@@ -126,23 +126,23 @@ function initContactForm() {
             
             // 폼 데이터 가져오기
             const formData = new FormData(this);
-            const name = this.querySelector('input[placeholder="이름"]').value;
-            const email = this.querySelector('input[placeholder="이메일"]').value;
+            const name = this.querySelector('input[placeholder="Name"]').value;
+            const email = this.querySelector('input[placeholder="Email"]').value;
             const message = this.querySelector('textarea').value;
             
             // 간단한 유효성 검사
             if (!name || !email || !message) {
-                showNotification('모든 필드를 입력해주세요.', 'error');
+                showNotification('Please fill in all fields.', 'error');
                 return;
             }
             
             if (!isValidEmail(email)) {
-                showNotification('올바른 이메일 주소를 입력해주세요.', 'error');
+                showNotification('Please enter a valid email address.', 'error');
                 return;
             }
             
             // 성공 메시지 (실제 서버는 없으므로 시뮬레이션)
-            showNotification('메시지가 전송되었습니다! 감사합니다.', 'success');
+            showNotification('Message sent successfully! Thank you.', 'success');
             
             // 폼 초기화
             this.reset();
@@ -298,10 +298,6 @@ function initThemeToggle() {
         document.body.classList.toggle('dark-mode', isDarkMode);
         localStorage.setItem('darkMode', isDarkMode);
         
-        showNotification(
-            isDarkMode ? '다크모드가 활성화되었습니다' : '라이트모드가 활성화되었습니다',
-            'info'
-        );
     });
 }
 
@@ -318,8 +314,8 @@ function initScrollProgress() {
         position: fixed;
         top: 0;
         left: 0;
-        height: 4px;
-        background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        height: 2px;
+        background: var(--text-dark);
         z-index: 10000;
         transition: width 0.3s ease;
     `;
@@ -334,4 +330,4 @@ function initScrollProgress() {
 }
 
 // 스크롤 진행도 초기화 (원하는 경우 주석 해제)
-//initScrollProgress();
+initScrollProgress();

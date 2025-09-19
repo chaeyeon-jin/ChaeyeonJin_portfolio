@@ -8,7 +8,7 @@
 /* Root Variables */
 :root {
     --primary-color: #c4ff72;
-    --secondary-color: #ffe9b6;
+    --secondary-color: #ffb6e4;
     --accent-color: #ff0099;
     --text-dark: #2d3748;
     --text-light: #4a5568;
@@ -365,7 +365,9 @@ body {
     height: 80px;
     display: flex;
     align-items: center;
-    position: relative;
+    position: sticky;
+    top: 80px;
+    z-index: 500;
 }
 
 .interest-card:hover {
@@ -486,21 +488,22 @@ body {
 }
 
 .beginner .skill-level {
-    background: #319795;
-    color: white;
+    background: #8dffaf;
+    color: var(--text-dark);
 }
 
 .future .skill-level {
-    background: #d69e2e;
-    color: white;
+    background: #ff94d6;
+    color: var(--text-dark);
 }
 
 /* Contact Section */
 .contact {
     padding: 6rem 0;
-    background: linear-gradient(135deg, var(--primary-color), var(--background-white));
+    background: linear-gradient(0, var(--primary-color), var(--background-white));
     color: var(--text-white);
 }
+
 
 .contact-content {
     display: grid;
@@ -617,6 +620,96 @@ body {
 .footer p {
     margin-bottom: 0.5rem;
     opacity: 0.8;
+}
+
+/* Dark Mode Styles */
+.dark-mode {
+    --background-white: #151515;
+    --background-light: #242424;
+    --text-dark: #ffffff;
+    --text-light: #e2e8f0;
+    --primary-color: var(--accent-color);
+}
+
+.dark-mode body {
+    background: linear-gradient(90deg, var(--background-dark), var(--text-dark));
+}
+
+.dark-mode .header {
+    background: linear-gradient(90deg, var(--accent-color), var(--text-dark));
+}
+
+.dark-mode .nav a {
+    color: var(--background-white);
+}
+
+.dark-mode .hero {
+    background: var(--background-dark);
+}
+
+.dark-mode .about {
+    background: var(--background-dark);
+}
+
+.dark-mode .skills {
+    background: var(--background-white);
+}
+
+.dark-mode .interests {
+    background: var(--background-dark);
+}
+
+
+.dark-mode .interest-card {
+    background: var(--background-dark);
+    border-top: 2px solid var(--accent-color);
+    color: var(--accent-color);
+}
+
+.dark-mode .stat-item {
+    background: var(--background-light);
+}
+
+.dark-mode .skill-category {
+    background: var(--background-light);
+}
+
+.dark-mode .skill-item {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-dark);
+}
+
+.dark-mode .contact {
+    background: linear-gradient(180deg, var(--background-dark), var(--text-dark));
+}
+
+.dark-mode .contact-form {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.dark-mode .contact-form input,
+.dark-mode .contact-form textarea {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-white);
+}
+
+.dark-mode .contact-form input:focus,
+.dark-mode .contact-form textarea:focus {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.dark-mode .footer p {
+    color: var(--background-dark);
+}
+
+.dark-mode .cta-button {
+    background: var(--text-dark);
+    color: var(--background-white);
+}
+
+.dark-mode .cta-button::before {
+    background: var(--accent-color);
+    color: var(--background-dark);
 }
 
 /* Responsive Design */
