@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-urbanist: var(--font-urbanist);
+    --font-instrument-serif: var(--font-instrument-serif);
+  }
+  
+  body {
+    @apply bg-white;
+    font-family: var(--font-urbanist), sans-serif;
+  }
+}
+

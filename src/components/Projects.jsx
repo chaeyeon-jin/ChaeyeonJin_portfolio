@@ -1,8 +1,10 @@
+'use client'
+
 import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 
 const Projects = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   
   const projects = [
     {
@@ -85,7 +87,7 @@ const Projects = () => {
             <div
               key={project.id}
               ref={(el) => (cardsRef.current[index] = el)}
-              onClick={() => (project.id === 1 || project.id === 2 || project.id === 3) && navigate(`/project/${project.id}`)}
+              onClick={() => (project.id === 1 || project.id === 2 || project.id === 3) && router.push(`/project/${project.id}`)}
               className={`relative aspect-video rounded-2xl overflow-hidden cursor-pointer group transition-all duration-600 ${
                 visibleCards.has(index)
                   ? 'opacity-100 translate-y-0 scale-100'

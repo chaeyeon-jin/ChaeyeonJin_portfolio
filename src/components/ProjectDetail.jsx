@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+'use client'
 
-const ProjectDetail = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+
+const ProjectDetail = ({ id, router: routerProp }) => {
+  const router = routerProp || useRouter();
 
   // 프로젝트 데이터
   const projectsData = {
@@ -33,10 +34,10 @@ const ProjectDetail = () => {
     }
   };
 
-  const project = projectsData[parseInt(id)];
+  const project = projectsData[parseInt(id?.toString() || '0')];
 
   const handleBack = () => {
-    navigate('/');
+    router.push('/');
     // 스크롤을 projects 섹션으로 이동
     setTimeout(() => {
       const projectsSection = document.getElementById('interests');
