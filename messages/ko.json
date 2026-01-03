@@ -1,0 +1,85 @@
+{
+  "nav": {
+    "about": "소개",
+    "contact": "연락하기"
+  },
+  "home": {
+    "title": "진채연",
+    "subtitle": "UX/UI & 그래픽 디자이너",
+    "description": "의미 있는 디지털 경험과 비주얼 아이덴티티를 만드는 것에 열정을 가진 독립 디자이너입니다.",
+    "about": "소개",
+    "contact": "연락하기"
+  },
+  "about": {
+    "title": "소개",
+    "description": "진채연은 디지털 디자인과 비주얼 커뮤니케이션 분야의 광범위한 배경을 가진 독립 UX/UI 및 그래픽 디자이너입니다.",
+    "description2": "독립 전문가 네트워크를 활용하거나 크리에이티브 에이전시와 협업하여, 진채연은 개념적 창의적 사고와 디자인에 대한 변함없는 열정을 결합하여 전 세계 브랜드를 위한 대담하고 독창적인 작품을 만듭니다.",
+    "experience": "경력",
+    "education": "학력",
+    "accolades": "수상 경력",
+    "socials": "소셜",
+    "updates": "업데이트",
+    "educationDetails": {
+      "university": "국민대학교",
+      "major": "시각디자인학과",
+      "period": "2018—2022"
+    },
+    "experienceItems": [
+      {
+        "company": "프리랜스 디자이너",
+        "period": "2022—현재",
+        "description": "다양한 UX/UI 및 그래픽 디자인 프로젝트 진행"
+      },
+      {
+        "company": "디자인 스튜디오 인턴",
+        "period": "2021—2022",
+        "description": "브랜드 아이덴티티 및 디지털 디자인 프로젝트 지원"
+      }
+    ],
+    "accoladesItems": [
+      {
+        "award": "디자인 어워드 2023",
+        "category": "UX/UI 디자인",
+        "year": "2023"
+      },
+      {
+        "award": "학생 디자인 공모전",
+        "category": "그래픽 디자인",
+        "year": "2021"
+      }
+    ],
+    "socialLinks": {
+      "instagram": "@chaeyeon_jin",
+      "behance": "@chaeyeonjin",
+      "linkedin": "in/chaeyeon-jin"
+    },
+    "updatesItems": [
+      {
+        "text": "새로운 포트폴리오 프로젝트가 디자인 매거진에 소개됨",
+        "link": "#",
+        "date": "2024"
+      },
+      {
+        "text": "UX 디자인 컨퍼런스 2024 참여",
+        "link": "#",
+        "date": "2024"
+      }
+    ]
+  },
+  "contact": {
+    "title": "연락하기",
+    "description": "저는 항상 창의적인 기회에 대해 듣거나 새로운 사람들과 연결하는 것에 열려있습니다.",
+    "description2": "어느 쪽이든, 아래 양식을 작성해 주시면 가능한 한 빨리 이메일로 답변드리겠습니다.",
+    "fullName": "성명",
+    "organization": "소속 기관",
+    "subject": "제목",
+    "message": "메시지",
+    "keyDates": "중요 날짜",
+    "email": "이메일",
+    "send": "보내기"
+  },
+  "footer": {
+    "copyright": "© 진채연 2025"
+  }
+}
+
