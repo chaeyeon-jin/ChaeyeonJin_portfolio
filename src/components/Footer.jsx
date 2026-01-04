@@ -2,37 +2,31 @@
 
 import React from 'react'
 
-const Footer = () => {
+const Footer = ({ isToggled }) => {
   return (
-    <>
-      <div className="top-[6292px] absolute left-20 font-nohemi font-normal text-variable-collection-black text-2xl tracking-[0] leading-[24.3px] whitespace-nowrap">
-        Web Design
+    <footer className={`w-full relative px-[80px] py-[40px] transition-colors duration-300 ${isToggled ? 'bg-variable-collection-black' : 'bg-variable-collection-background'}`}>
+      <div className={`grid grid-cols-6 gap-y-3 gap-x-5 font-nohemi font-normal text-lg leading-normal transition-colors duration-300 ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}>
+        
+        {/* Left Column */}
+        <div className="col-span-1">
+          <div className="whitespace-nowrap">Web Design</div>
+          <div className="whitespace-nowrap mt-3">Web Development</div>
+        </div>
+        
+        {/* Middle Column */}
+        <div className="col-span-1">
+          <div className="whitespace-nowrap">Chaeyeon Jin</div>
+          <div className="whitespace-nowrap mt-3">Chaeyeon Jin</div>
+        </div>
+        
+        {/* Right Column - Email and Copyright */}
+        <div className="col-span-2 col-start-5 text-right">
+          <div className="whitespace-nowrap">chaeyeonjin.work@gmail.com</div>
+          <div className="whitespace-nowrap mt-3">©2026 Chaeyeon Jin</div>
+        </div>
+        
       </div>
-      
-      <div className="absolute top-[6292px] left-[377px] text-2xl leading-[24.3px] font-nohemi font-normal text-variable-collection-black tracking-[0] whitespace-nowrap">
-        Chaeyeon Jin
-      </div>
-      
-      <div className="absolute top-[6292px] left-[970px] font-nohemi font-normal text-variable-collection-black text-2xl tracking-[0] leading-[24.3px] whitespace-nowrap">
-        chaeyeonjin.work@gmail.com
-      </div>
-      
-      <div className="absolute top-[6336px] left-[970px] font-nohemi font-normal text-variable-collection-black text-2xl tracking-[0] leading-[24.3px] whitespace-nowrap">
-        +1(949)572-7559
-      </div>
-      
-      <div className="top-[6336px] absolute left-20 font-nohemi font-normal text-variable-collection-black text-2xl tracking-[0] leading-[24.3px] whitespace-nowrap">
-        Web Development
-      </div>
-      
-      <div className="absolute top-[6336px] left-[377px] text-2xl leading-[24.3px] font-nohemi font-normal text-variable-collection-black tracking-[0] whitespace-nowrap">
-        Chaeyeon Jin
-      </div>
-      
-      <div className="absolute top-[6336px] left-[1592px] font-nohemi font-normal text-variable-collection-black text-2xl tracking-[0] leading-[24.3px] whitespace-nowrap">
-        ©2026 Chaeyeon Jin
-      </div>
-    </>
+    </footer>
   )
 }
 

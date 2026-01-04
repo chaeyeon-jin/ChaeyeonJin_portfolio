@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Header from '../src/components/Header'
 import Hero from '../src/components/Hero'
 import Projects from '../src/components/Projects'
@@ -9,6 +9,9 @@ import Contact from '../src/components/Contact'
 import Footer from '../src/components/Footer'
 
 export default function Home() {
+  const [borderRadius, setBorderRadius] = useState(60)
+  const [isToggled, setIsToggled] = useState(false)
+
   useEffect(() => {
     // Scroll progress bar
     const progressBar = document.createElement('div')
@@ -33,13 +36,13 @@ export default function Home() {
   }, [])
 
   return (
-    <div className="bg-variable-collection-background w-full relative grid-overlay">
+    <div className={`w-full relative grid-overlay transition-colors duration-300 ${isToggled ? 'bg-variable-collection-black' : 'bg-variable-collection-background'}`}>
       <Header />
-      <Hero />
-      <Projects />
-      <About />
-      <Contact />
-      <Footer />
+      <Hero borderRadius={borderRadius} setBorderRadius={setBorderRadius} isToggled={isToggled} setIsToggled={setIsToggled} />
+      <Projects borderRadius={borderRadius} isToggled={isToggled} />
+      <About borderRadius={borderRadius} isToggled={isToggled} />
+      <Contact borderRadius={borderRadius} isToggled={isToggled} />
+      <Footer isToggled={isToggled} />
     </div>
   )
 }

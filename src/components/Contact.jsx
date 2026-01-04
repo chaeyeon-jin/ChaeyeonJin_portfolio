@@ -1,14 +1,31 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 
-const Contact = () => {
+const Contact = ({ borderRadius, isToggled }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     note: "",
   })
+  
+  const [containerDimensions, setContainerDimensions] = useState({ width: 0, height: 0 })
+  const [containerRef, setContainerRef] = useState(null)
+
+  useEffect(() => {
+    if (!containerRef) return
+
+    const resizeObserver = new ResizeObserver((entries) => {
+      if (entries[0]) {
+        const { width, height } = entries[0].contentRect
+        setContainerDimensions({ width, height })
+      }
+    })
+
+    resizeObserver.observe(containerRef)
+    return () => resizeObserver.disconnect()
+  }, [containerRef])
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -24,130 +41,195 @@ const Contact = () => {
   }
 
   return (
-    <>
-      {/* Section Title */}
-      <div className="absolute top-[5088px] left-[95px] font-mango-grotesque font-semibold italic text-variable-collection-black text-8xl tracking-[0] leading-normal whitespace-nowrap">
-        Let&apos;s Keep in touch!!
-      </div>
-
-      {/* Social Links */}
-      {/* GitHub */}
-      <div className="flex w-[277px] items-center gap-2.5 p-10 absolute top-[5580px] left-20 bg-variable-collection-black rounded-[60px]">
-        <div className="relative w-[200px] h-[200px] mr-[-3.00px] aspect-[1] flex items-center justify-center">
-          {/* Temporary placeholder for vector */}
-          <div className="w-32 h-32 bg-variable-collection-white rounded-lg" />
+    <section id="contact" className={`w-full relative px-[80px] py-[80px] transition-colors duration-300 ${isToggled ? 'bg-variable-collection-black' : 'bg-variable-collection-background'}`}>
+      <div className="grid grid-cols-6 gap-5">
+        {/* Section Title */}
+        <div className="col-span-6 mb-10">
+          <h2 className={`font-mango-grotesque font-semibold italic text-8xl tracking-[0] leading-normal whitespace-nowrap transition-colors duration-300 ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}>
+            Get in touch!
+          </h2>
         </div>
-      </div>
 
-      {/* Email */}
-      <div className="flex w-[277px] items-center justify-center gap-2.5 p-10 absolute top-[5281px] left-20 bg-variable-collection-black rounded-[60px]">
-        <div className="relative w-[202px] h-[202px] ml-[-2.50px] mr-[-2.50px] overflow-hidden aspect-[1] flex items-center justify-center">
-          {/* Temporary placeholder for image, vector2, vector3 */}
-          <div className="w-32 h-32 bg-variable-collection-white rounded-lg" />
-        </div>
-      </div>
-
-      {/* LinkedIn */}
-      <div className="flex w-[277px] items-center justify-center gap-2.5 p-10 absolute top-[5282px] left-[377px] bg-variable-collection-black rounded-[60px]">
-        <div className="relative w-[198px] h-[198px] ml-[-0.50px] mr-[-0.50px] aspect-[1] flex items-center justify-center">
-          {/* Temporary placeholder for vector4 */}
-          <div className="w-32 h-32 bg-variable-collection-white rounded-lg" />
-        </div>
-      </div>
-
-      {/* frame77 - Contact icon placeholder */}
-      <div className="absolute top-[5581px] left-[377px] w-[277px] h-[279px] bg-variable-collection-yellow rounded-[60px] flex items-center justify-center">
-        <div className="w-[200px] h-[200px] bg-variable-collection-black rounded-lg" />
-      </div>
-
-      {/* Contact Form */}
-      <div className="absolute top-[5280px] left-[673px] w-[1165px] h-[579px] bg-variable-collection-background rounded-[60px]">
-        <Image
-          className="absolute top-[200px] left-[26px] w-[1117px] h-[353px] pointer-events-none"
-          alt="Email"
-          src="/email.svg"
-          width={1117}
-          height={353}
-        />
+        {/* Row 1: Email, LinkedIn, Form(Start) */}
         
-        <form onSubmit={handleSubmit} className="absolute top-[41px] left-[67px]">
-          <div className="mb-[22px]">
-            <label
-              htmlFor="contact-note"
-              className="block font-mango-grotesque font-semibold italic text-variable-collection-black text-5xl tracking-[0] leading-normal whitespace-nowrap"
-            >
-              Leave a note
-            </label>
+        {/* Email - Col 1 */}
+        <div 
+          className="col-span-1 h-[280px] bg-variable-collection-black flex items-center justify-center p-10 transition-all duration-300"
+          style={{ borderRadius: `${borderRadius}px` }}
+        >
+          <a href="#email" className="relative w-full h-full flex items-center justify-center hover:opacity-80 transition-opacity" aria-label="Email">
+             <Image
+               src="/SVG/email.svg"
+               alt="Email"
+               width={200}
+               height={200}
+               className="w-auto h-auto"
+             />
+          </a>
+        </div>
+
+        {/* LinkedIn - Col 2 */}
+        <div 
+          className="col-span-1 h-[280px] bg-variable-collection-black flex items-center justify-center p-10 transition-all duration-300"
+          style={{ borderRadius: `${borderRadius}px` }}
+        >
+          <a href="#linkedin" className="relative w-full h-full flex items-center justify-center hover:opacity-80 transition-opacity" aria-label="LinkedIn">
+             <Image
+               src="/SVG/linkedin.svg"
+               alt="LinkedIn"
+               width={200}
+               height={200}
+               className="w-auto h-auto"
+             />
+              </a>
+            </div>
+
+        {/* Contact Form - Col 3-6 (4 cols), Row Span 2 */}
+        <div 
+          className="col-span-4 row-span-2 h-[580px] relative bg-variable-collection-background overflow-hidden transition-all duration-300"
+          style={{ borderRadius: `${borderRadius}px` }}
+        >
+          {/* Background Image if needed, or keeping it clean */}
+          {/* <Image
+             className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90%] h-auto opacity-10 pointer-events-none"
+             alt="Email Background"
+             src="/email.svg"
+             width={1117}
+             height={353}
+          /> */}
+
+          <form onSubmit={handleSubmit} className="relative w-full h-full p-10 flex flex-col gap-6">
+             {/* Title */}
+             <div>
+               <label className="block font-mango-grotesque font-semibold italic text-variable-collection-black text-5xl tracking-[0] leading-normal whitespace-nowrap">
+                 Leave a note
+               </label>
+          </div>
+          
+             {/* Inputs Row */}
+             <div className="flex gap-5">
+               <div className="flex-1">
+                 <label htmlFor="contact-name" className="block text-variable-collection-black font-mango-grotesque font-semibold italic text-4xl mb-2">
+                   Name
+                 </label>
+              <input
+                type="text"
+                   id="contact-name"
+                name="name"
+                value={formData.name}
+                   onChange={handleInputChange}
+                   className="w-full h-16 bg-variable-collection-yellow px-6 font-nohemi font-normal text-variable-collection-black text-xl border-none outline-none focus:ring-2 focus:ring-black/10 transition-all duration-300"
+                   style={{ borderRadius: `${borderRadius}px` }}
+                required
+              />
+               </div>
+               <div className="flex-1">
+                 <label htmlFor="contact-email" className="block text-variable-collection-black font-mango-grotesque font-semibold italic text-4xl mb-2">
+                   Email
+                 </label>
+              <input
+                type="email"
+                   id="contact-email"
+                name="email"
+                value={formData.email}
+                   onChange={handleInputChange}
+                   className="w-full h-16 bg-variable-collection-yellow px-6 font-nohemi font-normal text-variable-collection-black text-xl border-none outline-none focus:ring-2 focus:ring-black/10 transition-all duration-300"
+                   style={{ borderRadius: `${borderRadius}px` }}
+                required
+                 />
+               </div>
+             </div>
+
+             {/* Note Area with Custom Shape & Button */}
+             <div className="flex-1 relative flex flex-col min-h-[150px]">
+               <label htmlFor="contact-note" className="block text-variable-collection-black font-mango-grotesque font-semibold italic text-4xl mb-2">
+                 Note
+               </label>
+               
+               {/* Container for the shaped background and content */}
+               <div ref={(el) => setContainerRef(el)} className="relative flex-1 w-full">
+                 {/* SVG Background */}
+                 <svg className="absolute inset-0 w-full h-full pointer-events-none drop-shadow-sm">
+                   <path 
+                     d={containerDimensions.width > 0 ? `
+                       M ${borderRadius},0
+                       L ${containerDimensions.width - borderRadius},0
+                       Q ${containerDimensions.width},0 ${containerDimensions.width},${borderRadius}
+                       L ${containerDimensions.width},${containerDimensions.height - 80 - borderRadius}
+                       Q ${containerDimensions.width},${containerDimensions.height - 80} ${containerDimensions.width - borderRadius},${containerDimensions.height - 80}
+                       L ${containerDimensions.width - 220 + borderRadius},${containerDimensions.height - 80}
+                       Q ${containerDimensions.width - 220},${containerDimensions.height - 80} ${containerDimensions.width - 220},${containerDimensions.height - 80 + borderRadius}
+                       L ${containerDimensions.width - 220},${containerDimensions.height - borderRadius}
+                       Q ${containerDimensions.width - 220},${containerDimensions.height} ${containerDimensions.width - 220 - borderRadius},${containerDimensions.height}
+                       L ${borderRadius},${containerDimensions.height}
+                       Q 0,${containerDimensions.height} 0,${containerDimensions.height - borderRadius}
+                       L 0,${borderRadius}
+                       Q 0,0 ${borderRadius},0
+                       Z
+                     ` : ''}
+                     fill="var(--variable-collection-white)"
+                   />
+                 </svg>
+
+              <textarea
+                   id="contact-note"
+                   name="note"
+                   value={formData.note}
+                   onChange={handleInputChange}
+                   className="relative w-full h-full bg-transparent font-nohemi font-normal text-variable-collection-black text-2xl resize-none outline-none border-none p-4 pb-[80px]"
+                required
+              />
+
+                 {/* Submit Button in the Cut-out */}
+              <button
+                type="submit"
+                   className="absolute bottom-0 right-0 flex w-[200px] h-[60px] items-center justify-center bg-variable-collection-black hover:opacity-80 transition-all duration-300"
+                   style={{ borderRadius: `${borderRadius}px` }}
+              >
+                   <span className="text-variable-collection-white font-mango-grotesque font-semibold italic text-4xl pt-1">
+                Send
+                   </span>
+              </button>
+               </div>
+             </div>
+            </form>
           </div>
 
-          <div className="absolute top-[102px] left-[-27px] w-[534px]">
-            <label
-              htmlFor="contact-name"
-              className="block text-variable-collection-background font-mango-grotesque font-semibold italic text-5xl tracking-[0] leading-normal whitespace-nowrap mb-2"
-            >
-              Name
-            </label>
-            <input
-              type="text"
-              id="contact-name"
-              name="name"
-              value={formData.name}
-              onChange={handleInputChange}
-              className="w-full h-20 bg-variable-collection-yellow rounded-[60px] px-6 font-nohemi font-normal text-variable-collection-black text-2xl"
-              required
-              aria-required="true"
-            />
-          </div>
 
-          <div className="absolute top-[102px] left-[527px] w-[549px]">
-            <label
-              htmlFor="contact-email"
-              className="block font-mango-grotesque font-semibold italic text-variable-collection-background text-5xl tracking-[0] leading-normal whitespace-nowrap mb-2"
-            >
-              Email
-            </label>
-            <input
-              type="email"
-              id="contact-email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              className="w-full h-20 bg-variable-collection-yellow rounded-[60px] px-6 font-nohemi font-normal text-variable-collection-black text-2xl"
-              required
-              aria-required="true"
-            />
-          </div>
+        {/* Row 2: Github, Icon */}
+        
+        {/* Github - Col 1 */}
+        <div 
+          className="col-span-1 h-[280px] bg-variable-collection-black flex items-center justify-center p-10 transition-all duration-300"
+          style={{ borderRadius: `${borderRadius}px` }}
+        >
+          <a href="#github" className="relative w-full h-full flex items-center justify-center hover:opacity-80 transition-opacity" aria-label="GitHub">
+             <Image
+               src="/SVG/github.svg"
+               alt="GitHub"
+               width={200}
+               height={200}
+               className="w-auto h-auto"
+             />
+          </a>
+        </div>
 
-          <div className="absolute top-[234px] left-0 w-[1050px]">
-            <label
-              htmlFor="contact-note"
-              className="block font-mango-grotesque font-semibold italic text-variable-collection-background text-5xl tracking-[0] leading-normal whitespace-nowrap mb-2"
-            >
-              Note
-            </label>
-            <textarea
-              id="contact-note"
-              name="note"
-              value={formData.note}
-              onChange={handleInputChange}
-              rows={6}
-              className="w-full bg-transparent font-nohemi font-normal text-variable-collection-black text-2xl resize-none outline-none"
-              required
-              aria-required="true"
-            />
-          </div>
+        {/* StarYellow Icon - Col 2 */}
+        <div 
+          className="col-span-1 h-[280px] bg-variable-collection-black flex items-center justify-center transition-all duration-300"
+          style={{ borderRadius: `${borderRadius}px` }}
+        >
+          <Image
+            src="/SVG/StarYellow.svg"
+            alt="Star"
+            width={199}
+            height={199}
+            className="w-auto h-auto"
+          />
+        </div>
 
-          <button
-            type="submit"
-            className="flex w-[222px] h-[60px] items-center justify-center gap-2.5 p-4 absolute top-[493px] left-[854px] bg-variable-collection-black rounded-[40px] hover:opacity-80 transition-opacity cursor-pointer"
-          >
-            <span className="relative w-fit mt-[-10.00px] mb-[-8.00px] text-variable-collection-white font-mango-grotesque font-semibold italic text-5xl tracking-[0] leading-normal whitespace-nowrap">
-              Send
-            </span>
-          </button>
-        </form>
       </div>
-    </>
+    </section>
   )
 }
 
