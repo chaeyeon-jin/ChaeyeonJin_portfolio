@@ -1,43 +1,111 @@
 'use client'
 
-import React from 'react';
+import React from 'react'
+import Image from 'next/image'
 
 const About = () => {
   return (
-    <section id="about" className="min-h-screen py-20 bg-white">
-      <div className="max-w-[90%] mx-auto px-5">
-        <h2 className="font-urbanist italic text-4xl md:text-5xl mb-12 text-black">Introduction</h2>
-        <div className="max-w-4xl">
-          <div>
-            <h3 className="font-urbanist text-3xl md:text-4xl mb-6 text-black">Hello, I'm Chaeyeon Jin</h3>
-            <p className="font-urbanist text-lg md:text-xl mb-6 text-black/70 leading-relaxed">
-              I'm a UX/UI designer passionate about crafting intuitive and engaging digital experiences.
-              I cover the full spectrum of design—from user research and interface design to interaction design—and I have hands-on experience in branding.
-              I build with HTML, CSS, and JavaScript, and I'm currently learning React to bring even more flexibility into my work.
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-              <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
-                <h4 className="font-urbanist font-semibold text-lg text-lime mb-2 uppercase">Major</h4>
-                <p className="font-urbanist text-base font-semibold text-black">
-                  Visual Communication Design
-                  <br />
-                  Minor in Industrial Design
-                </p>
-              </div>
-              <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
-                <h4 className="font-urbanist font-semibold text-lg text-lime mb-2 uppercase">Year</h4>
-                <p className="font-urbanist text-base font-semibold text-black">2nd semester Junior</p>
-              </div>
-              <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
-                <h4 className="font-urbanist font-semibold text-lg text-lime mb-2 uppercase">Goal</h4>
-                <p className="font-urbanist text-base font-semibold text-black">UX/UI designer</p>
-              </div>
-            </div>
-          </div>
+    <>
+      {/* Section Title */}
+      <div className="flex w-[1743px] items-start gap-[68px] absolute top-[3967px] left-[95px]">
+        <div className="relative w-fit mt-[-1.00px] font-mango-grotesque font-semibold italic text-variable-collection-black text-8xl tracking-[0] leading-normal whitespace-nowrap">
+          More about
+        </div>
+        <div className="relative w-fit mt-[-1.00px] text-8xl leading-normal font-nohemi font-normal text-variable-collection-black tracking-[0] whitespace-nowrap">
+          Chaeyeon Jin
         </div>
       </div>
-    </section>
-  );
-};
 
-export default About;
+      {/* Text Box 1 */}
+      <div className="flex w-[868px] h-[280px] items-center justify-center gap-2.5 px-10 py-[46px] absolute top-[4080px] left-[379px] bg-variable-collection-yellow rounded-[60px]">
+        <p className="relative w-[726px] font-nohemi font-normal text-variable-collection-grey300 text-[40px] tracking-[0] leading-[40.4px]">
+          <span className="text-[#bcbcbc]">I&apos;m a </span>
+          <span className="text-[#222222]">UX/UI designer</span>
+          <span className="text-[#bcbcbc]"> based in </span>
+          <span className="text-[#222222]">California</span>
+          <span className="text-[#bcbcbc]">
+            , focused on user-centered thinking and clear visual communication.
+          </span>
+        </p>
+      </div>
+
+      {/* Text Box 2 */}
+      <div className="flex w-[868px] h-[280px] items-center justify-center gap-2.5 px-10 py-[46px] absolute top-[4380px] left-20 bg-variable-collection-yellow rounded-[60px]">
+        <p className="relative w-[726px] font-nohemi font-normal text-variable-collection-grey300 text-[40px] tracking-[0] leading-[40.4px]">
+          <span className="text-[#bcbcbc]">
+            I enjoy turning ideas into functional experiences through{" "}
+          </span>
+          <span className="text-[#222222]">front-end developing</span>
+          <span className="text-[#bcbcbc]"> with </span>
+          <span className="text-[#222222]">HTML</span>
+          <span className="text-[#bcbcbc]">, </span>
+          <span className="text-[#222222]">CSS</span>
+          <span className="text-[#bcbcbc]">, </span>
+          <span className="text-[#222222]">JavaScript</span>
+          <span className="text-[#bcbcbc]">, and </span>
+          <span className="text-[#222222]">React</span>
+          <span className="text-[#bcbcbc]">.</span>
+        </p>
+      </div>
+
+      {/* Text Box 3 */}
+      <div className="flex w-[868px] h-[280px] items-center justify-center gap-2.5 px-10 py-[46px] absolute top-[4680px] left-[379px] bg-variable-collection-yellow rounded-[60px]">
+        <p className="relative w-[726px] font-nohemi font-normal text-variable-collection-background text-[40px] tracking-[0] leading-[40.4px]">
+          <span className="text-[#bcbcbc]">Currently a</span>
+          <span className="text-[#e1e1e1]">&nbsp;</span>
+          <span className="text-[#222222]">senior</span>
+          <span className="text-[#e1e1e1]">&nbsp;</span>
+          <span className="text-[#bcbcbc]">majoring in</span>
+          <span className="text-[#e1e1e1]">&nbsp;</span>
+          <span className="text-[#222222]">Visual Communication Design</span>
+          <span className="text-[#bcbcbc]">, and previously worked as a </span>
+          <span className="text-[#222222]">freelance visual designer</span>
+          <span className="text-[#e1e1e1]">&nbsp;</span>
+          <span className="text-[#bcbcbc]">in</span>
+          <span className="text-[#e1e1e1]">&nbsp;</span>
+          <span className="text-[#222222]">Ireland</span>
+          <span className="text-[#bcbcbc]">.</span>
+        </p>
+      </div>
+
+      {/* Text Box 4 */}
+      <div className="flex w-[573px] h-[280px] items-center justify-center gap-2.5 px-10 py-[46px] absolute top-[4680px] left-[1265px] bg-variable-collection-background rounded-[60px]">
+        <p className="relative w-[529px] mt-[-27.00px] mb-[-25.00px] ml-[-18.00px] mr-[-18.00px] font-nohemi font-normal text-variable-collection-black text-[40px] tracking-[0] leading-[40.4px]">
+          Outside of design, I&apos;m an advanced scuba diver and enjoy film
+          photography, both of which influence how I observe people,
+          environments, and details.
+        </p>
+      </div>
+
+      {/* Photos Image */}
+      <Image
+        className="absolute top-[4080px] left-[1267px] w-[573px] h-[579px] object-cover rounded-[60px]"
+        alt="Photos"
+        src="/photos-1.png"
+        width={573}
+        height={579}
+      />
+
+      {/* frame67 - Design icon placeholder */}
+      <div className="absolute top-[4081px] left-20 w-[277px] h-[279px] bg-variable-collection-yellow rounded-[60px] flex items-center justify-center">
+        <div className="w-[200px] h-[200px] bg-variable-collection-black rounded-lg" />
+      </div>
+
+      {/* frame70 - Development icon placeholder */}
+      <div className="absolute top-[4380px] left-[969px] w-[277px] h-[279px] bg-variable-collection-yellow rounded-[60px] flex items-center justify-center">
+        <div className="w-[200px] h-[200px] bg-variable-collection-black rounded-lg" />
+      </div>
+
+      {/* frame72 - Education icon placeholder */}
+      <div className="absolute top-[4680px] left-20 w-[277px] h-[279px] bg-variable-collection-yellow rounded-[60px] flex items-center justify-center">
+        <div className="w-[200px] h-[200px] bg-variable-collection-black rounded-lg" />
+      </div>
+
+      {/* White Box with union3 - Temporary placeholder */}
+      <div className="absolute top-[4380px] left-[1563px] w-[277px] h-[279px] bg-variable-collection-white rounded-[60px]" />
+      <div className="absolute top-[4560px] left-[1708px] w-[99px] h-[61px] bg-variable-collection-yellow rounded-lg" />
+    </>
+  )
+}
+
+export default About

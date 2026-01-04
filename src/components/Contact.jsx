@@ -1,153 +1,154 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState } from 'react'
+import Image from 'next/image'
 
 const Contact = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
+    name: "",
+    email: "",
+    note: "",
+  })
 
-  const isValidEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
-  const showNotification = (message, type = 'info') => {
-    const existingNotification = document.querySelector('.notification');
-    if (existingNotification) {
-      existingNotification.remove();
-    }
-
-    const notification = document.createElement('div');
-    const bgColor = type === 'success' ? 'bg-green-500' : type === 'error' ? 'bg-red-500' : 'bg-blue-500';
-    notification.className = `fixed top-24 right-5 md:right-10 px-6 py-3 rounded-lg shadow-lg text-white z-50 ${bgColor} transform translate-x-full transition-transform duration-300`;
-    notification.textContent = message;
-    document.body.appendChild(notification);
-
-    setTimeout(() => {
-      notification.classList.remove('translate-x-full');
-    }, 10);
-
-    setTimeout(() => {
-      notification.classList.add('translate-x-full');
-      setTimeout(() => {
-        if (notification.parentNode) {
-          notification.remove();
-        }
-      }, 300);
-    }, 3000);
-  };
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }))
+  }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (!formData.name || !formData.email || !formData.message) {
-      showNotification('Please fill in all fields.', 'error');
-      return;
-    }
-
-    if (!isValidEmail(formData.email)) {
-      showNotification('Please enter a valid email address.', 'error');
-      return;
-    }
-
-    showNotification('Message sent successfully! Thank you.', 'success');
-    setFormData({
-      name: '',
-      email: '',
-      message: ''
-    });
-  };
+    e.preventDefault()
+    console.log("Form submitted:", formData)
+  }
 
   return (
-    <section id="contact" className="min-h-screen py-20 bg-gradient-to-b from-lime/20 to-white">
-      <div className="max-w-[90%] mx-auto px-5">
-        <h2 className="font-urbanist italic text-4xl md:text-5xl mb-12 text-black">Contact</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          <div>
-            <h3 className="font-urbanist text-3xl mb-4 text-black">Join my journey!</h3>
-            <p className="font-urbanist text-lg mb-8 text-black/70">Contact me anytime :)</p>
-            
-            <div className="flex flex-col gap-4">
-              <a
-                href="mailto:hcd0402@gmail.com"
-                className="flex items-center gap-4 p-4 rounded-xl bg-white/50 hover:bg-white/70 transition-all hover:translate-x-2"
-              >
-                <span className="text-2xl">✉️</span>
-                <span className="font-urbanist text-black">hcd0402@gmail.com</span>
-              </a>
-              <a
-                href="https://github.com/Chaeyeon-Jin"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-4 p-4 rounded-xl bg-white/50 hover:bg-white/70 transition-all hover:translate-x-2"
-              >
-                <span className="text-2xl">🐙</span>
-                <span className="font-urbanist text-black">GitHub</span>
-              </a>
-              <a
-                href="https://www.linkedin.com/in/chaeyeon-jin-a4498b327/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-4 p-4 rounded-xl bg-white/50 hover:bg-white/70 transition-all hover:translate-x-2"
-              >
-                <span className="text-2xl">💼</span>
-                <span className="font-urbanist text-black">LinkedIn</span>
-              </a>
-            </div>
-          </div>
-          
-          <div className="bg-white/50 backdrop-blur-sm p-8 rounded-2xl">
-            <h3 className="font-urbanist text-2xl mb-6 text-center text-black">Email me</h3>
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-              <input
-                type="text"
-                name="name"
-                placeholder="Name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-                className="px-4 py-3 rounded-xl border-none bg-white/90 text-black placeholder-black/50 focus:outline-none focus:bg-white transition-colors font-urbanist"
-              />
-              <input
-                type="email"
-                name="email"
-                placeholder="Email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                className="px-4 py-3 rounded-xl border-none bg-white/90 text-black placeholder-black/50 focus:outline-none focus:bg-white transition-colors font-urbanist"
-              />
-              <textarea
-                name="message"
-                placeholder="Message"
-                rows="5"
-                value={formData.message}
-                onChange={handleChange}
-                required
-                className="px-4 py-3 rounded-xl border-none bg-white/90 text-black placeholder-black/50 focus:outline-none focus:bg-white transition-colors font-urbanist resize-none"
-              />
-              <button
-                type="submit"
-                className="px-6 py-3 rounded-xl bg-white text-black font-urbanist font-semibold hover:bg-lime/30 transition-colors"
-              >
-                Send
-              </button>
-            </form>
-          </div>
+    <>
+      {/* Section Title */}
+      <div className="absolute top-[5088px] left-[95px] font-mango-grotesque font-semibold italic text-variable-collection-black text-8xl tracking-[0] leading-normal whitespace-nowrap">
+        Let&apos;s Keep in touch!!
+      </div>
+
+      {/* Social Links */}
+      {/* GitHub */}
+      <div className="flex w-[277px] items-center gap-2.5 p-10 absolute top-[5580px] left-20 bg-variable-collection-black rounded-[60px]">
+        <div className="relative w-[200px] h-[200px] mr-[-3.00px] aspect-[1] flex items-center justify-center">
+          {/* Temporary placeholder for vector */}
+          <div className="w-32 h-32 bg-variable-collection-white rounded-lg" />
         </div>
       </div>
-    </section>
-  );
-};
 
-export default Contact;
+      {/* Email */}
+      <div className="flex w-[277px] items-center justify-center gap-2.5 p-10 absolute top-[5281px] left-20 bg-variable-collection-black rounded-[60px]">
+        <div className="relative w-[202px] h-[202px] ml-[-2.50px] mr-[-2.50px] overflow-hidden aspect-[1] flex items-center justify-center">
+          {/* Temporary placeholder for image, vector2, vector3 */}
+          <div className="w-32 h-32 bg-variable-collection-white rounded-lg" />
+        </div>
+      </div>
+
+      {/* LinkedIn */}
+      <div className="flex w-[277px] items-center justify-center gap-2.5 p-10 absolute top-[5282px] left-[377px] bg-variable-collection-black rounded-[60px]">
+        <div className="relative w-[198px] h-[198px] ml-[-0.50px] mr-[-0.50px] aspect-[1] flex items-center justify-center">
+          {/* Temporary placeholder for vector4 */}
+          <div className="w-32 h-32 bg-variable-collection-white rounded-lg" />
+        </div>
+      </div>
+
+      {/* frame77 - Contact icon placeholder */}
+      <div className="absolute top-[5581px] left-[377px] w-[277px] h-[279px] bg-variable-collection-yellow rounded-[60px] flex items-center justify-center">
+        <div className="w-[200px] h-[200px] bg-variable-collection-black rounded-lg" />
+      </div>
+
+      {/* Contact Form */}
+      <div className="absolute top-[5280px] left-[673px] w-[1165px] h-[579px] bg-variable-collection-background rounded-[60px]">
+        <Image
+          className="absolute top-[200px] left-[26px] w-[1117px] h-[353px] pointer-events-none"
+          alt="Email"
+          src="/email.svg"
+          width={1117}
+          height={353}
+        />
+        
+        <form onSubmit={handleSubmit} className="absolute top-[41px] left-[67px]">
+          <div className="mb-[22px]">
+            <label
+              htmlFor="contact-note"
+              className="block font-mango-grotesque font-semibold italic text-variable-collection-black text-5xl tracking-[0] leading-normal whitespace-nowrap"
+            >
+              Leave a note
+            </label>
+          </div>
+
+          <div className="absolute top-[102px] left-[-27px] w-[534px]">
+            <label
+              htmlFor="contact-name"
+              className="block text-variable-collection-background font-mango-grotesque font-semibold italic text-5xl tracking-[0] leading-normal whitespace-nowrap mb-2"
+            >
+              Name
+            </label>
+            <input
+              type="text"
+              id="contact-name"
+              name="name"
+              value={formData.name}
+              onChange={handleInputChange}
+              className="w-full h-20 bg-variable-collection-yellow rounded-[60px] px-6 font-nohemi font-normal text-variable-collection-black text-2xl"
+              required
+              aria-required="true"
+            />
+          </div>
+
+          <div className="absolute top-[102px] left-[527px] w-[549px]">
+            <label
+              htmlFor="contact-email"
+              className="block font-mango-grotesque font-semibold italic text-variable-collection-background text-5xl tracking-[0] leading-normal whitespace-nowrap mb-2"
+            >
+              Email
+            </label>
+            <input
+              type="email"
+              id="contact-email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              className="w-full h-20 bg-variable-collection-yellow rounded-[60px] px-6 font-nohemi font-normal text-variable-collection-black text-2xl"
+              required
+              aria-required="true"
+            />
+          </div>
+
+          <div className="absolute top-[234px] left-0 w-[1050px]">
+            <label
+              htmlFor="contact-note"
+              className="block font-mango-grotesque font-semibold italic text-variable-collection-background text-5xl tracking-[0] leading-normal whitespace-nowrap mb-2"
+            >
+              Note
+            </label>
+            <textarea
+              id="contact-note"
+              name="note"
+              value={formData.note}
+              onChange={handleInputChange}
+              rows={6}
+              className="w-full bg-transparent font-nohemi font-normal text-variable-collection-black text-2xl resize-none outline-none"
+              required
+              aria-required="true"
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="flex w-[222px] h-[60px] items-center justify-center gap-2.5 p-4 absolute top-[493px] left-[854px] bg-variable-collection-black rounded-[40px] hover:opacity-80 transition-opacity cursor-pointer"
+          >
+            <span className="relative w-fit mt-[-10.00px] mb-[-8.00px] text-variable-collection-white font-mango-grotesque font-semibold italic text-5xl tracking-[0] leading-normal whitespace-nowrap">
+              Send
+            </span>
+          </button>
+        </form>
+      </div>
+    </>
+  )
+}
+
+export default Contact

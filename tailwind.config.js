@@ -1,24 +1,33 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+  content: ["./src/**/*.{html,js,ts,jsx,tsx}", "./app/**/*.{html,js,ts,jsx,tsx}"],
   theme: {
     extend: {
       colors: {
-        'primary': '#EAFF71',
-        'lime': '#EAFF71', // 호환성을 위해 유지
-        'bg-cream': '#FEFFF5',
+        "variable-collection-background":
+          "var(--variable-collection-background)",
+        "variable-collection-black": "var(--variable-collection-black)",
+        "variable-collection-grey300": "var(--variable-collection-grey300)",
+        "variable-collection-white": "var(--variable-collection-white)",
+        "variable-collection-yellow": "var(--variable-collection-yellow)",
       },
       fontFamily: {
-        'urbanist': ['var(--font-urbanist)', 'sans-serif'],
-        'instrument-serif': ['var(--font-instrument-serif)', 'serif'],
+        'nohemi': ['Nohemi', 'Helvetica', 'sans-serif'],
+        'mango-grotesque': ['Mango Grotesque', 'Helvetica', 'sans-serif'],
+      },
+      gridTemplateColumns: {
+        '6': 'repeat(6, minmax(0, 1fr))',
+      },
+      spacing: {
+        'grid-row': '80px', // 그리드 행 높이 (Margin)
+        'grid-gutter': '20px', // 그리드 칼럼 간격 (Gutter)
+        'grid-margin': '80px', // 그리드 좌우 마진
+      },
+      gap: {
+        'grid': '20px', // 그리드 기본 간격
       },
     },
   },
   plugins: [],
-}
+};
 

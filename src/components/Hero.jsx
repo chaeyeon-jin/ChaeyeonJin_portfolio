@@ -1,129 +1,205 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState } from 'react'
+import Image from 'next/image'
 
 const Hero = () => {
-  const [isMenuHovered, setIsMenuHovered] = useState(false);
+  const [sliderValue, setSliderValue] = useState(0)
+  const [borderRadius, setBorderRadius] = useState(60)
+  const [isToggled, setIsToggled] = useState(false)
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 
-  const handleSmoothScroll = (e, targetId) => {
-    e.preventDefault();
-    const targetElement = document.getElementById(targetId);
-    if (targetElement) {
-      const headerHeight = document.querySelector('header')?.offsetHeight || 0;
-      window.scrollTo({
-        top: targetElement.offsetTop - headerHeight,
-        behavior: 'smooth'
-      });
-      setIsMenuHovered(false);
+  React.useEffect(() => {
+    const handleMouseMove = (e) => {
+      // 화면 중앙을 (0,0)으로 하는 상대 좌표 계산
+      // 범위: -1 ~ 1
+      const x = (e.clientX / window.innerWidth - 0.5) * 2
+      const y = (e.clientY / window.innerHeight - 0.5) * 2
+      setMousePosition({ x, y })
     }
-  };
+
+    window.addEventListener('mousemove', handleMouseMove)
+    return () => window.removeEventListener('mousemove', handleMouseMove)
+  }, [])
+
+  const handleSliderChange = (e) => {
+    const value = parseInt(e.target.value)
+    setSliderValue(value)
+    // 슬라이더를 오른쪽으로 갈수록 라운딩값이 0이 되도록 (0-100 범위에서 60-0으로 매핑)
+    const newBorderRadius = 60 - (value / 100) * 60
+    setBorderRadius(newBorderRadius)
+  }
+
+  const handleToggle = () => {
+    setIsToggled(!isToggled)
+  }
 
   return (
-    <section className="min-h-screen relative overflow-hidden flex flex-col bg-bg-cream">
-      {/* 좌우 그라데이션 배경 */}
-      <div className="absolute inset-0 pointer-events-none">
-        {/* 왼쪽 그라데이션 - 가장자리에서 부드럽게 페이드 */}
-        <div 
-          className="absolute left-0 top-0 w-[15%] h-full"
-          style={{
-            background: 'linear-gradient(to right, #EAFF71 0%, rgba(234, 255, 113, 0.9) 10%, rgba(234, 255, 113, 0.7) 25%, rgba(234, 255, 113, 0.4) 45%, rgba(234, 255, 113, 0.2) 65%, rgba(234, 255, 113, 0.05) 85%, transparent 100%)'
-          }}
-        ></div>
-        {/* 오른쪽 그라데이션 - 가장자리에서 부드럽게 페이드 */}
-        <div 
-          className="absolute right-0 top-0 w-[15%] h-full"
-          style={{
-            background: 'linear-gradient(to left, #EAFF71 0%, rgba(234, 255, 113, 0.9) 10%, rgba(234, 255, 113, 0.7) 25%, rgba(234, 255, 113, 0.4) 45%, rgba(234, 255, 113, 0.2) 65%, rgba(234, 255, 113, 0.05) 85%, transparent 100%)'
-          }}
-        ></div>
-      </div>
-      {/* 좌측 상단 네비게이션 - 고정 */}
-      <div className="fixed top-8 left-0 right-0 z-50 pointer-events-none">
-        <div className="max-w-[1400px] mx-auto px-8 md:px-12">
-          <div 
-            className="flex items-center gap-3 pointer-events-auto"
-            onMouseEnter={() => setIsMenuHovered(true)}
-            onMouseLeave={() => setIsMenuHovered(false)}
-          >
-          {/* 원형 버튼 */}
-          <div
-            className="w-12 h-12 rounded-full flex-shrink-0 transition-all duration-500 ease-out cursor-pointer"
-            style={{
-              backgroundColor: '#EAFF71',
-              boxShadow: '0 0 16px #EAFF71',
-              transform: isMenuHovered ? 'scale(1.1)' : 'scale(1)',
-            }}
-          ></div>
+    <section className="relative w-full min-h-screen bg-variable-collection-background pt-[120px] pb-20">
+      {/* Slider and Toggle Container - Using Grid System */}
+      <div className="absolute top-[19px] left-0 right-0 mx-[80px]">
+        <div className="grid grid-cols-6 gap-5">
+          {/* Empty space for header (1,2 columns) */}
+          <div className="col-span-2" />
+          
+          {/* Slider - 3,4,5 columns */}
+          <div className="col-span-3 flex items-center">
+            <div className="relative w-full h-[48px] flex items-center justify-center">
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value={sliderValue}
+                onChange={handleSliderChange}
+                className="w-full border-radius-slider"
+                style={{
+                  borderRadius: `${borderRadius}px`,
+                  margin: '0',
+                  padding: '0',
+                }}
+              />
+            </div>
+          </div>
 
-          {/* 메뉴 버튼들 - hover 시에만 나타남 */}
-          <div
-            className={`px-4 py-2 bg-primary rounded-full flex items-center gap-4 transition-all duration-700 ease-out overflow-hidden ${
-              isMenuHovered ? 'opacity-100 translate-x-0 w-auto' : 'opacity-0 translate-x-[-20px] w-0'
-            }`}
-            style={{
-              backgroundColor: '#EAFF71',
-            }}
-          >
-            <a
-              href="#interests"
-              onClick={(e) => handleSmoothScroll(e, 'interests')}
-              className="text-black font-urbanist hover:opacity-80 transition-opacity whitespace-nowrap"
+          {/* Theme Toggle - 6th column */}
+          <div className="col-span-1 flex items-center justify-end">
+            <button
+              onClick={handleToggle}
+              className="relative flex w-full h-[60px] items-center px-[10px] py-2.5 bg-variable-collection-grey300 cursor-pointer transition-all duration-300"
+              style={{ borderRadius: `${borderRadius}px` }}
             >
-              projects
-            </a>
-            <a
-              href="#about"
-              onClick={(e) => handleSmoothScroll(e, 'about')}
-              className="text-black font-urbanist hover:opacity-80 transition-opacity whitespace-nowrap"
-            >
-              about
-            </a>
-            <a
-              href="#contact"
-              onClick={(e) => handleSmoothScroll(e, 'contact')}
-              className="text-black font-urbanist hover:opacity-80 transition-opacity whitespace-nowrap"
-            >
-              contact
-            </a>
+              <div 
+                className="absolute h-[40px] w-[40px] bg-variable-collection-white transition-all duration-300 rounded-[20px]"
+                style={{
+                  left: isToggled ? 'calc(100% - 50px)' : '10px', // 10px padding + 버튼이 오른쪽 끝에 오도록
+                }}
+              />
+            </button>
           </div>
         </div>
-        </div>
       </div>
 
-      {/* 메인 텍스트 - 화면 하단 */}
-      <div className="flex-1 flex items-end pb-20 md:pb-32 relative z-10">
-        <div className="max-w-[1400px] mx-auto px-8 md:px-12 w-full flex items-end gap-6">
-          <p className="font-instrument-serif leading-tight text-black text-4xl md:text-6xl lg:text-[96px]" style={{ fontSize: 'clamp(2.5rem, 8vw, 96px)' }}>
-            <span className="italic">Chaeyeon Jin</span> is a creative UX/UI designer who bridges Tech and design.
-          </p>
-          
-          {/* CTA 버튼 - 완전한 원형 */}
-          <button
-            onClick={(e) => handleSmoothScroll(e, 'interests')}
-            className="flex-shrink-0 w-14 h-14 bg-primary rounded-full flex items-center justify-center hover:scale-110 transition-transform"
-            style={{
-              backgroundColor: '#EAFF71',
-            }}
-            aria-label="Scroll to projects"
-          >
-            <svg
-              className="w-5 h-5 text-black"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M19 14l-7 7m0 0l-7-7m7 7V3"
+      {/* Main Content Container - Using Grid System */}
+      <div className="absolute bottom-[80px] left-0 right-0 mx-[80px]">
+        <div className="grid grid-cols-6 gap-5">
+          {/* Chaeyeon Jin - Grid 1~4 (4 columns), Height: 4 grid rows (320px) */}
+          <div className="col-span-4 flex flex-col gap-5 relative">
+            {/* Interactive Face Icon - Above Chaeyeon Jin */}
+            <div className="absolute -top-[200px] left-0">
+              <div className="relative w-[180px] h-[180px] bg-variable-collection-black rounded-full flex items-center justify-center cursor-pointer z-10">
+                {/* Eyes */}
+                <div 
+                  className="absolute top-[60px] left-[45px] w-[24px] h-[24px] bg-variable-collection-background rounded-full transition-transform duration-100 ease-out"
+                  style={{
+                    transform: `translate(${mousePosition.x * 15}px, ${mousePosition.y * 17}px)`
+                  }}
+                />
+                <div 
+                  className="absolute top-[60px] right-[45px] w-[24px] h-[24px] bg-variable-collection-background rounded-full transition-transform duration-100 ease-out"
+                  style={{
+                    transform: `translate(${mousePosition.x * 15}px, ${mousePosition.y * 17}px)`
+                  }}
+                />
+                
+                {/* Mouth - SVG */}
+                <Image
+                  src="/SVG/mouth.svg"
+                  alt="Mouth"
+                  width={50}
+                  height={25}
+                  className="absolute bottom-[45px] left-1/2 -translate-x-1/2 transition-transform duration-100 ease-out"
+                  style={{ 
+                    transform: `translate(calc(-50% + ${mousePosition.x * 5}px), ${mousePosition.y * 7}px)`
+                  }}
+                />
+              </div>
+
+              {/* Star Icon - Next to Face */}
+              <Image
+                src="/SVG/Star.svg"
+                alt="Star"
+                width={180}
+                height={180}
+                className="absolute top-0 -right-[200px] z-0 transition-transform duration-100 ease-out"
+                style={{
+                  transform: `rotate(${mousePosition.x * 100}deg)`
+                }}
               />
-            </svg>
-          </button>
+            </div>
+            
+            <div 
+              className="flex w-full h-[320px] items-center justify-center gap-2.5 px-8 lg:px-12 xl:px-[114px] py-12 xl:py-[109px] bg-variable-collection-white"
+              style={{ borderRadius: `${borderRadius}px` }}
+            >
+              <div className="relative w-fit mt-[-0.50px] ml-[-40.00px] mr-[-40.00px] font-nohemi font-normal text-variable-collection-black text-5xl md:text-7xl lg:text-9xl xl:text-[140px] tracking-[0] leading-normal whitespace-nowrap">
+                Chaeyeon Jin
+              </div>
+            </div>
+
+            {/* Action Buttons - 4 buttons, each using 1 grid column */}
+            <div className="grid grid-cols-4 gap-5">
+              <button
+                className="flex w-full h-[80px] items-center justify-center gap-2.5 bg-variable-collection-grey300 cursor-pointer transition-opacity hover:opacity-80"
+                style={{ borderRadius: `${borderRadius}px` }}
+              >
+                <span className="relative w-fit font-mango-grotesque font-medium text-variable-collection-black text-xl lg:text-2xl xl:text-[40px] tracking-[0] leading-normal">
+                  Email
+                </span>
+              </button>
+              <button
+                className="flex w-full h-[80px] items-center justify-center gap-2.5 bg-variable-collection-grey300 cursor-pointer transition-opacity hover:opacity-80"
+                style={{ borderRadius: `${borderRadius}px` }}
+              >
+                <span className="relative w-fit font-mango-grotesque font-medium text-variable-collection-black text-xl lg:text-2xl xl:text-[40px] tracking-[0] leading-normal">
+                  Résumé
+                </span>
+              </button>
+              <button
+                className="flex w-full h-[80px] items-center justify-center gap-2.5 bg-variable-collection-grey300 cursor-pointer transition-opacity hover:opacity-80"
+                style={{ borderRadius: `${borderRadius}px` }}
+              >
+                <span className="relative w-fit font-mango-grotesque font-medium text-variable-collection-black text-xl lg:text-2xl xl:text-[40px] tracking-[0] leading-normal">
+                  Github
+                </span>
+              </button>
+              <button
+                className="flex w-full h-[80px] items-center justify-center gap-2.5 bg-variable-collection-grey300 cursor-pointer transition-opacity hover:opacity-80"
+                style={{ borderRadius: `${borderRadius}px` }}
+              >
+                <span className="relative w-fit font-mango-grotesque font-medium text-variable-collection-black text-xl lg:text-2xl xl:text-[40px] tracking-[0] leading-normal">
+                  Linkedin
+                </span>
+              </button>
+            </div>
+          </div>
+
+          {/* Grid 5~6 - CTA Button and Description Box */}
+          <div className="col-span-2 flex flex-col gap-5">
+            {/* I'm looking for internship - CTA Button */}
+            <div 
+              className="flex w-full h-[80px] items-center justify-center gap-2.5 pt-5 pb-4 px-6 xl:px-10 bg-variable-collection-black"
+              style={{ borderRadius: `${borderRadius}px` }}
+            >
+              <p className="relative w-fit font-mango-grotesque font-medium text-variable-collection-background text-xl lg:text-2xl xl:text-[40px] tracking-[0] leading-normal text-center">
+                I&apos;m looking for internship - contact me!!
+              </p>
+            </div>
+
+            {/* She is a Designer... - Grid 5~6 (2 columns), Height: 4 grid rows (320px) */}
+            <div 
+              className="flex w-full h-[320px] items-center justify-center gap-2.5 px-6 lg:px-8 xl:px-10 py-8 xl:py-[46px] bg-variable-collection-yellow"
+              style={{ borderRadius: `${borderRadius}px` }}
+            >
+              <p className="relative w-full mt-[-9.50px] mb-[-7.50px] ml-[-15.00px] mr-[-15.00px] font-nohemi font-normal text-variable-collection-black text-3xl lg:text-4xl xl:text-5xl tracking-[0] leading-[1.01]">
+                She is a Designer &amp; Developer in California, who bridges tech and
+                design.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default Hero;
+export default Hero

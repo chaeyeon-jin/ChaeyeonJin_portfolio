@@ -5,7 +5,6 @@ import Header from '../src/components/Header'
 import Hero from '../src/components/Hero'
 import Projects from '../src/components/Projects'
 import About from '../src/components/About'
-import Skills from '../src/components/Skills'
 import Contact from '../src/components/Contact'
 import Footer from '../src/components/Footer'
 
@@ -13,7 +12,7 @@ export default function Home() {
   useEffect(() => {
     // Scroll progress bar
     const progressBar = document.createElement('div')
-    progressBar.className = 'fixed top-0 left-0 h-0.5 bg-lime z-50 transition-all duration-300'
+    progressBar.className = 'fixed top-0 left-0 h-0.5 bg-variable-collection-yellow z-50 transition-all duration-300'
     progressBar.style.width = '0%'
     document.body.appendChild(progressBar)
     
@@ -34,17 +33,13 @@ export default function Home() {
   }, [])
 
   return (
-    <>
+    <div className="bg-variable-collection-background w-full relative grid-overlay">
       <Header />
-      <main>
-        <Hero />
-        <Projects />
-        <About />
-        <Skills />
-        <Contact />
-      </main>
+      <Hero />
+      <Projects />
+      <About />
+      <Contact />
       <Footer />
-    </>
+    </div>
   )
 }
-
