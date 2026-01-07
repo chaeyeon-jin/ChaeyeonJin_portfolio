@@ -1,8 +1,11 @@
 import './globals.css'
 
 export const metadata = {
-  title: '진채연의 포트폴리오',
+  title: "chaeyeonjin's portfolio",
   description: 'Chaeyeon Jin Portfolio',
+  icons: {
+    icon: '/SVG/Star.svg',
+  },
 }
 
 export default function RootLayout({ children }) {

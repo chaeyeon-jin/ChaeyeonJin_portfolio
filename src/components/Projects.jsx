@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const Projects = ({ borderRadius, isToggled }) => {
   const [activeProjectIndex, setActiveProjectIndex] = useState(0)
@@ -25,7 +26,9 @@ const Projects = ({ borderRadius, isToggled }) => {
       title: 'SiMO',
       description: 'SiMple mockup generator for designers',
       date: '2025.10~2025.12',
-      tags: ['UX research', 'UI Design', 'Development']
+      tags: ['UX research', 'UI Design', 'Development'],
+      url: 'https://mock-ai-azure.vercel.app/',
+      thumbnail: '/simo/simothumbnail.png'
     },
     {
       id: 'biaspoca',
@@ -136,7 +139,9 @@ const Projects = ({ borderRadius, isToggled }) => {
 
               <div className="inline-flex flex-col items-start justify-end gap-2.5 relative mt-auto">
                 <a 
-                  href={`/project/${activeProject.id}`} 
+                  href={activeProject.url || `/project/${activeProject.id}`}
+                  target={activeProject.url ? '_blank' : undefined}
+                  rel={activeProject.url ? 'noopener noreferrer' : undefined}
                   className={`flex w-36 h-[50px] items-center justify-center gap-2 pt-2 pb-1.5 px-3 relative hover:opacity-80 transition-opacity ${isToggled ? 'bg-variable-collection-white' : 'bg-variable-collection-white'}`}
                   style={{ borderRadius: `${borderRadius}px` }}
                 >
@@ -175,8 +180,8 @@ const Projects = ({ borderRadius, isToggled }) => {
               <Image 
                 src="/SVG/viewPortfolio.svg" 
                 alt="View Portfolio" 
-                width={246} 
-                height={49} 
+                width={123} 
+                height={24.5} 
               />
                 </div>
           )}
@@ -186,20 +191,33 @@ const Projects = ({ borderRadius, isToggled }) => {
               key={project.id}
               ref={(el) => (thumbnailRefs.current[index] = el)}
               data-project-index={index}
-                className="h-[480px] bg-variable-collection-white flex items-center justify-center transition-all duration-300"
-                style={{ borderRadius: `${borderRadius}px` }}
+              className="h-[480px] bg-variable-collection-white transition-all duration-300 relative overflow-hidden group"
+              style={{ borderRadius: `${borderRadius}px` }}
+            >
+              <Link
+                href={`/project/${project.id}`}
+                className="w-full h-full flex items-center justify-center"
               >
-              {/* Placeholder for thumbnail - will be replaced with actual images later */}
-              <div className="text-variable-collection-black font-nohemi text-2xl">
-                {project.title}
-              </div>
+                {project.thumbnail ? (
+                  <Image
+                    src={project.thumbnail}
+                    alt={project.title}
+                    fill
+                    className="object-cover group-hover:scale-[1.02] transition-transform duration-300"
+                  />
+                ) : (
+                  <div className={`text-2xl ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}>
+                    {project.title}
+                  </div>
+                )}
+              </Link>
             </div>
           ))}
 
           {/* View All Portfolio Link */}
           <div className="h-[80px] flex items-center justify-end">
             <a href="/projects" className="flex items-center gap-4 group cursor-pointer">
-              <span className="font-mango-grotesque font-semibold italic text-variable-collection-black text-6xl tracking-[0] leading-normal group-hover:opacity-80 transition-opacity">
+              <span className={`font-mango-grotesque font-semibold italic text-6xl tracking-[0] leading-normal group-hover:opacity-80 transition-all duration-300 ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}>
                 View All Portfolio
               </span>
               <div className="w-[60px] group-hover:translate-x-2 transition-transform duration-300">

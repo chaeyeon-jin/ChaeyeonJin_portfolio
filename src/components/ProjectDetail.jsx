@@ -1,173 +1,133 @@
 'use client'
 
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-const ProjectDetail = ({ id, router: routerProp }) => {
-  const router = routerProp || useRouter();
-
-  // 프로젝트 데이터
-  const projectsData = {
-    1: {
-      id: 1,
-      name: 'SiMO: SiMple mockup generator for designers',
-      period: '2025.9~12',
-      roles: ['UX', 'UI', 'Frontend Dev'],
-      website: 'https://mock-ai-azure.vercel.app/',
-      slides: Array.from({ length: 12 }, (_, i) => `/simo/simoslide${i + 1}.png`)
-    },
-    2: {
-      id: 2,
-      name: 'BiasPoca: reliable and safe photocard marketplace for U.S. K-pop fans',
-      period: '2025/10-12',
-      roles: ['UX', 'UI', 'Frontend Dev'],
-      website: 'https://biaspoca.vercel.app/home',
-      slides: [] // BiasPoca 슬라이드가 있다면 추가
-    },
-    3: {
-      id: 3,
-      name: 'Five Flows: wellness brand for understanding inner energy',
-      period: '2025.9~12',
-      roles: ['UX', 'UI', 'Frontend Dev'],
-      website: 'https://fiveflows.vercel.app/',
-      slides: Array.from({ length: 11 }, (_, i) => `/fiveflows/fiveflowsslide${i + 1}.png`)
-    }
-  };
-
-  const project = projectsData[parseInt(id?.toString() || '0')];
-
-  const handleBack = () => {
-    router.push('/');
-    // 스크롤을 projects 섹션으로 이동
-    setTimeout(() => {
-      const projectsSection = document.getElementById('interests');
-      if (projectsSection) {
-        const headerHeight = document.querySelector('header')?.offsetHeight || 0;
-        window.scrollTo({
-          top: projectsSection.offsetTop - headerHeight,
-          behavior: 'smooth'
-        });
-      }
-    }, 100);
-  };
+const ProjectDetail = ({ id }) => {
+  const router = useRouter();
+  const [showBackButton, setShowBackButton] = useState(false);
 
   useEffect(() => {
-    // Scroll progress bar
-    const progressBar = document.createElement('div');
-    progressBar.className = 'fixed top-0 left-0 h-0.5 bg-lime z-40 transition-all duration-300';
-    progressBar.style.width = '0%';
-    document.body.appendChild(progressBar);
-    
-    const updateProgress = () => {
-      const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const scrolled = (window.scrollY / windowHeight) * 100;
-      progressBar.style.width = scrolled + '%';
+    const handleScroll = () => {
+      // 설명 섹션이 지나간 후 (약 300px 스크롤) 화살표 표시
+      const scrollThreshold = 300;
+      setShowBackButton(window.scrollY > scrollThreshold);
     };
-    
-    window.addEventListener('scroll', updateProgress);
-    
-    return () => {
-      window.removeEventListener('scroll', updateProgress);
-      if (progressBar.parentNode) {
-        progressBar.parentNode.removeChild(progressBar);
-      }
-    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  if (!project) {
+  // simo 프로젝트일 때만 simoportfolio.png를 가로 전체 너비로 표시
+  if (id === 'simo') {
+    const simoData = {
+      title: 'SiMO',
+      description: 'SiMple mockup generator for designers',
+      date: '2025.10~2025.12',
+      tags: ['UX research', 'UI Design', 'Development'],
+      url: 'https://mock-ai-azure.vercel.app/'
+    };
+
+    const handleBack = () => {
+      router.push('/');
+    };
+
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="font-urbanist text-2xl mb-4">Project not found</h1>
+      <div className="w-full">
+        {/* 고정된 이전 버튼 */}
+        {showBackButton && (
           <button
             onClick={handleBack}
-            className="px-6 py-3 bg-primary rounded-full text-black font-urbanist"
-            style={{ backgroundColor: '#EAFF71' }}
+            className="fixed top-[40px] left-[40px] z-50 flex items-center justify-center hover:opacity-80 transition-all duration-300"
           >
-            Back to Projects
+            <Image
+              src="/SVG/arrow.svg"
+              alt="Back"
+              width={99}
+              height={61}
+              className="rotate-180"
+            />
           </button>
+        )}
+        {/* 프로젝트 설명 - 그리드 시스템 */}
+        <div className="w-full px-[80px] py-[46px] bg-variable-collection-background">
+          <div className="grid grid-cols-6 gap-x-5">
+            {/* 왼쪽 3칸 - 제목, 설명, 웹사이트 (세로 배치) */}
+            <div className="col-span-3 flex flex-col gap-[22px]">
+              {/* 제목 */}
+              <h3 className="font-nohemi font-normal text-3xl tracking-[0] leading-[36px] text-variable-collection-black">
+                {simoData.title}
+              </h3>
+
+              {/* 설명 */}
+              <p className="font-nohemi font-normal text-xl tracking-[0] leading-[24px] text-variable-collection-black">
+                {simoData.description}
+              </p>
+
+              {/* Visit site 버튼 */}
+              <div className="inline-flex items-start justify-start">
+                <a 
+                  href={simoData.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex w-36 h-[50px] items-center justify-center gap-2 pt-2 pb-1.5 px-3 bg-variable-collection-white hover:opacity-80 transition-opacity rounded-[60px]"
+                >
+                  <Image
+                    src="/SVG/Visit.svg"
+                    alt="Visit"
+                    width={20}
+                    height={20}
+                    className="relative"
+                  />
+                  <span className="relative w-fit font-nohemi font-medium text-base tracking-[0] leading-normal whitespace-nowrap text-variable-collection-black">
+                    Visit site
+                  </span>
+                </a>
+              </div>
+            </div>
+
+            {/* 오른쪽 3칸 - 기간, 태그 (세로 배치) */}
+            <div className="col-span-3 flex flex-col gap-[22px]">
+              {/* 날짜 */}
+              <time className="font-nohemi font-normal text-2xl tracking-[0] leading-[24.3px] text-variable-collection-black">
+                {simoData.date}
+              </time>
+
+              {/* 태그들 */}
+              <div className="inline-flex items-start gap-2 flex-wrap">
+                {simoData.tags.map((tag, index) => (
+                  <div key={index} className="inline-flex items-center gap-1.5">
+                    <span className="flex w-fit items-center justify-center gap-1.5 pt-2 pb-1.5 px-3 bg-variable-collection-yellow rounded-[20px]">
+                      <span className="relative w-fit font-nohemi font-medium text-variable-collection-black text-sm tracking-[0] leading-normal whitespace-nowrap">
+                        {tag}
+                      </span>
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
+
+        {/* 포트폴리오 이미지 */}
+        <Image
+          src="/simo/simoportfolio.png"
+          alt="SiMO Portfolio"
+          width={1920}
+          height={1080}
+          className="w-full h-auto"
+          priority
+        />
       </div>
     );
   }
 
+  // 다른 프로젝트는 기존 로직 유지
   return (
-    <div className="min-h-screen bg-white">
-      {/* 헤더 - 뒤로가기 버튼 */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200">
-        <div className="max-w-[1400px] mx-auto px-8 md:px-12 py-4">
-          <button
-            onClick={handleBack}
-            className="flex items-center gap-2 text-black font-urbanist hover:opacity-70 transition-opacity"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            <span>Back to Projects</span>
-          </button>
-        </div>
-      </div>
-
-      {/* 프로젝트 정보 */}
-      <div className="pt-24 pb-12">
-        <div className="max-w-[1400px] mx-auto px-8 md:px-12">
-          {/* 프로젝트 제목 및 메타 정보 */}
-          <div className="mb-16">
-            <h1 className="font-instrument-serif text-4xl md:text-5xl lg:text-6xl mb-8 text-black leading-tight">
-              {project.name}
-            </h1>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-              <div>
-                <span className="font-urbanist text-sm text-black/60 uppercase tracking-wide block mb-2">Period</span>
-                <p className="font-urbanist text-xl text-black">{project.period}</p>
-              </div>
-              <div>
-                <span className="font-urbanist text-sm text-black/60 uppercase tracking-wide block mb-2">My Role</span>
-                <div className="flex flex-wrap gap-2">
-                  {project.roles.map((role, index) => (
-                    <span
-                      key={index}
-                      className="inline-block px-4 py-2 bg-primary/30 rounded-full text-black font-urbanist text-sm"
-                      style={{ backgroundColor: 'rgba(234, 255, 113, 0.3)' }}
-                    >
-                      {role}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <span className="font-urbanist text-sm text-black/60 uppercase tracking-wide block mb-2">Website</span>
-                <a
-                  href={project.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-black font-urbanist hover:opacity-70 transition-opacity"
-                >
-                  <span>Visit Live Site</span>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                  </svg>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          {/* 프로젝트 슬라이드 이미지들 */}
-          {project.slides && project.slides.length > 0 && (
-            <div className="space-y-0">
-              {project.slides.map((slide, index) => (
-                <div key={index} className="w-full">
-                  <img
-                    src={slide}
-                    alt={`${project.name} slide ${index + 1}`}
-                    className="w-full h-auto"
-                  />
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+    <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="text-center">
+        <h1 className="font-urbanist text-2xl mb-4">Project not found</h1>
       </div>
     </div>
   );
