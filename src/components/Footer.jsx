@@ -7,16 +7,16 @@ const Footer = ({ isToggled }) => {
     <footer className={`w-full relative px-[20px] md:px-[80px] py-[40px] transition-colors duration-300 ${isToggled ? 'bg-variable-collection-black' : 'bg-variable-collection-background'}`}>
       <div className={`grid grid-cols-1 md:grid-cols-6 gap-y-8 md:gap-y-3 gap-x-5 font-nohemi font-normal text-lg leading-normal transition-colors duration-300 ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}>
         
-        {/* Left Column */}
+        {/* Left Column - Web Design */}
         <div className="col-span-1">
           <div className="whitespace-nowrap">Web Design</div>
-          <div className="whitespace-nowrap mt-1 md:mt-3">Web Development</div>
+          <div className="whitespace-nowrap mt-1">Chaeyeon Jin</div>
         </div>
         
-        {/* Middle Column */}
+        {/* Middle Column - Web Development */}
         <div className="col-span-1">
-          <div className="whitespace-nowrap">Chaeyeon Jin</div>
-          <div className="whitespace-nowrap mt-1 md:mt-3">Chaeyeon Jin</div>
+          <div className="whitespace-nowrap">Web Development</div>
+          <div className="whitespace-nowrap mt-1">Chaeyeon Jin</div>
         </div>
         
         {/* Right Column - Email and Copyright */}

@@ -79,7 +79,7 @@ const Hero = ({ borderRadius, setBorderRadius, isToggled, setIsToggled }) => {
       </div>
 
       {/* Main Content Container - Using Grid System */}
-      <div className="relative md:absolute mt-[140px] md:mt-0 bottom-auto md:bottom-[80px] left-0 right-0 mx-[20px] md:mx-[80px]">
+      <div className="absolute bottom-[20px] md:bottom-[80px] left-0 right-0 mx-[20px] md:mx-[80px]">
         <div className="grid grid-cols-1 md:grid-cols-6 gap-3 md:gap-5">
           {/* Chaeyeon Jin - Grid 1~4 (4 columns), Height: 4 grid rows (320px) */}
           <div className="col-span-1 md:col-span-4 flex flex-col gap-3 md:gap-5 relative">
@@ -128,10 +128,10 @@ const Hero = ({ borderRadius, setBorderRadius, isToggled, setIsToggled }) => {
             </div>
             
             <div 
-              className="flex w-full h-[120px] md:h-[320px] items-center justify-center gap-2.5 px-2 md:px-8 lg:px-12 xl:px-[60px] py-4 md:py-12 xl:py-[60px] bg-variable-collection-white"
+              className="flex w-full h-[120px] md:h-[320px] items-center justify-center gap-2.5 px-2 md:px-8 lg:px-12 xl:px-[60px] py-4 md:py-12 xl:py-[60px] bg-variable-collection-white overflow-hidden"
               style={{ borderRadius: `${borderRadius}px` }}
             >
-              <div className="relative w-fit mt-[-0.50px] ml-[-20px] md:ml-[-40px] mr-[-20px] md:mr-[-40px] font-nohemi font-normal text-variable-collection-black text-3xl sm:text-5xl md:text-7xl lg:text-9xl xl:text-[140px] tracking-[0] leading-normal whitespace-nowrap">
+              <div className="relative w-full text-center font-nohemi font-normal text-variable-collection-black text-[13vw] md:text-[10vw] lg:text-[11vw] xl:text-[9vw] 2xl:text-[140px] tracking-[0] leading-normal whitespace-nowrap">
                 Chaeyeon Jin
               </div>
             </div>
@@ -144,7 +144,7 @@ const Hero = ({ borderRadius, setBorderRadius, isToggled, setIsToggled }) => {
                 style={{ borderRadius: `${borderRadius}px` }}
                 aria-label="Email chaeyeon.jin.work@gmail.com"
               >
-                <span className="relative w-fit font-mango-grotesque font-medium text-variable-collection-black text-xl md:text-xl lg:text-2xl xl:text-[40px] tracking-[0] leading-normal">
+                <span className="relative w-fit font-mango-grotesque font-medium text-variable-collection-black text-xl md:text-xl lg:text-2xl xl:text-[2.5vw] 2xl:text-[40px] tracking-[0] leading-normal">
                   Email
                 </span>
               </a>
@@ -155,7 +155,7 @@ const Hero = ({ borderRadius, setBorderRadius, isToggled, setIsToggled }) => {
                 style={{ borderRadius: `${borderRadius}px` }}
                 aria-label="Download résumé PDF"
               >
-                <span className="relative w-fit font-mango-grotesque font-medium text-variable-collection-black text-xl md:text-xl lg:text-2xl xl:text-[40px] tracking-[0] leading-normal">
+                <span className="relative w-fit font-mango-grotesque font-medium text-variable-collection-black text-xl md:text-xl lg:text-2xl xl:text-[2.5vw] 2xl:text-[40px] tracking-[0] leading-normal">
                   Résumé
                 </span>
               </a>
@@ -167,7 +167,7 @@ const Hero = ({ borderRadius, setBorderRadius, isToggled, setIsToggled }) => {
                 style={{ borderRadius: `${borderRadius}px` }}
                 aria-label="Open GitHub profile"
               >
-                <span className="relative w-fit font-mango-grotesque font-medium text-variable-collection-black text-xl md:text-xl lg:text-2xl xl:text-[40px] tracking-[0] leading-normal">
+                <span className="relative w-fit font-mango-grotesque font-medium text-variable-collection-black text-xl md:text-xl lg:text-2xl xl:text-[2.5vw] 2xl:text-[40px] tracking-[0] leading-normal">
                   Github
                 </span>
               </a>
@@ -179,7 +179,7 @@ const Hero = ({ borderRadius, setBorderRadius, isToggled, setIsToggled }) => {
                 style={{ borderRadius: `${borderRadius}px` }}
                 aria-label="Open LinkedIn profile"
               >
-                <span className="relative w-fit font-mango-grotesque font-medium text-variable-collection-black text-xl md:text-xl lg:text-2xl xl:text-[40px] tracking-[0] leading-normal">
+                <span className="relative w-fit font-mango-grotesque font-medium text-variable-collection-black text-xl md:text-xl lg:text-2xl xl:text-[2.5vw] 2xl:text-[40px] tracking-[0] leading-normal">
                   Linkedin
                 </span>
               </a>
@@ -187,23 +187,23 @@ const Hero = ({ borderRadius, setBorderRadius, isToggled, setIsToggled }) => {
           </div>
 
           {/* Grid 5~6 - CTA Button and Description Box */}
-          <div className="col-span-1 md:col-span-2 flex flex-col gap-3 md:gap-5 mt-5 md:mt-0">
+          <div className="col-span-1 md:col-span-2 flex flex-col gap-3 md:gap-5 mt-2 md:mt-0">
             {/* I'm looking for internship - CTA Button */}
             <div 
               className={`flex w-full h-[60px] md:h-[80px] items-center justify-center gap-2.5 pt-3 md:pt-5 pb-2 md:pb-4 px-4 md:px-6 xl:px-10 transition-colors duration-300 ${isToggled ? 'bg-variable-collection-background' : 'bg-variable-collection-black'}`}
               style={{ borderRadius: `${borderRadius}px` }}
             >
-              <p className={`relative w-fit font-mango-grotesque font-medium text-xl md:text-xl lg:text-2xl xl:text-[40px] tracking-[0] leading-normal text-center transition-colors duration-300 ${isToggled ? 'text-variable-collection-black' : 'text-variable-collection-background'}`}>
-                I&apos;m looking for internship - contact me!!
+              <p className={`relative w-full font-mango-grotesque font-medium text-xl md:text-xl lg:text-2xl xl:text-[2.5vw] max-xl:text-[24px] tracking-[0] leading-normal text-center transition-colors duration-300 ${isToggled ? 'text-variable-collection-black' : 'text-variable-collection-background'}`}>
+                I&apos;m looking for an internship - contact me!!
               </p>
             </div>
 
             {/* She is a Designer... - Grid 5~6 (2 columns), Height: 4 grid rows (320px) */}
             <div 
-              className="flex w-full h-[150px] md:h-[320px] items-center justify-center gap-2.5 px-4 md:px-6 lg:px-8 xl:px-[40px] py-4 md:py-8 xl:py-[46px] bg-variable-collection-yellow"
+              className="flex w-full h-[150px] md:h-[320px] items-center justify-center gap-2.5 px-4 md:px-6 lg:px-8 xl:px-[40px] py-4 md:py-8 xl:py-[46px] bg-variable-collection-yellow overflow-hidden"
               style={{ borderRadius: `${borderRadius}px` }}
             >
-              <p className="relative w-full mt-[-9.50px] mb-[-7.50px] ml-[-15.00px] mr-[-15.00px] font-nohemi font-normal text-variable-collection-black text-lg md:text-3xl lg:text-4xl xl:text-5xl tracking-[0] leading-[1.01]">
+              <p className="relative w-full font-nohemi font-normal text-variable-collection-black text-[6.5vw] md:text-[2.2vw] lg:text-[2.5vw] xl:text-[2.5vw] 2xl:text-5xl tracking-[0] leading-[1.01] text-center md:text-left break-words">
                 She is a Designer &amp; Developer in California, who bridges tech and
                 design.
               </p>

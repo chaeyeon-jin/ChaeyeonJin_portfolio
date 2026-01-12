@@ -100,7 +100,7 @@ const About = ({ borderRadius, isToggled }) => {
             style={{ 
               borderRadius: `${borderRadius}px`,
               width: 'calc(50% - 20px)',
-              height: '80px'
+              height: 'calc(17.24% - 20px)' // 100/580 ratio - 20px gap
             }}
           >
             <div className="w-[60px]">
@@ -167,7 +167,7 @@ const About = ({ borderRadius, isToggled }) => {
 
         {/* Text Box 3 - 3 cols */}
         <div 
-          className="col-span-1 md:col-span-3 h-auto md:h-[280px] flex items-center justify-center px-4 md:px-10 py-6 md:py-0 bg-variable-collection-yellow transition-all duration-300 group cursor-pointer"
+          className="col-span-1 md:col-span-3 h-auto md:h-[280px] flex items-center justify-center px-4 md:px-10 py-6 md:py-0 bg-variable-collection-yellow transition-all duration-300 group cursor-pointer order-3 md:order-none"
           style={{ borderRadius: `${borderRadius}px` }}
         >
           <p className="w-full font-nohemi font-normal text-variable-collection-background text-base md:text-2xl lg:text-[32px] tracking-[0] leading-relaxed md:leading-[40.4px]">

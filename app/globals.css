@@ -20,7 +20,7 @@
 
 @font-face {
   font-family: 'Mango Grotesque';
-  src: url('/fonts/MangoGrotesque-Medium.woff') format('woff');
+  src: url('/fonts/MangoGrotesque-Medium.240621-1323.woff') format('woff');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -28,7 +28,7 @@
 
 @font-face {
   font-family: 'Mango Grotesque';
-  src: url('/fonts/MangoGrotesque-SemiBoldItalic.woff') format('woff');
+  src: url('/fonts/MangoGrotesque-SemiBoldItalic.240621-1323.woff') format('woff');
   font-weight: 600;
   font-style: italic;
   font-display: swap;
@@ -259,3 +259,18 @@ input[type="range"].border-radius-slider::-moz-range-thumb {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Mobile Responsive Slider Thumb */
+@media (max-width: 768px) {
+  /* WebKit Thumb */
+  input[type="range"].border-radius-slider::-webkit-slider-thumb {
+    height: 32px;
+    width: 32px;
+    margin-top: -12px; /* (8px - 32px) / 2 = -12px */
+  }
+
+  /* Firefox Thumb */
+  input[type="range"].border-radius-slider::-moz-range-thumb {
+    height: 32px;
+    width: 32px;
+  }
+}
