@@ -131,7 +131,7 @@ const Hero = ({ borderRadius, setBorderRadius, isToggled, setIsToggled }) => {
               className="flex w-full h-[120px] md:h-[320px] items-center justify-center gap-2.5 px-2 md:px-8 lg:px-12 xl:px-[60px] py-4 md:py-12 xl:py-[60px] bg-variable-collection-white overflow-hidden"
               style={{ borderRadius: `${borderRadius}px` }}
             >
-              <div className="relative w-full text-center font-nohemi font-normal text-variable-collection-black text-[13vw] md:text-[10vw] lg:text-[11vw] xl:text-[9vw] 2xl:text-[140px] tracking-[0] leading-normal whitespace-nowrap">
+              <div className="relative w-full text-center font-nohemi font-normal text-variable-collection-black text-[10vw] md:text-[8vw] lg:text-[7vw] xl:text-[6vw] 2xl:text-[140px] tracking-[0] leading-normal whitespace-nowrap">
                 Chaeyeon Jin
               </div>
             </div>
