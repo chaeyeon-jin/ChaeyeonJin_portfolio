@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import Image from 'next/image'
+import FadeInUp from './FadeInUp'
 
 const Hero = ({ borderRadius, setBorderRadius, isToggled, setIsToggled }) => {
   const [sliderValue, setSliderValue] = useState(0)
@@ -127,87 +128,95 @@ const Hero = ({ borderRadius, setBorderRadius, isToggled, setIsToggled }) => {
               />
             </div>
             
-            <div 
-              className="flex w-full h-[120px] md:h-[320px] items-center justify-center gap-2.5 px-2 md:px-8 lg:px-12 xl:px-[60px] py-4 md:py-12 xl:py-[60px] bg-variable-collection-white overflow-hidden"
-              style={{ borderRadius: `${borderRadius}px` }}
-            >
-              <div className="relative w-full text-center font-nohemi font-normal text-variable-collection-black text-[10vw] md:text-[8vw] lg:text-[7vw] xl:text-[6vw] 2xl:text-[140px] tracking-[0] leading-normal whitespace-nowrap">
-                Chaeyeon Jin
+            <FadeInUp className="w-full">
+              <div 
+                className="flex w-full h-[120px] md:h-[320px] items-center justify-center gap-2.5 px-2 md:px-8 lg:px-12 xl:px-[60px] py-4 md:py-12 xl:py-[60px] bg-variable-collection-white overflow-hidden"
+                style={{ borderRadius: `${borderRadius}px` }}
+              >
+                <div className="relative w-full text-center font-nohemi font-normal text-variable-collection-black text-[10vw] md:text-[8vw] lg:text-[7vw] xl:text-[6vw] 2xl:text-[140px] tracking-[0] leading-normal whitespace-nowrap">
+                  Chaeyeon Jin
+                </div>
               </div>
-            </div>
+            </FadeInUp>
 
             {/* Action Buttons - 4 buttons, each using 1 grid column */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-5">
-              <a
-                href="mailto:chaeyeon.jin.work@gmail.com?subject=Portfolio%20message"
-                className="flex w-full h-[60px] md:h-[80px] items-center justify-center gap-2.5 bg-variable-collection-grey300 cursor-pointer transition-opacity hover:opacity-80"
-                style={{ borderRadius: `${borderRadius}px` }}
-                aria-label="Email chaeyeon.jin.work@gmail.com"
-              >
-                <span className="relative w-fit font-mango-grotesque font-medium text-variable-collection-black text-xl md:text-xl lg:text-2xl xl:text-[2.5vw] 2xl:text-[40px] tracking-[0] leading-normal">
-                  Email
-                </span>
-              </a>
-              <a
-                href="/ChaeyeonJin_resume.pdf"
-                download
-                className="flex w-full h-[60px] md:h-[80px] items-center justify-center gap-2.5 bg-variable-collection-grey300 cursor-pointer transition-opacity hover:opacity-80"
-                style={{ borderRadius: `${borderRadius}px` }}
-                aria-label="Download résumé PDF"
-              >
-                <span className="relative w-fit font-mango-grotesque font-medium text-variable-collection-black text-xl md:text-xl lg:text-2xl xl:text-[2.5vw] 2xl:text-[40px] tracking-[0] leading-normal">
-                  Résumé
-                </span>
-              </a>
-              <a
-                href="https://github.com/chaeyeon-jin"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex w-full h-[60px] md:h-[80px] items-center justify-center gap-2.5 bg-variable-collection-grey300 cursor-pointer transition-opacity hover:opacity-80"
-                style={{ borderRadius: `${borderRadius}px` }}
-                aria-label="Open GitHub profile"
-              >
-                <span className="relative w-fit font-mango-grotesque font-medium text-variable-collection-black text-xl md:text-xl lg:text-2xl xl:text-[2.5vw] 2xl:text-[40px] tracking-[0] leading-normal">
-                  Github
-                </span>
-              </a>
-              <a
-                href="https://www.linkedin.com/in/chaeyeon-jin/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex w-full h-[60px] md:h-[80px] items-center justify-center gap-2.5 bg-variable-collection-grey300 cursor-pointer transition-opacity hover:opacity-80"
-                style={{ borderRadius: `${borderRadius}px` }}
-                aria-label="Open LinkedIn profile"
-              >
-                <span className="relative w-fit font-mango-grotesque font-medium text-variable-collection-black text-xl md:text-xl lg:text-2xl xl:text-[2.5vw] 2xl:text-[40px] tracking-[0] leading-normal">
-                  Linkedin
-                </span>
-              </a>
-            </div>
+            <FadeInUp delay={100} className="w-full">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-5">
+                <a
+                  href="mailto:chaeyeon.jin.work@gmail.com?subject=Portfolio%20message"
+                  className="flex w-full h-[60px] md:h-[80px] items-center justify-center gap-2.5 bg-variable-collection-grey300 cursor-pointer transition-opacity hover:opacity-80"
+                  style={{ borderRadius: `${borderRadius}px` }}
+                  aria-label="Email chaeyeon.jin.work@gmail.com"
+                >
+                  <span className="relative w-fit font-mango-grotesque font-medium text-variable-collection-black text-xl md:text-xl lg:text-2xl xl:text-[2.5vw] 2xl:text-[40px] tracking-[0] leading-normal">
+                    Email
+                  </span>
+                </a>
+                <a
+                  href="/ChaeyeonJin_resume.pdf"
+                  download
+                  className="flex w-full h-[60px] md:h-[80px] items-center justify-center gap-2.5 bg-variable-collection-grey300 cursor-pointer transition-opacity hover:opacity-80"
+                  style={{ borderRadius: `${borderRadius}px` }}
+                  aria-label="Download résumé PDF"
+                >
+                  <span className="relative w-fit font-mango-grotesque font-medium text-variable-collection-black text-xl md:text-xl lg:text-2xl xl:text-[2.5vw] 2xl:text-[40px] tracking-[0] leading-normal">
+                    Résumé
+                  </span>
+                </a>
+                <a
+                  href="https://github.com/chaeyeon-jin"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex w-full h-[60px] md:h-[80px] items-center justify-center gap-2.5 bg-variable-collection-grey300 cursor-pointer transition-opacity hover:opacity-80"
+                  style={{ borderRadius: `${borderRadius}px` }}
+                  aria-label="Open GitHub profile"
+                >
+                  <span className="relative w-fit font-mango-grotesque font-medium text-variable-collection-black text-xl md:text-xl lg:text-2xl xl:text-[2.5vw] 2xl:text-[40px] tracking-[0] leading-normal">
+                    Github
+                  </span>
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/chaeyeon-jin/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex w-full h-[60px] md:h-[80px] items-center justify-center gap-2.5 bg-variable-collection-grey300 cursor-pointer transition-opacity hover:opacity-80"
+                  style={{ borderRadius: `${borderRadius}px` }}
+                  aria-label="Open LinkedIn profile"
+                >
+                  <span className="relative w-fit font-mango-grotesque font-medium text-variable-collection-black text-xl md:text-xl lg:text-2xl xl:text-[2.5vw] 2xl:text-[40px] tracking-[0] leading-normal">
+                    Linkedin
+                  </span>
+                </a>
+              </div>
+            </FadeInUp>
           </div>
 
           {/* Grid 5~6 - CTA Button and Description Box */}
           <div className="col-span-1 md:col-span-2 flex flex-col gap-3 md:gap-5 mt-2 md:mt-0">
             {/* I'm looking for internship - CTA Button */}
-            <div 
-              className={`flex w-full h-[60px] md:h-[80px] items-center justify-center gap-2.5 pt-3 md:pt-5 pb-2 md:pb-4 px-4 md:px-6 xl:px-10 transition-colors duration-300 ${isToggled ? 'bg-variable-collection-background' : 'bg-variable-collection-black'}`}
-              style={{ borderRadius: `${borderRadius}px` }}
-            >
-              <p className={`relative w-full font-mango-grotesque font-medium text-xl md:text-xl lg:text-2xl xl:text-[2.5vw] max-xl:text-[24px] tracking-[0] leading-normal text-center transition-colors duration-300 ${isToggled ? 'text-variable-collection-black' : 'text-variable-collection-background'}`}>
-                I&apos;m looking for an internship - contact me!!
-              </p>
-            </div>
+            <FadeInUp delay={200} className="w-full">
+              <div 
+                className={`flex w-full h-[60px] md:h-[80px] items-center justify-center gap-2.5 pt-3 md:pt-5 pb-2 md:pb-4 px-4 md:px-6 xl:px-10 transition-colors duration-300 ${isToggled ? 'bg-variable-collection-background' : 'bg-variable-collection-black'}`}
+                style={{ borderRadius: `${borderRadius}px` }}
+              >
+                <p className={`relative w-full font-mango-grotesque font-medium text-xl md:text-xl lg:text-2xl xl:text-[2.3vw] max-xl:text-[24px] tracking-[0] leading-normal text-center transition-colors duration-300 ${isToggled ? 'text-variable-collection-black' : 'text-variable-collection-background'}`}>
+                  I&apos;m looking for an internship - contact me!!
+                </p>
+              </div>
+            </FadeInUp>
 
             {/* She is a Designer... - Grid 5~6 (2 columns), Height: 4 grid rows (320px) */}
-            <div 
-              className="flex w-full h-[150px] md:h-[320px] items-center justify-center gap-2.5 px-4 md:px-6 lg:px-8 xl:px-[40px] py-4 md:py-8 xl:py-[46px] bg-variable-collection-yellow overflow-hidden"
-              style={{ borderRadius: `${borderRadius}px` }}
-            >
-              <p className="relative w-full font-nohemi font-normal text-variable-collection-black text-[6.5vw] md:text-[2.2vw] lg:text-[2.5vw] xl:text-[2.5vw] 2xl:text-5xl tracking-[0] leading-[1.01] text-center md:text-left break-words">
-                She is a Designer &amp; Developer in California, who bridges tech and
-                design.
-              </p>
-            </div>
+            <FadeInUp delay={300} className="w-full">
+              <div 
+                className="flex w-full h-[150px] md:h-[320px] items-center justify-center gap-2.5 px-4 md:px-6 lg:px-8 xl:px-[40px] py-4 md:py-8 xl:py-[46px] bg-variable-collection-yellow overflow-hidden"
+                style={{ borderRadius: `${borderRadius}px` }}
+              >
+                <p className="relative w-full font-nohemi font-normal text-variable-collection-black text-[6.5vw] md:text-[2.2vw] lg:text-[2.5vw] xl:text-[2.5vw] 2xl:text-5xl tracking-[0] leading-[1.01] text-center md:text-left break-words">
+                  She is a Designer &amp; Developer in California, who bridges tech and
+                  design.
+                </p>
+              </div>
+            </FadeInUp>
           </div>
         </div>
       </div>

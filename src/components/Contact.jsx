@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import emailjs from '@emailjs/browser'
+import FadeInUp from './FadeInUp'
 
 const Contact = ({ borderRadius, isToggled }) => {
   const [formData, setFormData] = useState({
@@ -72,18 +73,21 @@ const Contact = ({ borderRadius, isToggled }) => {
       <div className="grid grid-cols-2 md:grid-cols-6 gap-3 md:gap-5">
         {/* Section Title */}
         <div className="col-span-2 md:col-span-6 mb-6 md:mb-10">
-          <h2 className={`font-mango-grotesque font-semibold italic text-4xl md:text-6xl lg:text-8xl tracking-[0] leading-normal whitespace-nowrap transition-colors duration-300 ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}>
-            Get in touch!
-          </h2>
+          <FadeInUp className="w-full">
+            <h2 className={`font-mango-grotesque font-semibold italic text-4xl md:text-6xl lg:text-8xl tracking-[0] leading-normal whitespace-nowrap transition-colors duration-300 ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}>
+              Get in touch!
+            </h2>
+          </FadeInUp>
         </div>
 
         {/* Row 1: Email, LinkedIn, Form(Start) */}
         
         {/* Email - Col 1 */}
-        <div 
-          className="col-span-1 md:col-span-1 h-[150px] md:h-[280px] bg-variable-collection-black flex items-center justify-center p-4 md:p-10 transition-all duration-300 order-1"
-          style={{ borderRadius: `${borderRadius}px` }}
-        >
+        <FadeInUp delay={100} className="col-span-1 md:col-span-1 order-1">
+          <div 
+            className="h-[150px] md:h-[280px] bg-variable-collection-black flex items-center justify-center p-4 md:p-10 transition-all duration-300"
+            style={{ borderRadius: `${borderRadius}px` }}
+          >
           <a
             href="mailto:chaeyeon.jin.work@gmail.com?subject=Portfolio%20message"
             className="relative w-full h-full flex items-center justify-center hover:opacity-80 transition-opacity"
@@ -97,13 +101,15 @@ const Contact = ({ borderRadius, isToggled }) => {
                className="w-16 h-16 md:w-auto md:h-auto"
              />
           </a>
-        </div>
+          </div>
+        </FadeInUp>
 
         {/* LinkedIn - Col 2 */}
-        <div 
-          className="col-span-1 md:col-span-1 h-[150px] md:h-[280px] bg-variable-collection-black flex items-center justify-center p-4 md:p-10 transition-all duration-300 order-2"
-          style={{ borderRadius: `${borderRadius}px` }}
-        >
+        <FadeInUp delay={150} className="col-span-1 md:col-span-1 order-2">
+          <div 
+            className="h-[150px] md:h-[280px] bg-variable-collection-black flex items-center justify-center p-4 md:p-10 transition-all duration-300"
+            style={{ borderRadius: `${borderRadius}px` }}
+          >
           <a
             href="https://www.linkedin.com/in/chaeyeon-jin/"
             target="_blank"
@@ -119,13 +125,15 @@ const Contact = ({ borderRadius, isToggled }) => {
                className="w-16 h-16 md:w-auto md:h-auto"
              />
               </a>
-            </div>
+          </div>
+        </FadeInUp>
 
         {/* Contact Form - Col 3-6 (4 cols), Row Span 2 */}
-        <div 
-          className="col-span-2 md:col-span-4 row-span-2 h-auto md:h-[580px] relative bg-variable-collection-background overflow-hidden transition-all duration-300 order-5 md:order-none"
-          style={{ borderRadius: `${borderRadius}px` }}
-        >
+        <FadeInUp delay={200} className="col-span-2 md:col-span-4 row-span-2 order-5 md:order-none">
+          <div 
+            className="h-auto md:h-[580px] relative bg-variable-collection-background overflow-hidden transition-all duration-300"
+            style={{ borderRadius: `${borderRadius}px` }}
+          >
           {/* Background Image if needed, or keeping it clean */}
           {/* <Image
              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90%] h-auto opacity-10 pointer-events-none"
@@ -239,15 +247,17 @@ const Contact = ({ borderRadius, isToggled }) => {
              </div>
             </form>
           </div>
+        </FadeInUp>
 
 
         {/* Row 2: Github, Icon */}
         
         {/* Github - Col 1 */}
-        <div 
-          className="col-span-1 md:col-span-1 h-[150px] md:h-[280px] bg-variable-collection-black flex items-center justify-center p-4 md:p-10 transition-all duration-300 order-3 md:order-none"
-          style={{ borderRadius: `${borderRadius}px` }}
-        >
+        <FadeInUp delay={250} className="col-span-1 md:col-span-1 order-3 md:order-none">
+          <div 
+            className="h-[150px] md:h-[280px] bg-variable-collection-black flex items-center justify-center p-4 md:p-10 transition-all duration-300"
+            style={{ borderRadius: `${borderRadius}px` }}
+          >
           <a
             href="https://github.com/chaeyeon-jin"
             target="_blank"
@@ -263,13 +273,15 @@ const Contact = ({ borderRadius, isToggled }) => {
                className="w-16 h-16 md:w-auto md:h-auto"
              />
           </a>
-        </div>
+          </div>
+        </FadeInUp>
 
         {/* StarYellow Icon - Col 2 */}
-        <div 
-          className="col-span-1 md:col-span-1 h-[150px] md:h-[280px] bg-variable-collection-black flex items-center justify-center transition-all duration-300 order-4 md:order-none"
-          style={{ borderRadius: `${borderRadius}px` }}
-        >
+        <FadeInUp delay={300} className="col-span-1 md:col-span-1 order-4 md:order-none">
+          <div 
+            className="h-[150px] md:h-[280px] bg-variable-collection-black flex items-center justify-center transition-all duration-300"
+            style={{ borderRadius: `${borderRadius}px` }}
+          >
           <a
             href="/ChaeyeonJin_resume.pdf"
             download
@@ -284,7 +296,8 @@ const Contact = ({ borderRadius, isToggled }) => {
               className="w-24 h-24 md:w-auto md:h-auto"
             />
           </a>
-        </div>
+          </div>
+        </FadeInUp>
 
       </div>
     </section>

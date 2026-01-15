@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import FadeInUp from './FadeInUp'
 
 const Projects = ({ borderRadius, isToggled }) => {
   const [activeProjectIndex, setActiveProjectIndex] = useState(0)
@@ -184,19 +185,22 @@ const Projects = ({ borderRadius, isToggled }) => {
         <div className="grid grid-cols-1 md:grid-cols-6 gap-3 md:gap-5 relative">
           {/* Section Title */}
           <div className="col-span-1 md:col-span-6 mb-10 md:mb-20">
-            <h2 className={`font-mango-grotesque font-semibold italic text-4xl md:text-6xl lg:text-8xl tracking-[0] leading-normal whitespace-nowrap transition-colors duration-300 ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}>
-              What services I make
-            </h2>
+            <FadeInUp className="w-full">
+              <h2 className={`font-mango-grotesque font-semibold italic text-4xl md:text-6xl lg:text-8xl tracking-[0] leading-normal whitespace-nowrap transition-colors duration-300 ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}>
+                What services I make
+              </h2>
+            </FadeInUp>
           </div>
 
           {/* Left Column - Sticky Description (2 columns) */}
           <div className="col-span-1 md:col-span-2 relative mb-5 md:mb-0 hidden md:block">
             <div className="sticky top-[100px] md:top-[120px] pr-0 md:pr-5">
-              <div 
-                key={activeProjectIndex}
-                className={`flex flex-col items-start justify-start gap-4 md:gap-[22px] px-4 md:px-[46px] py-4 md:py-[46px] transition-all duration-300 ease-in-out ${isToggled ? 'bg-variable-collection-black' : 'bg-variable-collection-background'}`}
-                style={{ opacity: 1, borderRadius: `${borderRadius}px` }}
-              >
+              <FadeInUp delay={200} className="w-full">
+                <div 
+                  key={activeProjectIndex}
+                  className={`flex flex-col items-start justify-start gap-4 md:gap-[22px] px-4 md:px-[46px] py-4 md:py-[46px] transition-all duration-300 ease-in-out ${isToggled ? 'bg-variable-collection-black' : 'bg-variable-collection-background'}`}
+                  style={{ opacity: 1, borderRadius: `${borderRadius}px` }}
+                >
                 <h3 className={`relative w-full font-nohemi font-normal text-2xl md:text-4xl lg:text-5xl tracking-[0] leading-tight md:leading-[48.5px] ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}>
                   {activeProject.title}
                 </h3>
@@ -228,6 +232,12 @@ const Projects = ({ borderRadius, isToggled }) => {
                     rel={activeProject.url ? 'noopener noreferrer' : undefined}
                     className={`flex w-28 md:w-36 h-[40px] md:h-[50px] items-center justify-center gap-2 pt-2 pb-1.5 px-3 relative hover:opacity-80 transition-opacity ${isToggled ? 'bg-variable-collection-white' : 'bg-variable-collection-white'}`}
                     style={{ borderRadius: `${borderRadius}px` }}
+                    onClick={() => {
+                      if (!activeProject.url) {
+                        // 프로젝트 상세 페이지로 이동하는 경우에만 스크롤 위치 저장
+                        sessionStorage.setItem('projectScrollPosition', window.scrollY.toString());
+                      }
+                    }}
                   >
                     <Image
                       src="/SVG/Visit.svg"
@@ -242,7 +252,8 @@ const Projects = ({ borderRadius, isToggled }) => {
                     </span>
                   </a>
                 </div>
-              </div>
+                </div>
+              </FadeInUp>
             </div>
           </div>
                   
@@ -271,8 +282,8 @@ const Projects = ({ borderRadius, isToggled }) => {
             )}
 
               {projectsData.map((project, index) => (
+              <FadeInUp key={project.id} delay={index * 100} className="w-full">
                 <div
-                  key={project.id}
                   ref={(el) => (thumbnailRefs.current[index] = el)}
                   data-project-index={index}
                   className="h-[200px] md:h-[480px] bg-variable-collection-white transition-all duration-300 relative overflow-hidden group"
@@ -281,6 +292,10 @@ const Projects = ({ borderRadius, isToggled }) => {
                 <Link
                   href={`/project/${project.id}`}
                   className="w-full h-full flex items-center justify-center"
+                  onClick={() => {
+                    // 현재 스크롤 위치 저장
+                    sessionStorage.setItem('projectScrollPosition', window.scrollY.toString());
+                  }}
                 >
                   {project.thumbnail ? (
                     <Image
@@ -322,6 +337,12 @@ const Projects = ({ borderRadius, isToggled }) => {
                     rel={project.url ? 'noopener noreferrer' : undefined}
                     className={`flex w-fit h-[40px] items-center justify-center gap-2 px-3 mt-2 hover:opacity-80 transition-opacity bg-variable-collection-white`}
                     style={{ borderRadius: `${borderRadius}px` }}
+                    onClick={() => {
+                      if (!project.url) {
+                        // 프로젝트 상세 페이지로 이동하는 경우에만 스크롤 위치 저장
+                        sessionStorage.setItem('projectScrollPosition', window.scrollY.toString());
+                      }
+                    }}
                   >
                     <Image
                       src="/SVG/Visit.svg"
@@ -337,6 +358,7 @@ const Projects = ({ borderRadius, isToggled }) => {
                   </a>
                 </div>
               </div>
+              </FadeInUp>
             ))}
           </div>
         </div>
@@ -347,9 +369,11 @@ const Projects = ({ borderRadius, isToggled }) => {
         <div className="grid grid-cols-1 md:grid-cols-6 gap-3 md:gap-5 relative">
           {/* Section Title */}
           <div className="col-span-1 md:col-span-6 mb-10 md:mb-20">
-            <h2 className={`font-mango-grotesque font-semibold italic text-4xl md:text-6xl lg:text-8xl tracking-[0] leading-normal whitespace-nowrap transition-colors duration-300 ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}>
-              What graphics I make
-            </h2>
+            <FadeInUp className="w-full">
+              <h2 className={`font-mango-grotesque font-semibold italic text-4xl md:text-6xl lg:text-8xl tracking-[0] leading-normal whitespace-nowrap transition-colors duration-300 ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}>
+                What graphics I make
+              </h2>
+            </FadeInUp>
           </div>
 
           {/* Graphics Grid Layout */}
@@ -403,15 +427,19 @@ const Projects = ({ borderRadius, isToggled }) => {
               
               return sortedProjects
             })().map((project, index) => (
-              <div
-                key={project.id}
-                className="flex flex-col gap-4"
-              >
+              <FadeInUp key={project.id} delay={index * 80} className="w-full">
+                <div
+                  className="flex flex-col gap-4"
+                >
                 {/* Thumbnail */}
                 <Link
                   href={`/project/${project.id}`}
                   className="relative w-full aspect-video bg-variable-collection-white rounded-lg overflow-hidden group transition-all duration-300 hover:opacity-90 block"
                   style={{ borderRadius: `${borderRadius}px` }}
+                  onClick={() => {
+                    // 현재 스크롤 위치 저장
+                    sessionStorage.setItem('projectScrollPosition', window.scrollY.toString());
+                  }}
                 >
                   {project.youtubeId ? (
                     <>
@@ -448,6 +476,7 @@ const Projects = ({ borderRadius, isToggled }) => {
                   {project.title}
                 </h3>
               </div>
+              </FadeInUp>
             ))}
           </div>
         </div>

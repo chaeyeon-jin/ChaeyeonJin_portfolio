@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
+import FadeInUp from './FadeInUp'
 
 const About = ({ borderRadius, isToggled }) => {
   const [scrollY, setScrollY] = useState(0)
@@ -21,12 +22,16 @@ const About = ({ borderRadius, isToggled }) => {
       <div className="grid grid-cols-1 md:grid-cols-6 gap-3 md:gap-5">
         {/* Section Title */}
         <div className="col-span-1 md:col-span-6 flex flex-col md:flex-row items-start gap-4 md:gap-[68px] mb-6 md:mb-10">
-          <div className={`relative w-fit font-mango-grotesque font-semibold italic text-4xl md:text-6xl lg:text-8xl tracking-[0] leading-normal whitespace-nowrap transition-colors duration-300 ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}>
-            More about
-          </div>
-          <div className={`relative w-fit text-4xl md:text-6xl lg:text-8xl leading-normal font-nohemi font-normal tracking-[0] whitespace-nowrap transition-colors duration-300 ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}>
-            Chaeyeon Jin
-          </div>
+          <FadeInUp className="w-fit">
+            <div className={`relative w-fit font-mango-grotesque font-semibold italic text-4xl md:text-6xl lg:text-8xl tracking-[0] leading-normal whitespace-nowrap transition-colors duration-300 ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}>
+              More about
+            </div>
+          </FadeInUp>
+          <FadeInUp delay={100} className="w-fit">
+            <div className={`relative w-fit text-4xl md:text-6xl lg:text-8xl leading-normal font-nohemi font-normal tracking-[0] whitespace-nowrap transition-colors duration-300 ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}>
+              Chaeyeon Jin
+            </div>
+          </FadeInUp>
         </div>
 
         {/* Row 1 */}
@@ -43,10 +48,11 @@ const About = ({ borderRadius, isToggled }) => {
         </div>
 
         {/* Text Box 1 - 3 cols */}
-        <div 
-          className="col-span-1 md:col-span-3 h-auto md:h-[280px] flex items-center justify-center px-4 md:px-10 py-6 md:py-0 bg-variable-collection-yellow transition-all duration-300 group cursor-pointer order-1 md:order-none"
-          style={{ borderRadius: `${borderRadius}px` }}
-        >
+        <FadeInUp delay={200} className="col-span-1 md:col-span-3 order-1 md:order-none">
+          <div 
+            className="h-auto md:h-[280px] flex items-center justify-center px-4 md:px-10 py-6 md:py-0 bg-variable-collection-yellow transition-all duration-300 group cursor-pointer"
+            style={{ borderRadius: `${borderRadius}px` }}
+          >
           <p className="w-full font-nohemi font-normal text-variable-collection-grey300 text-base md:text-2xl lg:text-[32px] tracking-[0] leading-relaxed md:leading-[40.4px]">
             <span className="text-[#bcbcbc] group-hover:text-variable-collection-black transition-colors duration-300">I&apos;m a </span>
             <span className="text-[#222222] group-hover:text-variable-collection-black transition-colors duration-300">Product designer</span>
@@ -58,9 +64,11 @@ const About = ({ borderRadius, isToggled }) => {
             </span>
                 </p>
               </div>
+          </FadeInUp>
 
         {/* Photos Image - 2 cols */}
-        <div className="col-span-1 md:col-span-2 row-span-2 relative h-[400px] md:h-[580px] mb-3 md:mb-0 order-4 md:order-none"> 
+        <FadeInUp delay={300} className="col-span-1 md:col-span-2 row-span-2 order-4 md:order-none">
+          <div className="relative h-[400px] md:h-[580px] mb-3 md:mb-0"> 
           <svg width="0" height="0" style={{ position: 'absolute' }}>
             <defs>
               <clipPath id="l-shape-clip" clipPathUnits="objectBoundingBox">
@@ -113,15 +121,17 @@ const About = ({ borderRadius, isToggled }) => {
               />
             </div>
           </a>
-        </div>
+          </div>
+        </FadeInUp>
 
 
         {/* Row 2 */}
         {/* Text Box 2 - 3 cols */}
-        <div 
-          className="col-span-1 md:col-span-3 h-auto md:h-[280px] flex items-center justify-center px-4 md:px-10 py-6 md:py-0 bg-variable-collection-yellow transition-all duration-300 group cursor-pointer order-2 md:order-none"
-          style={{ borderRadius: `${borderRadius}px` }}
-        >
+        <FadeInUp delay={400} className="col-span-1 md:col-span-3 order-2 md:order-none">
+          <div 
+            className="h-auto md:h-[280px] flex items-center justify-center px-4 md:px-10 py-6 md:py-0 bg-variable-collection-yellow transition-all duration-300 group cursor-pointer"
+            style={{ borderRadius: `${borderRadius}px` }}
+          >
           <p className="w-full font-nohemi font-normal text-variable-collection-grey300 text-base md:text-2xl lg:text-[32px] tracking-[0] leading-relaxed md:leading-[40.4px]">
             <span className="text-[#bcbcbc] group-hover:text-variable-collection-black transition-colors duration-300">
               I enjoy turning ideas into functional, interactive experiences through{" "}
@@ -137,7 +147,8 @@ const About = ({ borderRadius, isToggled }) => {
             <span className="text-[#222222] group-hover:text-variable-collection-black transition-colors duration-300">React</span>
             <span className="text-[#bcbcbc] group-hover:text-variable-collection-black transition-colors duration-300">, with a focus on usability and iteration.</span>
           </p>
-        </div>
+          </div>
+        </FadeInUp>
 
         {/* Development Icon - 1 col (Counter-clockwise) */}
         <div className="hidden md:flex col-span-1 md:col-span-1 h-[200px] md:h-[280px] items-center justify-center">
@@ -166,10 +177,11 @@ const About = ({ borderRadius, isToggled }) => {
         </div>
 
         {/* Text Box 3 - 3 cols */}
-        <div 
-          className="col-span-1 md:col-span-3 h-auto md:h-[280px] flex items-center justify-center px-4 md:px-10 py-6 md:py-0 bg-variable-collection-yellow transition-all duration-300 group cursor-pointer order-3 md:order-none"
-          style={{ borderRadius: `${borderRadius}px` }}
-        >
+        <FadeInUp delay={500} className="col-span-1 md:col-span-3 order-3 md:order-none">
+          <div 
+            className="h-auto md:h-[280px] flex items-center justify-center px-4 md:px-10 py-6 md:py-0 bg-variable-collection-yellow transition-all duration-300 group cursor-pointer"
+            style={{ borderRadius: `${borderRadius}px` }}
+          >
           <p className="w-full font-nohemi font-normal text-variable-collection-background text-base md:text-2xl lg:text-[32px] tracking-[0] leading-relaxed md:leading-[40.4px]">
             <span className="text-[#bcbcbc] group-hover:text-variable-collection-black transition-colors duration-300">Currently a</span>
             <span className="text-[#e1e1e1] group-hover:text-variable-collection-black transition-colors duration-300">&nbsp;</span>
@@ -187,17 +199,20 @@ const About = ({ borderRadius, isToggled }) => {
             <span className="text-[#bcbcbc] group-hover:text-variable-collection-black transition-colors duration-300">, collaborating with local clients on branding and visual projects.</span>
           </p>
           </div>
+        </FadeInUp>
 
         {/* Text Box 4 - 2 cols */}
-        <div 
-          className="col-span-1 md:col-span-2 h-auto md:h-[280px] flex items-center justify-center px-4 md:px-10 py-6 md:py-0 bg-variable-collection-background border border-gray-200 transition-all duration-300 order-5 md:order-none"
-          style={{ borderRadius: `${borderRadius}px` }}
-        >
+        <FadeInUp delay={600} className="col-span-1 md:col-span-2 order-5 md:order-none">
+          <div 
+            className="h-auto md:h-[280px] flex items-center justify-center px-4 md:px-10 py-6 md:py-0 bg-variable-collection-background border border-gray-200 transition-all duration-300"
+            style={{ borderRadius: `${borderRadius}px` }}
+          >
           <p className="w-full font-nohemi font-normal text-variable-collection-yellow hover:text-variable-collection-black text-base md:text-2xl lg:text-[32px] tracking-[0] leading-relaxed md:leading-[32.4px]">
             Outside of design, I&apos;m a film photographer and an advanced scuba diver, both of which influence how I observe people,
             environments, and details.
           </p>
-        </div>
+          </div>
+        </FadeInUp>
 
       </div>
     </section>

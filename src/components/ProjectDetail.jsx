@@ -8,6 +8,11 @@ const ProjectDetail = ({ id }) => {
   const router = useRouter();
   const [showBackButton, setShowBackButton] = useState(false);
 
+  // 페이지 진입 시 최상단으로 스크롤
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
+
   useEffect(() => {
     const handleScroll = () => {
       // 설명 섹션이 지나간 후 (약 300px 스크롤) 화살표 표시
@@ -19,6 +24,20 @@ const ProjectDetail = ({ id }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // 공통 Back 핸들러: 저장된 스크롤 위치로 복원
+  const handleBack = () => {
+    const savedScrollPosition = sessionStorage.getItem('projectScrollPosition');
+    router.push('/');
+    
+    // 라우팅 후 스크롤 위치 복원
+    setTimeout(() => {
+      if (savedScrollPosition) {
+        window.scrollTo(0, parseInt(savedScrollPosition, 10));
+        sessionStorage.removeItem('projectScrollPosition');
+      }
+    }, 100);
+  };
+
   // biaspoca 프로젝트 처리
   if (id === 'biaspoca') {
     const biastradeData = {
@@ -27,10 +46,6 @@ const ProjectDetail = ({ id }) => {
       date: '08/2025 – 10/2025',
       tags: ['Product Management', 'UX research', 'UI design', 'Development'],
       url: 'https://www.biastrade.com/home'
-    };
-
-    const handleBack = () => {
-      router.push('/');
     };
 
     return (
@@ -132,10 +147,6 @@ const ProjectDetail = ({ id }) => {
       tags: ['UX research', 'UI design']
     };
 
-    const handleBack = () => {
-      router.push('/');
-    };
-
     return (
       <div className="w-full">
         {/* 고정된 이전 버튼 */}
@@ -213,10 +224,6 @@ const ProjectDetail = ({ id }) => {
       date: '04/2025 – 11/2025',
       tags: ['UX research', 'publication'],
       url: 'https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12512964'
-    };
-
-    const handleBack = () => {
-      router.push('/');
     };
 
     return (
@@ -376,10 +383,6 @@ const ProjectDetail = ({ id }) => {
       url: 'https://mock-ai-azure.vercel.app/'
     };
 
-    const handleBack = () => {
-      router.push('/');
-    };
-
     return (
       <div className="w-full">
         {/* 고정된 이전 버튼 */}
@@ -478,10 +481,6 @@ const ProjectDetail = ({ id }) => {
       tags: ['Motion graphics', 'Illustration']
     };
 
-    const handleBack = () => {
-      router.push('/');
-    };
-
     return (
       <div className="w-full">
         {/* 고정된 이전 버튼 */}
@@ -553,10 +552,6 @@ const ProjectDetail = ({ id }) => {
       title: 'Sea anemones and Nemos',
       date: '2023/09~2023/12',
       tags: ['Motion graphics', 'Graphic design']
-    };
-
-    const handleBack = () => {
-      router.push('/');
     };
 
     return (
@@ -634,10 +629,6 @@ const ProjectDetail = ({ id }) => {
       url: 'https://chaeyeon-jin.github.io/fromalleywithlove/'
     };
 
-    const handleBack = () => {
-      router.push('/');
-    };
-
     return (
       <div className="w-full">
         {/* 고정된 이전 버튼 */}
@@ -656,17 +647,17 @@ const ProjectDetail = ({ id }) => {
           </button>
         )}
         {/* 프로젝트 설명 - 그리드 시스템 */}
-        <div className="w-full px-[80px] py-[46px] bg-variable-collection-background">
-          <div className="grid grid-cols-6 gap-x-5">
+        <div className="w-full px-[20px] md:px-[80px] py-6 md:py-[46px] bg-variable-collection-background">
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-x-3 md:gap-x-5">
             {/* 왼쪽 3칸 - 제목, 설명, 웹사이트 (세로 배치) */}
-            <div className="col-span-3 flex flex-col gap-[22px]">
+            <div className="col-span-1 md:col-span-3 flex flex-col gap-4 md:gap-[22px]">
               {/* 제목 */}
-              <h3 className="font-nohemi font-normal text-3xl tracking-[0] leading-[36px] text-variable-collection-black">
+              <h3 className="font-nohemi font-normal text-2xl md:text-3xl tracking-[0] leading-tight md:leading-[36px] text-variable-collection-black">
                 {fromalleyData.title}
               </h3>
 
               {/* 설명 */}
-              <p className="font-nohemi font-normal text-xl tracking-[0] leading-[24px] text-variable-collection-black">
+              <p className="font-nohemi font-normal text-base md:text-xl tracking-[0] leading-snug md:leading-[24px] text-variable-collection-black">
                 {fromalleyData.description}
               </p>
 
@@ -693,9 +684,9 @@ const ProjectDetail = ({ id }) => {
             </div>
 
             {/* 오른쪽 3칸 - 기간, 태그 (세로 배치) */}
-            <div className="col-span-3 flex flex-col gap-[22px]">
+            <div className="col-span-1 md:col-span-3 flex flex-col gap-4 md:gap-[22px]">
               {/* 날짜 */}
-              <time className="font-nohemi font-normal text-2xl tracking-[0] leading-[24.3px] text-variable-collection-black">
+              <time className="font-nohemi font-normal text-lg md:text-2xl tracking-[0] leading-normal md:leading-[24.3px] text-variable-collection-black">
                 {fromalleyData.date}
               </time>
 
@@ -703,8 +694,8 @@ const ProjectDetail = ({ id }) => {
               <div className="inline-flex items-start gap-2 flex-wrap">
                 {fromalleyData.tags.map((tag, index) => (
                   <div key={index} className="inline-flex items-center gap-1.5">
-                    <span className="flex w-fit items-center justify-center gap-1.5 pt-2 pb-1.5 px-3 bg-variable-collection-yellow rounded-[20px]">
-                      <span className="relative w-fit font-nohemi font-medium text-variable-collection-black text-sm tracking-[0] leading-normal whitespace-nowrap">
+                    <span className="flex w-fit items-center justify-center gap-1.5 pt-1.5 md:pt-2 pb-1 md:pb-1.5 px-2 md:px-3 bg-variable-collection-yellow rounded-[20px]">
+                      <span className="relative w-fit font-nohemi font-medium text-variable-collection-black text-xs md:text-sm tracking-[0] leading-normal whitespace-nowrap">
                         {tag}
                       </span>
                     </span>
@@ -725,6 +716,19 @@ const ProjectDetail = ({ id }) => {
             className="w-full h-auto"
             priority
           />
+          
+          {/* Website Preview iframe */}
+          <div className="w-full px-[20px] md:px-[80px] py-8 md:py-[60px] bg-variable-collection-background">
+            <div className="w-full h-[400px] md:h-[600px] lg:h-[800px] border border-gray-200 rounded-lg overflow-hidden">
+              <iframe
+                src="https://chaeyeon-jin.github.io/fromalleywithlove/"
+                className="w-full h-full"
+                title="From Alley With Love Website Preview"
+                allow="fullscreen"
+              />
+            </div>
+          </div>
+          
           <Image
             src="/graphics/fromalleywithlove/fromalley2.png"
             alt="fromalley 2"
@@ -763,10 +767,6 @@ const ProjectDetail = ({ id }) => {
       title: 'FFFW: Forth Floor Fashion Week',
       date: '2023/10~2024/01',
       tags: ['Editorial design', 'Graphic design']
-    };
-
-    const handleBack = () => {
-      router.push('/');
     };
 
     useEffect(() => {
@@ -989,10 +989,6 @@ const ProjectDetail = ({ id }) => {
       title: '2024 happy new year!',
       date: '2023/12 ~ 2024/01',
       tags: ['Graphic design']
-    };
-
-    const handleBack = () => {
-      router.push('/');
     };
 
     useEffect(() => {
@@ -1219,10 +1215,6 @@ const ProjectDetail = ({ id }) => {
       url: 'https://chaeyeon-jin.github.io/find_raccoons/index.html'
     };
 
-    const handleBack = () => {
-      router.push('/');
-    };
-
     return (
       <div className="w-full">
         {/* 고정된 이전 버튼 */}
@@ -1345,10 +1337,6 @@ const ProjectDetail = ({ id }) => {
       url: 'https://chaeyeon-jin.github.io/marine_creatures/'
     };
 
-    const handleBack = () => {
-      router.push('/');
-    };
-
     return (
       <div className="w-full">
         {/* 고정된 이전 버튼 */}
@@ -1463,10 +1451,6 @@ const ProjectDetail = ({ id }) => {
       tags: ['Graphic design', 'Branding design']
     };
 
-    const handleBack = () => {
-      router.push('/');
-    };
-
     return (
       <div className="w-full">
         {/* 고정된 이전 버튼 */}
@@ -1564,10 +1548,6 @@ const ProjectDetail = ({ id }) => {
       title: 'The butterfly effect',
       date: '2022/09~2022/12',
       tags: ['Graphic design', 'Illustration']
-    };
-
-    const handleBack = () => {
-      router.push('/');
     };
 
     useEffect(() => {
