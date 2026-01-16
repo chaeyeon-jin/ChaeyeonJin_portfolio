@@ -55,13 +55,20 @@ const About = ({ borderRadius, isToggled }) => {
           >
           <p className="w-full font-nohemi font-normal text-variable-collection-grey300 text-base md:text-2xl lg:text-[32px] tracking-[0] leading-relaxed md:leading-[40.4px]">
             <span className="text-[#bcbcbc] group-hover:text-variable-collection-black transition-colors duration-300">I&apos;m a </span>
-            <span className="text-[#222222] group-hover:text-variable-collection-black transition-colors duration-300">Product designer</span>
+            <span className="text-[#222222] group-hover:text-variable-collection-black transition-colors duration-300">Product designer &amp; Graphic designer</span>
             <span className="text-[#bcbcbc] group-hover:text-variable-collection-black transition-colors duration-300"> based in </span>
             <span className="text-[#222222] group-hover:text-variable-collection-black transition-colors duration-300">California</span>
-            <span className="text-[#bcbcbc] group-hover:text-variable-collection-black transition-colors duration-300">, focused on </span>
-            <span className="text-[#222222] group-hover:text-variable-collection-black transition-colors duration-300">user-centered thinking</span>
-            <span className="text-[#bcbcbc] group-hover:text-variable-collection-black transition-colors duration-300">, clear visual communication, strong graphic foundations, and coded prototyping.
-            </span>
+            <span className="text-[#bcbcbc] group-hover:text-variable-collection-black transition-colors duration-300">, specializing in </span>
+            <span className="text-[#222222] group-hover:text-variable-collection-black transition-colors duration-300">user-centered UX/UI</span>
+            <span className="text-[#bcbcbc] group-hover:text-variable-collection-black transition-colors duration-300"> design and </span>
+            <span className="text-[#222222] group-hover:text-variable-collection-black transition-colors duration-300">visual communication</span>
+            <span className="text-[#bcbcbc] group-hover:text-variable-collection-black transition-colors duration-300"> through </span>
+            <span className="text-[#222222] group-hover:text-variable-collection-black transition-colors duration-300">editorial design</span>
+            <span className="text-[#bcbcbc] group-hover:text-variable-collection-black transition-colors duration-300">, </span>
+            <span className="text-[#222222] group-hover:text-variable-collection-black transition-colors duration-300">branding</span>
+            <span className="text-[#bcbcbc] group-hover:text-variable-collection-black transition-colors duration-300">, and </span>
+            <span className="text-[#222222] group-hover:text-variable-collection-black transition-colors duration-300">motion graphics</span>
+            <span className="text-[#bcbcbc] group-hover:text-variable-collection-black transition-colors duration-300">.</span>
                 </p>
               </div>
           </FadeInUp>
