@@ -90,7 +90,7 @@ const Projects = ({ borderRadius, isToggled }) => {
       title: 'FFFW: Forth Floor Fashion Week',
       date: '2023/10~2024/01',
       tags: ['Editorial design', 'Graphic design'],
-      thumbnail: '/graphics/fffwThumbnail.jpeg',
+      thumbnail: '/graphics/fffw/fffwThumbnail.jpeg',
       instagramUrl: 'https://www.instagram.com/p/DEIM8BEP2-H/'
     },
     {
@@ -98,7 +98,7 @@ const Projects = ({ borderRadius, isToggled }) => {
       title: '2024 happy new year!',
       date: '2023/12 ~ 2024/01',
       tags: ['Graphic design'],
-      thumbnail: '/graphics/2024happynewyearThumbnail.jpeg',
+      thumbnail: '/graphics/2024happynewyear/2024happynewyearThumbnail.jpeg',
       instagramUrl: 'https://www.instagram.com/p/C1ju8vVSLzr/'
     },
     {
@@ -129,7 +129,7 @@ const Projects = ({ borderRadius, isToggled }) => {
       title: 'The butterfly effect',
       date: '2022/09~2022/12',
       tags: ['Graphic design', 'Illustration'],
-      thumbnail: '/graphics/thebutterflyeffectThumbnail.jpeg',
+      thumbnail: '/graphics/TBE/thebutterflyeffectThumbnail.jpeg',
       instagramUrl: 'https://www.instagram.com/p/Cvj-YAgyvQ7/'
     }
   ]
@@ -466,15 +466,25 @@ const Projects = ({ borderRadius, isToggled }) => {
                         src={project.thumbnail}
                         alt={project.title}
                         fill
-                        className="object-cover"
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                     )
                   )}
                 </Link>
-                {/* Title */}
-                <h3 className={`font-nohemi font-normal text-lg md:text-2xl tracking-[0] leading-normal ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}>
-                  {project.title}
-                </h3>
+                {/* Title and Tags */}
+                <div className="flex flex-col gap-2">
+                  <h3 className={`font-nohemi font-normal text-lg md:text-2xl tracking-[0] leading-normal ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}>
+                    {project.title}
+                  </h3>
+                  {/* Tags */}
+                  <div className="flex flex-wrap gap-2">
+                    {project.tags.map((tag, i) => (
+                      <span key={i} className={`text-xs px-2 py-1 rounded-full ${isToggled ? 'bg-white/10 text-white' : 'bg-gray-100 text-gray-600'}`}>
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </div>
               </FadeInUp>
             ))}
