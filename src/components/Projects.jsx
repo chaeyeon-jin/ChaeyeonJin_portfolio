@@ -110,12 +110,11 @@ const Projects = ({ borderRadius, isToggled }) => {
       websiteUrl: 'https://chaeyeon-jin.github.io/find_raccoons/index.html'
     },
     {
-      id: 'marinecreatures',
-      title: 'Marine creatures',
-      date: '04/2023 ~ 06/2023',
-      tags: ['Graphic design', 'Web design'],
-      thumbnail: '/graphics/marinecreatures/marinecreaturesThumbnail.png',
-      websiteUrl: 'https://chaeyeon-jin.github.io/marine_creatures/'
+      id: 'hut',
+      title: 'HUT',
+      date: '2025/06~2025/10',
+      tags: ['Graphic design', 'Editorial design'],
+      thumbnail: '/graphics/HUT/hutThumbnail.jpeg'
     },
     {
       id: 'atr',

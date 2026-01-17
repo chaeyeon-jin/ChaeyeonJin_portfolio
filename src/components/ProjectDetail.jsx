@@ -1097,14 +1097,29 @@ const ProjectDetail = ({ id }) => {
     );
   }
 
-  if (id === 'marinecreatures') {
-    const marinecreaturesData = {
-      title: 'Marine creatures',
-      description: 'Personal project',
-      date: '04/2023 ~ 06/2023',
-      tags: ['Graphic design', 'Web design'],
-      url: 'https://chaeyeon-jin.github.io/marine_creatures/'
+  if (id === 'hut') {
+    const hutData = {
+      title: 'HUT',
+      description: 'I created a zine featuring interviews and the daily lives of design students. The zine was printed using risography with three colors (gold, cyan, black), and I hand-bound the physical copies myself. I also designed the typography for the book title and created Instagram posts for the project.',
+      date: '2025/06~2025/10',
+      tags: ['Graphic design', 'Editorial design']
     };
+
+    // Instagram embed script loading
+    useEffect(() => {
+      const script = document.createElement('script');
+      script.src = 'https://www.instagram.com/embed.js';
+      script.async = true;
+      document.body.appendChild(script);
+
+      return () => {
+        // Cleanup
+        const existingScript = document.querySelector('script[src="https://www.instagram.com/embed.js"]');
+        if (existingScript) {
+          document.body.removeChild(existingScript);
+        }
+      };
+    }, []);
 
     return (
       <div className="w-full">
@@ -1124,52 +1139,29 @@ const ProjectDetail = ({ id }) => {
         {/* 프로젝트 설명 - 그리드 시스템 */}
         <div className="w-full px-[20px] pt-[80px] md:pt-6 md:pl-[180px] md:pr-[80px] py-6 md:py-[46px] bg-variable-collection-background">
           <div className="grid grid-cols-1 md:grid-cols-6 gap-x-3 md:gap-x-5">
-            {/* 왼쪽 3칸 - 제목, 설명, 웹사이트 (세로 배치) */}
+            {/* 왼쪽 3칸 - 제목, 설명 (세로 배치) */}
             <div className="col-span-1 md:col-span-3 flex flex-col gap-4 md:gap-[22px]">
               {/* 제목 */}
               <h3 className="font-nohemi font-normal text-2xl md:text-3xl tracking-[0] leading-tight md:leading-[36px] text-variable-collection-black">
-                {marinecreaturesData.title}
+                {hutData.title}
               </h3>
 
               {/* 설명 */}
               <p className="font-nohemi font-normal text-base md:text-xl tracking-[0] leading-snug md:leading-[24px] text-variable-collection-black">
-                Marine Creatures is a digital archive inspired by my love for scuba diving and my desire to better understand marine life.
-                Through a simple grid layout and pixel art aesthetic, the site introduces 24 species, each with a brief profile including name, classification, and description.
-                The project focuses on creating a playful and accessible experience, allowing users to explore the ocean world without barriers.
+                {hutData.description}
               </p>
-
-              {/* Visit site 버튼 */}
-              <div className="inline-flex items-start justify-start">
-                <a 
-                  href={marinecreaturesData.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex w-28 md:w-36 h-[40px] md:h-[50px] items-center justify-center gap-2 pt-2 pb-1.5 px-3 bg-variable-collection-white hover:opacity-80 transition-opacity rounded-[60px]"
-                >
-                  <Image
-                    src="/SVG/Visit.svg"
-                    alt="Visit"
-                    width={20}
-                    height={20}
-                    className="relative"
-                  />
-                    <span className="relative w-fit font-nohemi font-medium text-sm md:text-base tracking-[0] leading-normal whitespace-nowrap text-variable-collection-black">
-                      Visit site
-                    </span>
-                </a>
-              </div>
             </div>
 
             {/* 오른쪽 3칸 - 기간, 태그 (세로 배치) */}
             <div className="col-span-1 md:col-span-3 flex flex-col gap-4 md:gap-[22px]">
               {/* 날짜 */}
               <time className="font-nohemi font-normal text-lg md:text-2xl tracking-[0] leading-normal md:leading-[24.3px] text-variable-collection-black">
-                {marinecreaturesData.date}
+                {hutData.date}
               </time>
 
               {/* 태그들 */}
               <div className="inline-flex items-start gap-2 flex-wrap">
-                {marinecreaturesData.tags.map((tag, index) => (
+                {hutData.tags.map((tag, index) => (
                   <div key={index} className="inline-flex items-center gap-1.5">
                     <span className="flex w-fit items-center justify-center gap-1.5 pt-1.5 md:pt-2 pb-1 md:pb-1.5 px-2 md:px-3 bg-variable-collection-yellow rounded-[20px]">
                       <span className="relative w-fit font-nohemi font-medium text-variable-collection-black text-xs md:text-sm tracking-[0] leading-normal whitespace-nowrap">
@@ -1183,27 +1175,41 @@ const ProjectDetail = ({ id }) => {
           </div>
         </div>
 
-        {/* 포트폴리오 이미지들 - 여백 없이 맨 위부터 꽉 차게 */}
-        <div className="w-full">
-          <Image
-            src="/graphics/marinecreatures/marincreatures1.png"
-            alt="marinecreatures 1"
-            width={1920}
-            height={1080}
-            className="w-full h-auto"
-            priority
-          />
-          
-          {/* Website Preview */}
-          <div className="w-full px-[20px] md:pl-[180px] md:pr-[80px] py-8 md:py-[60px] bg-variable-collection-background">
-            <div className="w-full h-[400px] md:h-[600px] lg:h-[800px] border border-gray-200 rounded-lg overflow-hidden">
-              <iframe
-                src="https://chaeyeon-jin.github.io/marine_creatures/"
-                className="w-full h-full"
-                title="Marine Creatures Website Preview"
-                allow="fullscreen"
-              />
-            </div>
+        {/* 포트폴리오 이미지들 - 좌우 레이아웃 */}
+        <div className="w-full flex flex-col md:flex-row gap-0">
+          {/* 왼쪽: Instagram Embed */}
+          <div className="w-full md:w-1/2 flex justify-center items-center py-8 md:py-12 bg-variable-collection-background">
+            <blockquote 
+              className="instagram-media" 
+              data-instgrm-permalink="https://www.instagram.com/p/DOaIxr4EeWS/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="
+              data-instgrm-version="14"
+              style={{
+                background: '#FFF',
+                border: '0',
+                borderRadius: '3px',
+                margin: '1px',
+                maxWidth: '702px',
+                minWidth: '424px',
+                padding: '0',
+                width: 'calc(100% - 2px)'
+              }}
+            >
+            </blockquote>
+          </div>
+
+          {/* 오른쪽: 이미지들 - 2x3 그리드, 여백 없이 */}
+          <div className="w-full md:w-1/2 grid grid-cols-2 gap-0">
+            {[2, 3, 4, 5, 6, 7].map((num) => (
+              <div key={num} className="relative w-full aspect-square overflow-hidden">
+                <Image
+                  src={`/graphics/HUT/hut${num}.jpeg`}
+                  alt={`HUT ${num}`}
+                  fill
+                  className="object-cover"
+                  priority={num === 2}
+                />
+              </div>
+            ))}
           </div>
         </div>
       </div>
