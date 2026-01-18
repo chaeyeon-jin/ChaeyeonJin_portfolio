@@ -24,6 +24,28 @@ const Projects = ({ borderRadius, isToggled }) => {
     return () => window.removeEventListener('mousemove', handleMouseMove)
   }, [])
 
+  // 상세페이지에서 돌아왔을 때 스크롤 위치 복원
+  useEffect(() => {
+    const savedScrollPosition = sessionStorage.getItem('projectScrollPosition')
+    if (savedScrollPosition) {
+      const scrollPos = parseInt(savedScrollPosition, 10)
+      // 페이지가 완전히 로드된 후 스크롤 복원
+      const restoreScroll = () => {
+        if (lenis) {
+          lenis.scrollTo(scrollPos, { immediate: true })
+        } else {
+          window.scrollTo(0, scrollPos)
+        }
+        sessionStorage.removeItem('projectScrollPosition')
+      }
+      
+      // 여러 시도로 확실하게 복원
+      setTimeout(restoreScroll, 100)
+      setTimeout(restoreScroll, 300)
+      setTimeout(restoreScroll, 500)
+    }
+  }, [lenis])
+
   // UX/UI Project data array
   const uxuiProjectsData = [
     {
@@ -65,6 +87,15 @@ const Projects = ({ borderRadius, isToggled }) => {
 
   // Graphics Project data array
   const graphicsProjectsData = [
+    {
+      id: 'marinecreatures',
+      title: 'Marine creatures',
+      description: "A digital archive introducing 24 marine species through a simple pixel art aesthetic.",
+      date: '04/2023 ~ 06/2023',
+      tags: ['Graphic design', 'Web design'],
+      thumbnail: '/graphics/marinecreatures/marinecreaturesThumbnail.png',
+      websiteUrl: 'https://chaeyeon-jin.github.io/marine_creatures/'
+    },
     {
       id: 'pompoko-story',
       title: 'Pompoko story',
@@ -120,15 +151,6 @@ const Projects = ({ borderRadius, isToggled }) => {
       websiteUrl: 'https://chaeyeon-jin.github.io/find_raccoons/index.html'
     },
     {
-      id: 'marinecreatures',
-      title: 'Marine creatures',
-      description: "A digital archive introducing 24 marine species through a simple pixel art aesthetic.",
-      date: '04/2023 ~ 06/2023',
-      tags: ['Graphic design', 'Web design'],
-      thumbnail: '/graphics/marinecreatures/marinecreaturesThumbnail.png',
-      websiteUrl: 'https://chaeyeon-jin.github.io/marine_creatures/'
-    },
-    {
       id: 'hut',
       title: 'HUT',
       description: "A hand-bound zine featuring interviews and daily lives of design students, printed with risography.",
@@ -155,7 +177,7 @@ const Projects = ({ borderRadius, isToggled }) => {
     },
     {
       id: 'print-in-progress',
-      title: 'Print in progress',
+      title: 'Printing in progress',
       description: "Outdoor location posters for a print shop, using 12-color risography to explore printing processes.",
       date: '2025/02~2025/03',
       tags: ['Graphic design', 'Risography'],
@@ -183,11 +205,24 @@ const Projects = ({ borderRadius, isToggled }) => {
         return new Date(0)
       }
 
-      return [...graphicsProjectsData].sort((a, b) => {
+      const sorted = [...graphicsProjectsData].sort((a, b) => {
         const dateA = parseDate(a.date)
         const dateB = parseDate(b.date)
         return dateB.getTime() - dateA.getTime()
       })
+      
+      // marine creatures와 pompoko story의 순서를 바꿈 (marine creatures가 먼저)
+      const marineIndex = sorted.findIndex(p => p.id === 'marinecreatures')
+      const pompokoIndex = sorted.findIndex(p => p.id === 'pompoko-story')
+      
+      if (marineIndex !== -1 && pompokoIndex !== -1 && marineIndex > pompokoIndex) {
+        // marine creatures가 pompoko story보다 뒤에 있으면 순서 바꿈
+        const temp = sorted[marineIndex]
+        sorted[marineIndex] = sorted[pompokoIndex]
+        sorted[pompokoIndex] = temp
+      }
+      
+      return sorted
     }
   })()
 
@@ -285,7 +320,7 @@ const Projects = ({ borderRadius, isToggled }) => {
       <section
         id="projects"
         ref={projectsSectionRef}
-        className={`w-full relative px-[20px] md:px-[80px] pb-10 md:pb-20 transition-colors duration-300 ${isToggled ? 'bg-variable-collection-black' : 'bg-variable-collection-background'}`}
+        className={`w-full relative px-[20px] md:px-[80px] pb-32 md:pb-40 transition-colors duration-300 ${isToggled ? 'bg-variable-collection-black' : 'bg-variable-collection-background'}`}
       >
         <div className="grid grid-cols-1 md:grid-cols-6 gap-3 md:gap-5 relative">
           {/* Section Title */}
@@ -300,7 +335,7 @@ const Projects = ({ borderRadius, isToggled }) => {
           {/* Tab Toggle Button */}
           <div className="col-span-1 md:col-span-6 sticky top-0 z-40 py-4 mb-10 md:mb-20 bg-inherit">
             <FadeInUp delay={100} className="w-full flex justify-center">
-              <div className="relative flex w-full max-w-sm h-[50px] md:h-[70px] items-center px-[6px] py-1.5 bg-variable-collection-yellow cursor-pointer transition-all duration-300 overflow-hidden"
+              <div className="relative flex w-full max-w-[240px] md:max-w-sm h-[50px] md:h-[70px] items-center px-[6px] py-1.5 bg-variable-collection-yellow cursor-pointer transition-all duration-300 overflow-hidden"
                 style={{ borderRadius: `${borderRadius}px` }}
               >
                 <div 
@@ -311,7 +346,15 @@ const Projects = ({ borderRadius, isToggled }) => {
                   }}
                 />
                 <button
-                  onClick={() => setActiveTab('uxui')}
+                  onClick={() => {
+                    if (activeTab !== 'uxui') {
+                      setActiveTab('uxui');
+                      setActiveProjectIndex(0);
+                      setTimeout(() => {
+                        scrollToProjectsTop();
+                      }, 50);
+                    }
+                  }}
                   className={`relative z-10 flex-1 h-full flex items-center justify-center font-mango-grotesque font-medium text-xl md:text-3xl transition-colors duration-300 ${
                     activeTab === 'uxui' ? 'text-variable-collection-black' : 'text-variable-collection-black/40'
                   }`}
@@ -319,7 +362,15 @@ const Projects = ({ borderRadius, isToggled }) => {
                   UX/UI
                 </button>
                 <button
-                  onClick={() => setActiveTab('graphics')}
+                  onClick={() => {
+                    if (activeTab !== 'graphics') {
+                      setActiveTab('graphics');
+                      setActiveProjectIndex(0);
+                      setTimeout(() => {
+                        scrollToProjectsTop();
+                      }, 50);
+                    }
+                  }}
                   className={`relative z-10 flex-1 h-full flex items-center justify-center font-mango-grotesque font-medium text-xl md:text-3xl transition-colors duration-300 ${
                     activeTab === 'graphics' ? 'text-variable-collection-black' : 'text-variable-collection-black/40'
                   }`}
@@ -429,7 +480,7 @@ const Projects = ({ borderRadius, isToggled }) => {
                 <div
                   ref={(el) => (thumbnailRefs.current[index] = el)}
                   data-project-index={index}
-                  className="h-[200px] md:h-[480px] bg-variable-collection-white transition-all duration-300 relative overflow-hidden group"
+                  className="h-[280px] md:h-[600px] bg-variable-collection-white transition-all duration-300 relative overflow-hidden group"
                   style={{ borderRadius: `${borderRadius}px` }}
                 >
                 <Link

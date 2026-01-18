@@ -29,23 +29,9 @@ const ProjectDetail = ({ id }) => {
     }
   }, [id, lenis]);
 
-  // 공통 Back 핸들러: 저장된 스크롤 위치로 복원
+  // 공통 Back 핸들러: 메인 페이지로 이동 (스크롤 위치 복원은 Projects 컴포넌트에서 처리)
   const handleBack = () => {
-    const savedScrollPosition = sessionStorage.getItem('projectScrollPosition');
     router.push('/');
-    
-    // 라우팅 후 스크롤 위치 복원
-    setTimeout(() => {
-      if (savedScrollPosition) {
-        const scrollPos = parseInt(savedScrollPosition, 10);
-        if (lenis) {
-          lenis.scrollTo(scrollPos, { immediate: true });
-        } else {
-          window.scrollTo(0, scrollPos);
-        }
-        sessionStorage.removeItem('projectScrollPosition');
-      }
-    }, 100);
   };
 
   // biaspoca 프로젝트 처리
@@ -187,9 +173,9 @@ const ProjectDetail = ({ id }) => {
             </div>
 
             {/* 오른쪽 3칸 - 기간, 태그 (세로 배치) */}
-            <div className="col-span-3 flex flex-col gap-[22px]">
+            <div className="col-span-1 md:col-span-3 flex flex-col gap-4 md:gap-[22px]">
               {/* 날짜 */}
-              <time className="font-nohemi font-normal text-2xl tracking-[0] leading-[24.3px] text-variable-collection-black">
+              <time className="font-nohemi font-normal text-lg md:text-2xl tracking-[0] leading-normal md:leading-[24.3px] text-variable-collection-black">
                 {myooData.date}
               </time>
 
@@ -248,17 +234,17 @@ const ProjectDetail = ({ id }) => {
             />
           </button>
         {/* 프로젝트 설명 - 그리드 시스템 */}
-        <div className="w-full px-[80px] py-[46px] bg-variable-collection-background">
-          <div className="grid grid-cols-6 gap-x-5">
+        <div className="w-full px-[20px] pt-[80px] md:pt-6 md:pl-[180px] md:pr-[80px] py-6 md:py-[46px] bg-variable-collection-background">
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-x-3 md:gap-x-5">
             {/* 왼쪽 3칸 - 제목, 설명, 웹사이트 (세로 배치) */}
-            <div className="col-span-3 flex flex-col gap-[22px]">
+            <div className="col-span-1 md:col-span-3 flex flex-col gap-4 md:gap-[22px]">
               {/* 제목 */}
-              <h3 className="font-nohemi font-normal text-3xl tracking-[0] leading-[36px] text-variable-collection-black">
+              <h3 className="font-nohemi font-normal text-2xl md:text-3xl tracking-[0] leading-tight md:leading-[36px] text-variable-collection-black">
                 {gilbeotData.title}
               </h3>
 
               {/* 설명 */}
-              <p className="font-nohemi font-normal text-xl tracking-[0] leading-[24px] text-variable-collection-black">
+              <p className="font-nohemi font-normal text-base md:text-xl tracking-[0] leading-snug md:leading-[24px] text-variable-collection-black">
                 {gilbeotData.description}
               </p>
 
@@ -285,9 +271,9 @@ const ProjectDetail = ({ id }) => {
             </div>
 
             {/* 오른쪽 3칸 - 기간, 태그 (세로 배치) */}
-            <div className="col-span-3 flex flex-col gap-[22px]">
+            <div className="col-span-1 md:col-span-3 flex flex-col gap-4 md:gap-[22px]">
               {/* 날짜 */}
-              <time className="font-nohemi font-normal text-2xl tracking-[0] leading-[24.3px] text-variable-collection-black">
+              <time className="font-nohemi font-normal text-lg md:text-2xl tracking-[0] leading-normal md:leading-[24.3px] text-variable-collection-black">
                 {gilbeotData.date}
               </time>
 
@@ -403,17 +389,17 @@ const ProjectDetail = ({ id }) => {
             />
           </button>
         {/* 프로젝트 설명 - 그리드 시스템 */}
-        <div className="w-full px-[80px] py-[46px] bg-variable-collection-background">
-          <div className="grid grid-cols-6 gap-x-5">
+        <div className="w-full px-[20px] pt-[80px] md:pt-6 md:pl-[180px] md:pr-[80px] py-6 md:py-[46px] bg-variable-collection-background">
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-x-3 md:gap-x-5">
             {/* 왼쪽 3칸 - 제목, 설명, 웹사이트 (세로 배치) */}
-            <div className="col-span-3 flex flex-col gap-[22px]">
+            <div className="col-span-1 md:col-span-3 flex flex-col gap-4 md:gap-[22px]">
               {/* 제목 */}
-              <h3 className="font-nohemi font-normal text-3xl tracking-[0] leading-[36px] text-variable-collection-black">
+              <h3 className="font-nohemi font-normal text-2xl md:text-3xl tracking-[0] leading-tight md:leading-[36px] text-variable-collection-black">
                 {simoData.title}
               </h3>
 
               {/* 설명 */}
-              <p className="font-nohemi font-normal text-xl tracking-[0] leading-[24px] text-variable-collection-black">
+              <p className="font-nohemi font-normal text-base md:text-xl tracking-[0] leading-snug md:leading-[24px] text-variable-collection-black">
                 {simoData.description}
               </p>
 
@@ -440,9 +426,9 @@ const ProjectDetail = ({ id }) => {
             </div>
 
             {/* 오른쪽 3칸 - 기간, 태그 (세로 배치) */}
-            <div className="col-span-3 flex flex-col gap-[22px]">
+            <div className="col-span-1 md:col-span-3 flex flex-col gap-4 md:gap-[22px]">
               {/* 날짜 */}
-              <time className="font-nohemi font-normal text-2xl tracking-[0] leading-[24.3px] text-variable-collection-black">
+              <time className="font-nohemi font-normal text-lg md:text-2xl tracking-[0] leading-normal md:leading-[24.3px] text-variable-collection-black">
                 {simoData.date}
               </time>
 
@@ -1341,7 +1327,7 @@ const ProjectDetail = ({ id }) => {
 
   if (id === 'print-in-progress') {
     const pipData = {
-      title: 'Print in progress',
+      title: 'Printing in progress',
       description: 'Taking inspiration from street signs, I created a location poster for the print shop. Using elements like the word "OPEN", printer-shaped graphics, and the actual form of yellow street signs, I designed an eye-catching poster to promote the print shop. I used 12-color risography printing, which allowed me to fully understand the risograph printing process.',
       date: '2025/02~2025/03',
       tags: ['Graphic design', 'Risography']
@@ -1410,7 +1396,7 @@ const ProjectDetail = ({ id }) => {
             <div className="relative w-full max-w-full">
               <Image
                 src="/graphics/PIP/pipthumbnail.jpeg"
-                alt="Print in progress thumbnail"
+                alt="Printing in progress thumbnail"
                 width={1920}
                 height={1080}
                 className="w-full h-auto object-contain"
@@ -1426,7 +1412,7 @@ const ProjectDetail = ({ id }) => {
             <div className="relative w-full aspect-square overflow-hidden">
               <Image
                 src="/graphics/PIP/pip1.jpg"
-                alt="Print in progress 1"
+                alt="Printing in progress 1"
                 fill
                 className="object-cover"
               />
@@ -1434,7 +1420,7 @@ const ProjectDetail = ({ id }) => {
             <div className="relative w-full aspect-square overflow-hidden">
               <Image
                 src="/graphics/PIP/pip2.jpeg"
-                alt="Print in progress 2"
+                alt="Printing in progress 2"
                 fill
                 className="object-cover"
               />
@@ -1442,7 +1428,7 @@ const ProjectDetail = ({ id }) => {
             <div className="relative w-full aspect-square overflow-hidden">
               <Image
                 src="/graphics/PIP/pip3.jpeg"
-                alt="Print in progress 3"
+                alt="Printing in progress 3"
                 fill
                 className="object-cover"
               />
@@ -1450,7 +1436,7 @@ const ProjectDetail = ({ id }) => {
             <div className="relative w-full aspect-square overflow-hidden">
               <Image
                 src="/graphics/PIP/pip4.jpeg"
-                alt="Print in progress 4"
+                alt="Printing in progress 4"
                 fill
                 className="object-cover"
               />

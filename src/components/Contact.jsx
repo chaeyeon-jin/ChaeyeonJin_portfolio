@@ -285,6 +285,21 @@ const Contact = ({ borderRadius, isToggled }) => {
           <a
             href="/ChaeyeonJin_resume.pdf"
             download
+            onClick={(e) => {
+              e.preventDefault();
+              // 첫 번째 파일 다운로드
+              const link1 = document.createElement('a');
+              link1.href = '/ChaeyeonJin_resume.pdf';
+              link1.download = 'ChaeyeonJin_resume.pdf';
+              link1.click();
+              // 두 번째 파일 다운로드 (약간의 지연 후)
+              setTimeout(() => {
+                const link2 = document.createElement('a');
+                link2.href = '/ChaeyeonJin_resume2.pdf';
+                link2.download = 'ChaeyeonJin_resume2.pdf';
+                link2.click();
+              }, 100);
+            }}
             className="relative w-full h-full flex items-center justify-center hover:opacity-80 transition-opacity"
             aria-label="Download résumé PDF"
           >

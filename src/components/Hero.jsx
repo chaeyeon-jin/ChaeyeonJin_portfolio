@@ -155,6 +155,21 @@ const Hero = ({ borderRadius, setBorderRadius, isToggled, setIsToggled }) => {
                 <a
                   href="/ChaeyeonJin_resume.pdf"
                   download
+                  onClick={(e) => {
+                    e.preventDefault();
+                    // 첫 번째 파일 다운로드
+                    const link1 = document.createElement('a');
+                    link1.href = '/ChaeyeonJin_resume.pdf';
+                    link1.download = 'ChaeyeonJin_resume.pdf';
+                    link1.click();
+                    // 두 번째 파일 다운로드 (약간의 지연 후)
+                    setTimeout(() => {
+                      const link2 = document.createElement('a');
+                      link2.href = '/ChaeyeonJin_resume2.pdf';
+                      link2.download = 'ChaeyeonJin_resume2.pdf';
+                      link2.click();
+                    }, 100);
+                  }}
                   className="flex w-full h-[60px] md:h-[80px] items-center justify-center gap-2.5 bg-variable-collection-grey300 cursor-pointer transition-opacity hover:opacity-80"
                   style={{ borderRadius: `${borderRadius}px` }}
                   aria-label="Download résumé PDF"

@@ -10,19 +10,18 @@ export default function GalleryPage() {
   const [selectedImage, setSelectedImage] = useState(null)
 
   useEffect(() => {
-    // gallery 폴더의 모든 이미지 파일 목록 생성
-    // 숫자로 된 파일명들을 추출하고 정렬 (큰 숫자부터 작은 숫자 순서로)
-    const imageList = []
-    // 1부터 220까지의 숫자로 파일 시도 (형식: "1 Large.jpeg")
-    for (let i = 1; i <= 220; i++) {
-      imageList.push({
-        src: `/gallery/${i} Large.jpeg`,
-        alt: `Gallery image ${i}`,
-        number: i
-      })
-    }
-    // 큰 숫자부터 작은 숫자 순서로 정렬 (1이 가장 아래, 큰 숫자가 가장 위)
-    imageList.sort((a, b) => b.number - a.number)
+    // gallery 폴더에 실제로 존재하는 이미지 파일 목록
+    const imageNumbers = [2, 8, 11, 12, 18, 34, 50, 54, 66, 68, 72, 78, 82, 89, 92, 94, 104, 105, 106, 113, 123, 124, 126, 132, 136, 143, 146, 154, 160, 162, 167, 171, 172, 177, 182, 186, 197, 200, 208, 214]
+    
+    // 큰 숫자부터 작은 숫자 순서로 정렬 (큰 숫자가 가장 위)
+    const sortedNumbers = [...imageNumbers].sort((a, b) => b - a)
+    
+    const imageList = sortedNumbers.map(number => ({
+      src: `/gallery/${number} Large.jpeg`,
+      alt: `Gallery image ${number}`,
+      number: number
+    }))
+    
     setImages(imageList)
   }, [])
 
