@@ -6,6 +6,7 @@ import Link from 'next/link'
 import FadeInUp from './FadeInUp'
 
 const Projects = ({ borderRadius, isToggled }) => {
+  const [activeTab, setActiveTab] = useState('uxui')
   const [activeProjectIndex, setActiveProjectIndex] = useState(0)
   const thumbnailRefs = useRef([])
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
@@ -64,6 +65,7 @@ const Projects = ({ borderRadius, isToggled }) => {
     {
       id: 'pompoko-story',
       title: 'Pompoko story',
+      description: "Illustrated motion graphics piece that presents the story of new town development and the overall narrative from the raccoons' perspective.",
       date: '2023/03~2023/05',
       tags: ['Motion graphics', 'Illustration'],
       youtubeUrl: 'https://youtu.be/ZcRT9zDzIqU',
@@ -72,6 +74,7 @@ const Projects = ({ borderRadius, isToggled }) => {
     {
       id: 'sea-anemones',
       title: 'Sea anemones and Nemos',
+      description: "A 45-second motion graphics video about sea anemones and Nemos based on documentary narration.",
       date: '2023/09~2023/12',
       tags: ['Motion graphics', 'Graphic design'],
       youtubeUrl: 'https://youtu.be/RqZFmD2D1ZI',
@@ -80,6 +83,7 @@ const Projects = ({ borderRadius, isToggled }) => {
     {
       id: 'fromalleywithlove',
       title: 'From Alley With Love',
+      description: "A digital stamp collection website preserving visual memories of Seoul's disappearing traditional alleys.",
       date: '03/2025~04/2025',
       tags: ['Graphic design', 'Web design'],
       thumbnail: '/graphics/fromalleywithlove/fromalleywithloveThumbnail.jpeg',
@@ -88,6 +92,7 @@ const Projects = ({ borderRadius, isToggled }) => {
     {
       id: 'fffw',
       title: 'FFFW: Forth Floor Fashion Week',
+      description: "A series of palm-sized zines documenting design students' daily fashion and style identities.",
       date: '2023/10~2024/01',
       tags: ['Editorial design', 'Graphic design'],
       thumbnail: '/graphics/fffw/fffwThumbnail.jpeg',
@@ -96,22 +101,34 @@ const Projects = ({ borderRadius, isToggled }) => {
     {
       id: '2024-happy-new-year',
       title: '2024 happy new year!',
+      description: "Risography-printed New Year greeting cards celebrating the Year of the Blue Dragon.",
       date: '2023/12 ~ 2024/01',
-      tags: ['Graphic design'],
+      tags: ['Graphic design', 'Risography'],
       thumbnail: '/graphics/2024happynewyear/2024happynewyearThumbnail.jpeg',
       instagramUrl: 'https://www.instagram.com/p/C1ju8vVSLzr/'
     },
     {
       id: 'find-raccoons',
       title: 'Where did all the raccoons go?',
+      description: "An interactive exhibition project selected for DDP, reflecting on urbanization through raccoons' perspective.",
       date: '05/2023~08/2023',
       tags: ['Graphic design', 'Web design'],
       thumbnail: '/graphics/findracoons/findracconThumbnail.jpeg',
       websiteUrl: 'https://chaeyeon-jin.github.io/find_raccoons/index.html'
     },
     {
+      id: 'marinecreatures',
+      title: 'Marine creatures',
+      description: "A digital archive introducing 24 marine species through a simple pixel art aesthetic.",
+      date: '04/2023 ~ 06/2023',
+      tags: ['Graphic design', 'Web design'],
+      thumbnail: '/graphics/marinecreatures/marinecreaturesThumbnail.png',
+      websiteUrl: 'https://chaeyeon-jin.github.io/marine_creatures/'
+    },
+    {
       id: 'hut',
       title: 'HUT',
+      description: "A hand-bound zine featuring interviews and daily lives of design students, printed with risography.",
       date: '2025/06~2025/10',
       tags: ['Graphic design', 'Editorial design'],
       thumbnail: '/graphics/HUT/hutThumbnail.jpeg'
@@ -119,6 +136,7 @@ const Projects = ({ borderRadius, isToggled }) => {
     {
       id: 'atr',
       title: 'Affection to rent',
+      description: "Logo design and merchandise production for Affection to Rent, an Irish band.",
       date: '2024/09~2024/12',
       tags: ['Graphic design', 'Branding design'],
       thumbnail: '/graphics/atr/atrThumbnail.jpeg'
@@ -126,15 +144,54 @@ const Projects = ({ borderRadius, isToggled }) => {
     {
       id: 'thebutterflyeffect',
       title: 'The butterfly effect',
+      description: "An experimental graphic book combining illustrations and typography based on the film The Butterfly Effect.",
       date: '2022/09~2022/12',
       tags: ['Graphic design', 'Illustration'],
       thumbnail: '/graphics/TBE/thebutterflyeffectThumbnail.jpeg',
       instagramUrl: 'https://www.instagram.com/p/Cvj-YAgyvQ7/'
+    },
+    {
+      id: 'print-in-progress',
+      title: 'Print in progress',
+      description: "Outdoor location posters for a print shop, using 12-color risography to explore printing processes.",
+      date: '2025/02~2025/03',
+      tags: ['Graphic design', 'Risography'],
+      thumbnail: '/graphics/PIP/pipthumbnail.jpeg'
     }
   ]
 
-  // Use UX/UI projects for the main section
-  const projectsData = uxuiProjectsData
+  // Get current projects data based on active tab
+  const projectsData = (() => {
+    if (activeTab === 'uxui') {
+      // UX/UI는 원래 순서 유지
+      return uxuiProjectsData
+    } else {
+      // Graphics는 날짜순 정렬 (최신순)
+      const parseDate = (dateStr) => {
+        const startDate = dateStr.split('~')[0].trim().split(' ')[0]
+        if (startDate.includes('/')) {
+          const parts = startDate.split('/')
+          if (parts[0].length === 4) {
+            return new Date(parseInt(parts[0]), parseInt(parts[1]) - 1)
+          } else {
+            return new Date(parseInt(parts[1]), parseInt(parts[0]) - 1)
+          }
+        }
+        return new Date(0)
+      }
+
+      return [...graphicsProjectsData].sort((a, b) => {
+        const dateA = parseDate(a.date)
+        const dateB = parseDate(b.date)
+        return dateB.getTime() - dateA.getTime()
+      })
+    }
+  })()
+
+  // Reset active project index when tab changes
+  useEffect(() => {
+    setActiveProjectIndex(0)
+  }, [activeTab])
 
   // Intersection Observer setup for active project detection
   useEffect(() => {
@@ -179,24 +236,57 @@ const Projects = ({ borderRadius, isToggled }) => {
 
   return (
     <>
-      {/* What I make - UX/UI Section */}
+      {/* Unified Projects Section */}
       <section id="projects" className={`w-full relative px-[20px] md:px-[80px] pb-10 md:pb-20 transition-colors duration-300 ${isToggled ? 'bg-variable-collection-black' : 'bg-variable-collection-background'}`}>
         <div className="grid grid-cols-1 md:grid-cols-6 gap-3 md:gap-5 relative">
           {/* Section Title */}
-          <div className="col-span-1 md:col-span-6 mb-10 md:mb-20">
-            <FadeInUp className="w-full">
+          <div className="col-span-1 md:col-span-6 mb-6 md:mb-10">
+            <FadeInUp className="w-full flex justify-center">
               <h2 className={`font-mango-grotesque font-semibold italic text-4xl md:text-6xl lg:text-8xl tracking-[0] leading-normal whitespace-nowrap transition-colors duration-300 ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}>
-                What services I make
+                What I make
               </h2>
             </FadeInUp>
           </div>
 
-          {/* Left Column - Sticky Description (2 columns) */}
-          <div className="col-span-1 md:col-span-2 relative mb-5 md:mb-0 hidden md:block">
+          {/* Tab Toggle Button */}
+          <div className="col-span-1 md:col-span-6 sticky top-0 z-40 py-4 mb-10 md:mb-20 bg-inherit">
+            <FadeInUp delay={100} className="w-full flex justify-center">
+              <div className="relative flex w-full max-w-sm h-[50px] md:h-[70px] items-center px-[6px] py-1.5 bg-variable-collection-yellow cursor-pointer transition-all duration-300 overflow-hidden"
+                style={{ borderRadius: `${borderRadius}px` }}
+              >
+                <div 
+                  className="absolute h-[38px] md:h-[56px] w-[calc(50%-10px)] bg-variable-collection-white transition-all duration-300 rounded-[20px]"
+                  style={{
+                    left: activeTab === 'uxui' ? '8px' : 'calc(50% + 2px)',
+                    transform: 'none'
+                  }}
+                />
+                <button
+                  onClick={() => setActiveTab('uxui')}
+                  className={`relative z-10 flex-1 h-full flex items-center justify-center font-mango-grotesque font-medium text-xl md:text-3xl transition-colors duration-300 ${
+                    activeTab === 'uxui' ? 'text-variable-collection-black' : 'text-variable-collection-black/40'
+                  }`}
+                >
+                  UX/UI
+                </button>
+                <button
+                  onClick={() => setActiveTab('graphics')}
+                  className={`relative z-10 flex-1 h-full flex items-center justify-center font-mango-grotesque font-medium text-xl md:text-3xl transition-colors duration-300 ${
+                    activeTab === 'graphics' ? 'text-variable-collection-black' : 'text-variable-collection-black/40'
+                  }`}
+                >
+                  Graphics
+                </button>
+              </div>
+            </FadeInUp>
+          </div>
+
+          {/* Sticky Description Column - Position changes based on tab */}
+          <div className={`col-span-1 md:col-span-2 relative mb-5 md:mb-0 hidden md:block ${activeTab === 'graphics' ? 'md:order-2' : ''}`}>
             <div className="sticky top-[100px] md:top-[120px] pr-0 md:pr-5">
               <FadeInUp delay={200} className="w-full">
                 <div 
-                  key={activeProjectIndex}
+                  key={`${activeTab}-${activeProjectIndex}`}
                   className={`flex flex-col items-start justify-start gap-4 md:gap-[22px] px-4 md:px-[46px] py-4 md:py-[46px] transition-all duration-300 ease-in-out ${isToggled ? 'bg-variable-collection-black' : 'bg-variable-collection-background'}`}
                   style={{ opacity: 1, borderRadius: `${borderRadius}px` }}
                 >
@@ -204,9 +294,11 @@ const Projects = ({ borderRadius, isToggled }) => {
                   {activeProject.title}
                 </h3>
 
-                <p className={`relative w-full font-nohemi font-normal text-lg md:text-2xl lg:text-[32px] tracking-[0] leading-snug md:leading-[32.3px] ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}>
-                  {activeProject.description}
-                </p>
+                {activeProject.description && (
+                  <p className={`relative w-full font-nohemi font-normal text-lg md:text-2xl lg:text-[32px] tracking-[0] leading-snug md:leading-[32.3px] ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}>
+                    {activeProject.description}
+                  </p>
+                )}
 
                 <time className={`relative w-full font-nohemi font-normal text-base md:text-xl lg:text-2xl tracking-[0] leading-normal md:leading-[24.3px] ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}>
                   {activeProject.date}
@@ -224,41 +316,42 @@ const Projects = ({ borderRadius, isToggled }) => {
                   ))}
                 </div>
 
-                <div className="inline-flex flex-col items-start justify-end gap-2.5 relative mt-auto">
-                  <a 
-                    href={activeProject.url || `/project/${activeProject.id}`}
-                    target={activeProject.url ? '_blank' : undefined}
-                    rel={activeProject.url ? 'noopener noreferrer' : undefined}
-                    className={`flex w-28 md:w-36 h-[40px] md:h-[50px] items-center justify-center gap-2 pt-2 pb-1.5 px-3 relative hover:opacity-80 transition-opacity ${isToggled ? 'bg-variable-collection-white' : 'bg-variable-collection-white'}`}
-                    style={{ borderRadius: `${borderRadius}px` }}
-                    onClick={() => {
-                      if (!activeProject.url) {
-                        // 프로젝트 상세 페이지로 이동하는 경우에만 스크롤 위치 저장
-                        sessionStorage.setItem('projectScrollPosition', window.scrollY.toString());
-                      }
-                    }}
-                  >
-                    <Image
-                      src="/SVG/Visit.svg"
-                      alt="Visit"
-                      width={20}
-                      height={20}
-                      className="relative w-4 h-4 md:w-5 md:h-5"
-                      style={{ filter: isToggled ? 'brightness(0)' : 'none' }}
-                    />
-                    <span className={`relative w-fit font-nohemi font-medium text-sm md:text-base tracking-[0] leading-normal whitespace-nowrap ${isToggled ? 'text-variable-collection-black' : 'text-variable-collection-black'}`}>
-                      {activeProject.url ? 'Visit site' : 'View project'}
-                    </span>
-                  </a>
-                </div>
+                {(activeProject.url || activeProject.websiteUrl) && (
+                  <div className="inline-flex flex-col items-start justify-end gap-2.5 relative mt-auto">
+                    <a 
+                      href={activeProject.url || activeProject.websiteUrl || `/project/${activeProject.id}`}
+                      target={(activeProject.url || activeProject.websiteUrl) ? '_blank' : undefined}
+                      rel={(activeProject.url || activeProject.websiteUrl) ? 'noopener noreferrer' : undefined}
+                      className={`flex w-28 md:w-36 h-[40px] md:h-[50px] items-center justify-center gap-2 pt-2 pb-1.5 px-3 relative hover:opacity-80 transition-opacity ${isToggled ? 'bg-variable-collection-white' : 'bg-variable-collection-white'}`}
+                      style={{ borderRadius: `${borderRadius}px` }}
+                      onClick={() => {
+                        if (!activeProject.url && !activeProject.websiteUrl) {
+                          sessionStorage.setItem('projectScrollPosition', window.scrollY.toString());
+                        }
+                      }}
+                    >
+                      <Image
+                        src="/SVG/Visit.svg"
+                        alt="Visit"
+                        width={20}
+                        height={20}
+                        className="relative w-4 h-4 md:w-5 md:h-5"
+                        style={{ filter: isToggled ? 'brightness(0)' : 'none' }}
+                      />
+                      <span className={`relative w-fit font-nohemi font-medium text-sm md:text-base tracking-[0] leading-normal whitespace-nowrap ${isToggled ? 'text-variable-collection-black' : 'text-variable-collection-black'}`}>
+                        {(activeProject.url || activeProject.websiteUrl) ? 'Visit site' : 'View project'}
+                      </span>
+                    </a>
+                  </div>
+                )}
                 </div>
               </FadeInUp>
             </div>
           </div>
                   
-          {/* Right Column - Scrollable Thumbnails (4 columns) */}
+          {/* Scrollable Thumbnails Column - Position changes based on tab */}
           <div 
-            className="col-span-1 md:col-span-4 flex flex-col gap-3 md:gap-5 relative cursor-none"
+            className={`col-span-1 md:col-span-4 flex flex-col gap-3 md:gap-5 relative cursor-none ${activeTab === 'graphics' ? 'md:order-1' : ''}`}
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
           >
@@ -280,7 +373,7 @@ const Projects = ({ borderRadius, isToggled }) => {
               </div>
             )}
 
-              {projectsData.map((project, index) => (
+            {projectsData.map((project, index) => (
               <FadeInUp key={project.id} delay={index * 100} className="w-full">
                 <div
                   ref={(el) => (thumbnailRefs.current[index] = el)}
@@ -292,11 +385,29 @@ const Projects = ({ borderRadius, isToggled }) => {
                   href={`/project/${project.id}`}
                   className="w-full h-full flex items-center justify-center"
                   onClick={() => {
-                    // 현재 스크롤 위치 저장
                     sessionStorage.setItem('projectScrollPosition', window.scrollY.toString());
                   }}
                 >
-                  {project.thumbnail ? (
+                  {project.youtubeId ? (
+                    <>
+                      <Image
+                        src={`https://img.youtube.com/vi/${project.youtubeId}/maxresdefault.jpg`}
+                        alt={project.title}
+                        fill
+                        className="object-cover group-hover:scale-[1.02] transition-transform duration-300"
+                      />
+                      {/* Play button overlay */}
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors">
+                        <svg
+                          className="w-16 h-16 text-white opacity-90"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                      </div>
+                    </>
+                  ) : project.thumbnail ? (
                     <Image
                       src={project.thumbnail}
                       alt={project.title}
@@ -315,9 +426,11 @@ const Projects = ({ borderRadius, isToggled }) => {
                   <h3 className={`font-nohemi font-normal text-2xl tracking-[0] leading-tight ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}>
                     {project.title}
                   </h3>
-                  <p className={`font-nohemi font-normal text-lg tracking-[0] leading-snug ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}>
-                    {project.description}
-                  </p>
+                  {project.description && (
+                    <p className={`font-nohemi font-normal text-lg tracking-[0] leading-snug ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}>
+                      {project.description}
+                    </p>
+                  )}
                   <time className={`font-nohemi font-normal text-base tracking-[0] leading-normal ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}>
                     {project.date}
                   </time>
@@ -331,14 +444,13 @@ const Projects = ({ borderRadius, isToggled }) => {
                     ))}
                   </div>
                   <a 
-                    href={project.url || `/project/${project.id}`}
-                    target={project.url ? '_blank' : undefined}
-                    rel={project.url ? 'noopener noreferrer' : undefined}
+                    href={project.url || project.websiteUrl || `/project/${project.id}`}
+                    target={(project.url || project.websiteUrl) ? '_blank' : undefined}
+                    rel={(project.url || project.websiteUrl) ? 'noopener noreferrer' : undefined}
                     className={`flex w-fit h-[40px] items-center justify-center gap-2 px-3 mt-2 hover:opacity-80 transition-opacity bg-variable-collection-white`}
                     style={{ borderRadius: `${borderRadius}px` }}
                     onClick={() => {
-                      if (!project.url) {
-                        // 프로젝트 상세 페이지로 이동하는 경우에만 스크롤 위치 저장
+                      if (!project.url && !project.websiteUrl) {
                         sessionStorage.setItem('projectScrollPosition', window.scrollY.toString());
                       }
                     }}
@@ -352,141 +464,40 @@ const Projects = ({ borderRadius, isToggled }) => {
                       style={{ filter: isToggled ? 'brightness(0)' : 'none' }}
                     />
                     <span className="font-nohemi font-medium text-sm text-variable-collection-black whitespace-nowrap">
-                      {project.url ? 'Visit site' : 'View project'}
+                      {(project.url || project.websiteUrl) ? 'Visit site' : 'View project'}
                     </span>
                   </a>
                 </div>
               </div>
               </FadeInUp>
             ))}
-          </div>
-        </div>
-      </section>
 
-      {/* Graphics Section */}
-      <section id="graphics" className={`w-full relative px-[20px] md:px-[80px] pb-10 md:pb-20 transition-colors duration-300 ${isToggled ? 'bg-variable-collection-black' : 'bg-variable-collection-background'}`}>
-        <div className="grid grid-cols-1 md:grid-cols-6 gap-3 md:gap-5 relative">
-          {/* Section Title */}
-          <div className="col-span-1 md:col-span-6 mb-10 md:mb-20">
-            <FadeInUp className="w-full">
-              <h2 className={`font-mango-grotesque font-semibold italic text-4xl md:text-6xl lg:text-8xl tracking-[0] leading-normal whitespace-nowrap transition-colors duration-300 ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}>
-                What graphics I make
-              </h2>
-            </FadeInUp>
-          </div>
-
-          {/* Graphics Grid Layout */}
-          <div 
-            className="col-span-1 md:col-span-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 relative cursor-none"
-            onMouseEnter={() => setIsHovering(true)}
-            onMouseLeave={() => setIsHovering(false)}
-          >
-            {/* Custom Cursor for Graphics */}
-            {isHovering && (
-              <div 
-                className="hidden md:block fixed pointer-events-none z-50 transform -translate-x-1/2 -translate-y-1/2"
-                style={{ 
-                  left: `${mousePosition.x}px`, 
-                  top: `${mousePosition.y}px` 
-                }}
-              >
-                <Image 
-                  src="/SVG/viewPortfolio.svg" 
-                  alt="View Portfolio" 
-                  width={123} 
-                  height={24.5} 
-                />
-              </div>
-            )}
-
-            {(() => {
-              // 날짜를 파싱하여 정렬 (오래된 게 오른쪽 아래에 오도록 역순 정렬)
-              const parseDate = (dateStr) => {
-                // 날짜 형식: "2023/03~2023/05" 또는 "03/2025~04/2025" 또는 "05/2023~08/2023"
-                const startDate = dateStr.split('~')[0].trim().split(' ')[0]
-                if (startDate.includes('/')) {
-                  const parts = startDate.split('/')
-                  if (parts[0].length === 4) {
-                    // "2023/03" 형식
-                    return new Date(parseInt(parts[0]), parseInt(parts[1]) - 1)
-                  } else {
-                    // "03/2025" 형식
-                    return new Date(parseInt(parts[1]), parseInt(parts[0]) - 1)
-                  }
-                }
-                return new Date(0)
-              }
-              
-              // 날짜 기준으로 정렬 (최신 것부터, 오래된 것이 오른쪽 아래에 오도록)
-              const sortedProjects = [...graphicsProjectsData].sort((a, b) => {
-                const dateA = parseDate(a.date)
-                const dateB = parseDate(b.date)
-                return dateB.getTime() - dateA.getTime() // 역순 정렬
-              })
-              
-              return sortedProjects
-            })().map((project, index) => (
-              <FadeInUp key={project.id} delay={index * 80} className="w-full">
-                <div
-                  className="flex flex-col gap-4"
-                >
-                {/* Thumbnail */}
-                <Link
-                  href={`/project/${project.id}`}
-                  className="relative w-full aspect-video bg-variable-collection-white rounded-lg overflow-hidden group transition-all duration-300 hover:opacity-90 block"
-                  style={{ borderRadius: `${borderRadius}px` }}
+            {/* Navigation Button to Other Tab */}
+            {projectsData.length > 0 && (
+              <FadeInUp delay={projectsData.length * 100} className="w-full flex justify-end mt-10 md:mt-20">
+                <button
                   onClick={() => {
-                    // 현재 스크롤 위치 저장
-                    sessionStorage.setItem('projectScrollPosition', window.scrollY.toString());
+                    setActiveTab(activeTab === 'uxui' ? 'graphics' : 'uxui');
+                    window.scrollTo({ top: document.getElementById('projects').offsetTop, behavior: 'smooth' });
                   }}
+                  className="flex items-center justify-center gap-4 px-8 py-4 bg-variable-collection-yellow hover:opacity-90 transition-all duration-300 group"
+                  style={{ borderRadius: `${borderRadius}px` }}
                 >
-                  {project.youtubeId ? (
-                    <>
-                      <Image
-                        src={`https://img.youtube.com/vi/${project.youtubeId}/maxresdefault.jpg`}
-                        alt={project.title}
-                        fill
-                        className="object-cover"
-                      />
-                      {/* Play button overlay */}
-                      <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors">
-                        <svg
-                          className="w-16 h-16 text-white opacity-90"
-                          fill="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path d="M8 5v14l11-7z" />
-                        </svg>
-                      </div>
-                    </>
-                  ) : (
-                    project.thumbnail && (
-                      <Image
-                        src={project.thumbnail}
-                        alt={project.title}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    )
-                  )}
-                </Link>
-                {/* Title and Tags */}
-                <div className="flex flex-col gap-2">
-                  <h3 className={`font-nohemi font-normal text-lg md:text-2xl tracking-[0] leading-normal ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}>
-                    {project.title}
-                  </h3>
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-2">
-                    {project.tags.map((tag, i) => (
-                      <span key={i} className={`text-xs px-2 py-1 rounded-full ${isToggled ? 'bg-white/10 text-white' : 'bg-gray-100 text-gray-600'}`}>
-                        {tag}
-                      </span>
-                    ))}
+                  <span className="font-mango-grotesque font-medium text-3xl md:text-5xl text-variable-collection-black">
+                    Check my {activeTab === 'uxui' ? 'graphic' : 'UX/UI'} works too!
+                  </span>
+                  <div className="w-8 md:w-12 h-8 md:h-12 flex items-center justify-center group-hover:translate-x-2 transition-transform duration-300">
+                    <Image
+                      src="/SVG/arrow.svg"
+                      alt="Arrow"
+                      width={40}
+                      height={40}
+                      className="w-6 md:w-10 h-auto"
+                    />
                   </div>
-                </div>
-              </div>
+                </button>
               </FadeInUp>
-            ))}
+            )}
           </div>
         </div>
       </section>

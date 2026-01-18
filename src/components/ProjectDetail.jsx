@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useLenis } from 'lenis/react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import HTMLFlipBook from 'react-pageflip';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
@@ -10,7 +11,8 @@ import 'react-pdf/dist/Page/TextLayer.css';
 
 const ProjectDetail = ({ id }) => {
   const router = useRouter();
-  
+  const lenis = useLenis();
+
   // PDF.js worker 설정
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -20,8 +22,12 @@ const ProjectDetail = ({ id }) => {
   
   // 페이지 진입 시 최상단으로 스크롤
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [id]);
+    if (lenis) {
+      lenis.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [id, lenis]);
 
   // 공통 Back 핸들러: 저장된 스크롤 위치로 복원
   const handleBack = () => {
@@ -31,7 +37,12 @@ const ProjectDetail = ({ id }) => {
     // 라우팅 후 스크롤 위치 복원
     setTimeout(() => {
       if (savedScrollPosition) {
-        window.scrollTo(0, parseInt(savedScrollPosition, 10));
+        const scrollPos = parseInt(savedScrollPosition, 10);
+        if (lenis) {
+          lenis.scrollTo(scrollPos, { immediate: true });
+        } else {
+          window.scrollTo(0, scrollPos);
+        }
         sessionStorage.removeItem('projectScrollPosition');
       }
     }, 100);
@@ -379,10 +390,10 @@ const ProjectDetail = ({ id }) => {
     return (
       <div className="w-full">
         {/* 고정된 이전 버튼 */}
-        <button
-          onClick={handleBack}
+          <button
+            onClick={handleBack}
           className="fixed top-[20px] md:top-[40px] left-[20px] md:left-[40px] z-50 flex items-center justify-center hover:opacity-80 transition-all duration-300"
-        >
+          >
             <Image
               src="/SVG/arrow.svg"
               alt="Back"
@@ -422,8 +433,8 @@ const ProjectDetail = ({ id }) => {
                     className="relative"
                   />
                     <span className="relative w-fit font-nohemi font-medium text-sm md:text-base tracking-[0] leading-normal whitespace-nowrap text-variable-collection-black">
-                      Visit site
-                    </span>
+                    Visit site
+                  </span>
                 </a>
               </div>
             </div>
@@ -621,7 +632,7 @@ const ProjectDetail = ({ id }) => {
   if (id === 'fromalleywithlove') {
     const fromalleyData = {
       title: 'From Alley With Love',
-      description: '',
+      description: 'Taking inspiration from street signs, I created a location poster for the print shop. Using elements like the word "OPEN", printer-shaped graphics, and the actual form of yellow street signs, I designed an eye-catching poster to promote the print shop. I used 12-color risography printing, which allowed me to fully understand the risograph printing process.',
       date: '03/2025~04/2025',
       tags: ['Graphic design', 'Web design'],
       url: 'https://chaeyeon-jin.github.io/fromalleywithlove/'
@@ -837,7 +848,7 @@ const ProjectDetail = ({ id }) => {
     const happyNewYearData = {
       title: '2024 happy new year!',
       date: '2023/12 ~ 2024/01',
-      tags: ['Graphic design']
+      tags: ['Graphic design', 'Risography']
     };
 
     return (
@@ -1097,6 +1108,117 @@ const ProjectDetail = ({ id }) => {
     );
   }
 
+  if (id === 'marinecreatures') {
+    const marinecreaturesData = {
+      title: 'Marine creatures',
+      description: 'Marine Creatures is a digital archive inspired by my love for scuba diving and my desire to better understand marine life. Through a simple grid layout and pixel art aesthetic, the site introduces 24 species, each with a brief profile including name, classification, and description. The project focuses on creating a playful and accessible experience, allowing users to explore the ocean world without barriers.',
+      date: '04/2023 ~ 06/2023',
+      tags: ['Graphic design', 'Web design'],
+      url: 'https://chaeyeon-jin.github.io/marine_creatures/'
+    };
+
+    return (
+      <div className="w-full">
+        {/* 고정된 이전 버튼 */}
+        <button
+          onClick={handleBack}
+          className="fixed top-[20px] md:top-[40px] left-[20px] md:left-[40px] z-50 flex items-center justify-center hover:opacity-80 transition-all duration-300"
+        >
+            <Image
+              src="/SVG/arrow.svg"
+              alt="Back"
+              width={99}
+              height={61}
+              className="rotate-180 w-16 h-10 md:w-[99px] md:h-[61px]"
+            />
+          </button>
+        {/* 프로젝트 설명 - 그리드 시스템 */}
+        <div className="w-full px-[20px] pt-[80px] md:pt-6 md:pl-[180px] md:pr-[80px] py-6 md:py-[46px] bg-variable-collection-background">
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-x-3 md:gap-x-5">
+            {/* 왼쪽 3칸 - 제목, 설명, 웹사이트 (세로 배치) */}
+            <div className="col-span-1 md:col-span-3 flex flex-col gap-4 md:gap-[22px]">
+              {/* 제목 */}
+              <h3 className="font-nohemi font-normal text-2xl md:text-3xl tracking-[0] leading-tight md:leading-[36px] text-variable-collection-black">
+                {marinecreaturesData.title}
+              </h3>
+
+              {/* 설명 */}
+              <p className="font-nohemi font-normal text-base md:text-xl tracking-[0] leading-snug md:leading-[24px] text-variable-collection-black">
+                {marinecreaturesData.description}
+              </p>
+
+              {/* Visit site 버튼 */}
+              <div className="inline-flex items-start justify-start">
+                <a 
+                  href={marinecreaturesData.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex w-28 md:w-36 h-[40px] md:h-[50px] items-center justify-center gap-2 pt-2 pb-1.5 px-3 bg-variable-collection-white hover:opacity-80 transition-opacity rounded-[60px]"
+                >
+                  <Image
+                    src="/SVG/Visit.svg"
+                    alt="Visit"
+                    width={20}
+                    height={20}
+                    className="relative"
+                  />
+                    <span className="relative w-fit font-nohemi font-medium text-sm md:text-base tracking-[0] leading-normal whitespace-nowrap text-variable-collection-black">
+                      Visit site
+                    </span>
+                </a>
+              </div>
+            </div>
+
+            {/* 오른쪽 3칸 - 기간, 태그 (세로 배치) */}
+            <div className="col-span-1 md:col-span-3 flex flex-col gap-4 md:gap-[22px]">
+              {/* 날짜 */}
+              <time className="font-nohemi font-normal text-lg md:text-2xl tracking-[0] leading-normal md:leading-[24.3px] text-variable-collection-black">
+                {marinecreaturesData.date}
+              </time>
+
+              {/* 태그들 */}
+              <div className="inline-flex items-start gap-2 flex-wrap">
+                {marinecreaturesData.tags.map((tag, index) => (
+                  <div key={index} className="inline-flex items-center gap-1.5">
+                    <span className="flex w-fit items-center justify-center gap-1.5 pt-1.5 md:pt-2 pb-1 md:pb-1.5 px-2 md:px-3 bg-variable-collection-yellow rounded-[20px]">
+                      <span className="relative w-fit font-nohemi font-medium text-variable-collection-black text-xs md:text-sm tracking-[0] leading-normal whitespace-nowrap">
+                        {tag}
+                      </span>
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 포트폴리오 이미지들 - 여백 없이 맨 위부터 꽉 차게 */}
+        <div className="w-full">
+          <Image
+            src="/graphics/marinecreatures/marincreatures1.png"
+            alt="marinecreatures 1"
+            width={1920}
+            height={1080}
+            className="w-full h-auto"
+            priority
+          />
+          
+          {/* Website Preview */}
+          <div className="w-full px-[20px] md:pl-[180px] md:pr-[80px] py-8 md:py-[60px] bg-variable-collection-background">
+            <div className="w-full h-[400px] md:h-[600px] lg:h-[800px] border border-gray-200 rounded-lg overflow-hidden">
+              <iframe
+                src="https://chaeyeon-jin.github.io/marine_creatures/"
+                className="w-full h-full"
+                title="Marine Creatures Website Preview"
+                allow="fullscreen"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (id === 'hut') {
     const hutData = {
       title: 'HUT',
@@ -1216,6 +1338,128 @@ const ProjectDetail = ({ id }) => {
     );
   }
 
+
+  if (id === 'print-in-progress') {
+    const pipData = {
+      title: 'Print in progress',
+      description: 'Taking inspiration from street signs, I created a location poster for the print shop. Using elements like the word "OPEN", printer-shaped graphics, and the actual form of yellow street signs, I designed an eye-catching poster to promote the print shop. I used 12-color risography printing, which allowed me to fully understand the risograph printing process.',
+      date: '2025/02~2025/03',
+      tags: ['Graphic design', 'Risography']
+    };
+
+    return (
+      <div className="w-full">
+        {/* 고정된 이전 버튼 */}
+        <button
+          onClick={handleBack}
+          className="fixed top-[20px] md:top-[40px] left-[20px] md:left-[40px] z-50 flex items-center justify-center hover:opacity-80 transition-all duration-300"
+        >
+            <Image
+              src="/SVG/arrow.svg"
+              alt="Back"
+              width={99}
+              height={61}
+              className="rotate-180 w-16 h-10 md:w-[99px] md:h-[61px]"
+            />
+          </button>
+        {/* 프로젝트 설명 - 그리드 시스템 */}
+        <div className="w-full px-[20px] pt-[80px] md:pt-6 md:pl-[180px] md:pr-[80px] py-6 md:py-[46px] bg-variable-collection-background">
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-x-3 md:gap-x-5">
+            {/* 왼쪽 3칸 - 제목, 설명 (세로 배치) */}
+            <div className="col-span-1 md:col-span-3 flex flex-col gap-4 md:gap-[22px]">
+              {/* 제목 */}
+              <h3 className="font-nohemi font-normal text-2xl md:text-3xl tracking-[0] leading-tight md:leading-[36px] text-variable-collection-black">
+                {pipData.title}
+              </h3>
+
+              {/* 설명 */}
+              {pipData.description && (
+                <p className="font-nohemi font-normal text-base md:text-xl tracking-[0] leading-snug md:leading-[24px] text-variable-collection-black">
+                  {pipData.description}
+                </p>
+              )}
+            </div>
+
+            {/* 오른쪽 3칸 - 기간, 태그 (세로 배치) */}
+            <div className="col-span-1 md:col-span-3 flex flex-col gap-4 md:gap-[22px]">
+              {/* 날짜 */}
+              <time className="font-nohemi font-normal text-lg md:text-2xl tracking-[0] leading-normal md:leading-[24.3px] text-variable-collection-black">
+                {pipData.date}
+              </time>
+
+              {/* 태그들 */}
+              <div className="inline-flex items-start gap-2 flex-wrap">
+                {pipData.tags.map((tag, index) => (
+                  <div key={index} className="inline-flex items-center gap-1.5">
+                    <span className="flex w-fit items-center justify-center gap-1.5 pt-1.5 md:pt-2 pb-1 md:pb-1.5 px-2 md:px-3 bg-variable-collection-yellow rounded-[20px]">
+                      <span className="relative w-fit font-nohemi font-medium text-variable-collection-black text-xs md:text-sm tracking-[0] leading-normal whitespace-nowrap">
+                        {tag}
+                      </span>
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 포트폴리오 이미지들 */}
+        {/* 썸네일 이미지 - 크게 표시 */}
+        <div className="w-full">
+          <div className="relative w-full flex items-center justify-center bg-variable-collection-background">
+            <div className="relative w-full max-w-full">
+              <Image
+                src="/graphics/PIP/pipthumbnail.jpeg"
+                alt="Print in progress thumbnail"
+                width={1920}
+                height={1080}
+                className="w-full h-auto object-contain"
+                priority
+              />
+            </div>
+          </div>
+        </div>
+        
+        {/* pip1~4 이미지들 - 한 줄에 여백 없이 배치 */}
+        <div className="w-full">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-0">
+            <div className="relative w-full aspect-square overflow-hidden">
+              <Image
+                src="/graphics/PIP/pip1.jpg"
+                alt="Print in progress 1"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="relative w-full aspect-square overflow-hidden">
+              <Image
+                src="/graphics/PIP/pip2.jpeg"
+                alt="Print in progress 2"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="relative w-full aspect-square overflow-hidden">
+              <Image
+                src="/graphics/PIP/pip3.jpeg"
+                alt="Print in progress 3"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="relative w-full aspect-square overflow-hidden">
+              <Image
+                src="/graphics/PIP/pip4.jpeg"
+                alt="Print in progress 4"
+                fill
+                className="object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
   if (id === 'atr') {
     const atrData = {
       title: 'Affection to rent',
