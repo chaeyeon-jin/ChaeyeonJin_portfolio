@@ -3,15 +3,17 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useLenis } from 'lenis/react'
 import FadeInUp from './FadeInUp'
 
 const Projects = ({ borderRadius, isToggled }) => {
   const [activeTab, setActiveTab] = useState('uxui')
   const [activeProjectIndex, setActiveProjectIndex] = useState(0)
   const thumbnailRefs = useRef([])
+  const projectsSectionRef = useRef(null)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [isHovering, setIsHovering] = useState(false)
-  const pendingScrollToFirstRef = useRef(false)
+  const lenis = useLenis()
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -194,28 +196,17 @@ const Projects = ({ borderRadius, isToggled }) => {
     setActiveProjectIndex(0)
   }, [activeTab])
 
-  // Scroll to first thumbnail after tab switch
-  useEffect(() => {
-    if (!pendingScrollToFirstRef.current) return
-
-    let attempts = 0
-    const tryScroll = () => {
-      const firstThumbnail = thumbnailRefs.current[0]
-      if (firstThumbnail) {
-        firstThumbnail.scrollIntoView({ behavior: 'smooth', block: 'start' })
-        pendingScrollToFirstRef.current = false
-        return
-      }
-      attempts += 1
-      if (attempts < 10) {
-        requestAnimationFrame(tryScroll)
+  const scrollToProjectsTop = () => {
+    // Hero 섹션 바로 아래로 스크롤 (Projects 섹션 시작 위치)
+    if (projectsSectionRef.current) {
+      const projectsTop = projectsSectionRef.current.getBoundingClientRect().top + window.scrollY
+      if (lenis) {
+        lenis.scrollTo(projectsTop, { duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) })
       } else {
-        pendingScrollToFirstRef.current = false
+        window.scrollTo({ top: projectsTop, behavior: 'smooth' })
       }
     }
-
-    requestAnimationFrame(tryScroll)
-  }, [activeTab, projectsData])
+  }
 
   // Intersection Observer + scroll fallback for active project detection
   useEffect(() => {
@@ -291,7 +282,11 @@ const Projects = ({ borderRadius, isToggled }) => {
   return (
     <>
       {/* Unified Projects Section */}
-      <section id="projects" className={`w-full relative px-[20px] md:px-[80px] pb-10 md:pb-20 transition-colors duration-300 ${isToggled ? 'bg-variable-collection-black' : 'bg-variable-collection-background'}`}>
+      <section
+        id="projects"
+        ref={projectsSectionRef}
+        className={`w-full relative px-[20px] md:px-[80px] pb-10 md:pb-20 transition-colors duration-300 ${isToggled ? 'bg-variable-collection-black' : 'bg-variable-collection-background'}`}
+      >
         <div className="grid grid-cols-1 md:grid-cols-6 gap-3 md:gap-5 relative">
           {/* Section Title */}
           <div className="col-span-1 md:col-span-6 mb-6 md:mb-10">
@@ -534,10 +529,12 @@ const Projects = ({ borderRadius, isToggled }) => {
                 <button
                   onClick={() => {
                     const newTab = activeTab === 'uxui' ? 'graphics' : 'uxui';
-                    pendingScrollToFirstRef.current = true;
-                    thumbnailRefs.current = [];
                     setActiveTab(newTab);
                     setActiveProjectIndex(0);
+                    // DOM 업데이트 후 스크롤
+                    setTimeout(() => {
+                      scrollToProjectsTop();
+                    }, 50);
                   }}
                   className="flex items-center justify-center gap-4 px-8 py-4 bg-variable-collection-yellow hover:opacity-90 transition-all duration-300 group"
                   style={{ borderRadius: `${borderRadius}px` }}
