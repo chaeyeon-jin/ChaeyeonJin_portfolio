@@ -11,6 +11,7 @@ const Projects = ({ borderRadius, isToggled }) => {
   const thumbnailRefs = useRef([])
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [isHovering, setIsHovering] = useState(false)
+  const pendingScrollToFirstRef = useRef(false)
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -192,6 +193,29 @@ const Projects = ({ borderRadius, isToggled }) => {
   useEffect(() => {
     setActiveProjectIndex(0)
   }, [activeTab])
+
+  // Scroll to first thumbnail after tab switch
+  useEffect(() => {
+    if (!pendingScrollToFirstRef.current) return
+
+    let attempts = 0
+    const tryScroll = () => {
+      const firstThumbnail = thumbnailRefs.current[0]
+      if (firstThumbnail) {
+        firstThumbnail.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        pendingScrollToFirstRef.current = false
+        return
+      }
+      attempts += 1
+      if (attempts < 10) {
+        requestAnimationFrame(tryScroll)
+      } else {
+        pendingScrollToFirstRef.current = false
+      }
+    }
+
+    requestAnimationFrame(tryScroll)
+  }, [activeTab, projectsData])
 
   // Intersection Observer + scroll fallback for active project detection
   useEffect(() => {
@@ -510,15 +534,10 @@ const Projects = ({ borderRadius, isToggled }) => {
                 <button
                   onClick={() => {
                     const newTab = activeTab === 'uxui' ? 'graphics' : 'uxui';
+                    pendingScrollToFirstRef.current = true;
+                    thumbnailRefs.current = [];
                     setActiveTab(newTab);
                     setActiveProjectIndex(0);
-                    // 탭 전환 후 첫 번째 썸네일로 스크롤
-                    setTimeout(() => {
-                      const firstThumbnail = thumbnailRefs.current[0];
-                      if (firstThumbnail) {
-                        firstThumbnail.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                      }
-                    }, 100);
                   }}
                   className="flex items-center justify-center gap-4 px-8 py-4 bg-variable-collection-yellow hover:opacity-90 transition-all duration-300 group"
                   style={{ borderRadius: `${borderRadius}px` }}
