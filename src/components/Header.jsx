@@ -17,13 +17,7 @@ const Header = ({ isToggled, borderRadius }) => {
           href="#projects" 
           className={`font-nohemi font-normal text-sm lg:text-lg tracking-[0] leading-normal whitespace-nowrap cursor-pointer hover:opacity-80 transition-opacity ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}
         >
-          UX/UI
-        </Link>
-        <Link 
-          href="#graphics" 
-          className={`font-nohemi font-normal text-sm lg:text-lg tracking-[0] leading-normal whitespace-nowrap cursor-pointer hover:opacity-80 transition-opacity ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}
-        >
-          Graphics
+          Works
         </Link>
         <Link 
           href="#about" 
@@ -71,14 +65,7 @@ const Header = ({ isToggled, borderRadius }) => {
             onClick={() => setIsMenuOpen(false)}
             className={`font-nohemi font-normal text-base tracking-[0] leading-normal whitespace-nowrap cursor-pointer hover:opacity-80 transition-opacity ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}
           >
-            UX/UI
-          </Link>
-          <Link 
-            href="#graphics" 
-            onClick={() => setIsMenuOpen(false)}
-            className={`font-nohemi font-normal text-base tracking-[0] leading-normal whitespace-nowrap cursor-pointer hover:opacity-80 transition-opacity ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}
-          >
-            Graphics
+            Works
           </Link>
           <Link 
             href="#about" 

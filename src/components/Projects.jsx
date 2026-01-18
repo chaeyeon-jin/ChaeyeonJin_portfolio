@@ -193,12 +193,12 @@ const Projects = ({ borderRadius, isToggled }) => {
     setActiveProjectIndex(0)
   }, [activeTab])
 
-  // Intersection Observer setup for active project detection
+  // Intersection Observer + scroll fallback for active project detection
   useEffect(() => {
     const observerOptions = {
       root: null,
-      rootMargin: '-20% 0px -20% 0px',
-      threshold: 0.5
+      rootMargin: '-35% 0px -35% 0px',
+      threshold: 0.2
     }
 
     const observerCallback = (entries) => {
@@ -214,12 +214,38 @@ const Projects = ({ borderRadius, isToggled }) => {
 
     const observer = new IntersectionObserver(observerCallback, observerOptions)
 
+    const updateActiveByScroll = () => {
+      const viewportCenter = window.innerHeight * 0.5
+      let closestIndex = 0
+      let closestDistance = Infinity
+
+      thumbnailRefs.current.forEach((ref, index) => {
+        if (!ref) return
+        const rect = ref.getBoundingClientRect()
+        const cardCenter = rect.top + rect.height / 2
+        const distance = Math.abs(cardCenter - viewportCenter)
+        if (distance < closestDistance) {
+          closestDistance = distance
+          closestIndex = index
+        }
+      })
+
+      if (closestIndex !== activeProjectIndex) {
+        setActiveProjectIndex(closestIndex)
+      }
+    }
+
     // Observe all thumbnail cards
     thumbnailRefs.current.forEach((ref) => {
       if (ref) {
         observer.observe(ref)
       }
     })
+
+    // Scroll fallback (handles upward scrolling)
+    window.addEventListener('scroll', updateActiveByScroll, { passive: true })
+    window.addEventListener('resize', updateActiveByScroll)
+    updateActiveByScroll()
 
     // Cleanup
     return () => {
@@ -228,11 +254,15 @@ const Projects = ({ borderRadius, isToggled }) => {
           observer.unobserve(ref)
         }
       })
+      window.removeEventListener('scroll', updateActiveByScroll)
+      window.removeEventListener('resize', updateActiveByScroll)
     }
-  }, [projectsData])
+  }, [projectsData, activeProjectIndex])
 
-  // Get current active project
-  const activeProject = projectsData[activeProjectIndex]
+  // Get current active project - ensure it exists
+  const activeProject = projectsData && projectsData.length > 0 && activeProjectIndex >= 0 && activeProjectIndex < projectsData.length 
+    ? projectsData[activeProjectIndex] 
+    : (projectsData && projectsData.length > 0 ? projectsData[0] : null)
 
   return (
     <>
@@ -282,72 +312,74 @@ const Projects = ({ borderRadius, isToggled }) => {
           </div>
 
           {/* Sticky Description Column - Position changes based on tab */}
-          <div className={`col-span-1 md:col-span-2 relative mb-5 md:mb-0 hidden md:block ${activeTab === 'graphics' ? 'md:order-2' : ''}`}>
-            <div className="sticky top-[100px] md:top-[120px] pr-0 md:pr-5">
-              <FadeInUp delay={200} className="w-full">
-                <div 
-                  key={`${activeTab}-${activeProjectIndex}`}
-                  className={`flex flex-col items-start justify-start gap-4 md:gap-[22px] px-4 md:px-[46px] py-4 md:py-[46px] transition-all duration-300 ease-in-out ${isToggled ? 'bg-variable-collection-black' : 'bg-variable-collection-background'}`}
-                  style={{ opacity: 1, borderRadius: `${borderRadius}px` }}
-                >
-                <h3 className={`relative w-full font-nohemi font-normal text-2xl md:text-4xl lg:text-5xl tracking-[0] leading-tight md:leading-[48.5px] ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}>
-                  {activeProject.title}
-                </h3>
+          {activeProject && (
+            <div className={`col-span-1 md:col-span-2 relative mb-5 md:mb-0 hidden md:block ${activeTab === 'graphics' ? 'md:order-2' : ''}`}>
+              <div className="sticky top-[100px] md:top-[120px] pr-0 md:pr-5">
+                <FadeInUp delay={200} className="w-full">
+                  <div 
+                    key={`${activeTab}-${activeProjectIndex}`}
+                    className={`flex flex-col items-start justify-start gap-4 md:gap-[22px] px-4 md:px-[46px] py-4 md:py-[46px] transition-all duration-300 ease-in-out ${isToggled ? 'bg-variable-collection-black' : 'bg-variable-collection-background'}`}
+                    style={{ opacity: 1, borderRadius: `${borderRadius}px` }}
+                  >
+                  <h3 className={`relative w-full font-nohemi font-normal text-2xl md:text-4xl lg:text-5xl tracking-[0] leading-tight md:leading-[48.5px] ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}>
+                    {activeProject.title}
+                  </h3>
 
-                {activeProject.description && (
-                  <p className={`relative w-full font-nohemi font-normal text-lg md:text-2xl lg:text-[32px] tracking-[0] leading-snug md:leading-[32.3px] ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}>
-                    {activeProject.description}
-                  </p>
-                )}
+                  {activeProject.description && (
+                    <p className={`relative w-full font-nohemi font-normal text-lg md:text-2xl lg:text-[32px] tracking-[0] leading-snug md:leading-[32.3px] ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}>
+                      {activeProject.description}
+                    </p>
+                  )}
 
-                <time className={`relative w-full font-nohemi font-normal text-base md:text-xl lg:text-2xl tracking-[0] leading-normal md:leading-[24.3px] ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}>
-                  {activeProject.date}
-                </time>
+                  <time className={`relative w-full font-nohemi font-normal text-base md:text-xl lg:text-2xl tracking-[0] leading-normal md:leading-[24.3px] ${isToggled ? 'text-variable-collection-white' : 'text-variable-collection-black'}`}>
+                    {activeProject.date}
+                  </time>
 
-                <div className="inline-flex items-start gap-2 relative flex-[0_0_auto] flex-wrap">
-                  {activeProject.tags.map((tag, index) => (
-                    <div key={index} className="inline-flex items-center gap-1.5 relative flex-[0_0_auto]">
-                      <span className="flex w-fit items-center justify-center gap-1.5 pt-1.5 md:pt-2 pb-1 md:pb-1.5 px-2 md:px-3 relative bg-variable-collection-yellow rounded-[20px]">
-                        <span className="relative w-fit font-nohemi font-medium text-variable-collection-black text-xs md:text-sm tracking-[0] leading-normal whitespace-nowrap">
-                          {tag}
+                  <div className="inline-flex items-start gap-2 relative flex-[0_0_auto] flex-wrap">
+                    {activeProject.tags && activeProject.tags.map((tag, index) => (
+                      <div key={index} className="inline-flex items-center gap-1.5 relative flex-[0_0_auto]">
+                        <span className="flex w-fit items-center justify-center gap-1.5 pt-1.5 md:pt-2 pb-1 md:pb-1.5 px-2 md:px-3 relative bg-variable-collection-yellow rounded-[20px]">
+                          <span className="relative w-fit font-nohemi font-medium text-variable-collection-black text-xs md:text-sm tracking-[0] leading-normal whitespace-nowrap">
+                            {tag}
+                          </span>
                         </span>
-                      </span>
-                    </div>
-                  ))}
-                </div>
-
-                {(activeProject.url || activeProject.websiteUrl) && (
-                  <div className="inline-flex flex-col items-start justify-end gap-2.5 relative mt-auto">
-                    <a 
-                      href={activeProject.url || activeProject.websiteUrl || `/project/${activeProject.id}`}
-                      target={(activeProject.url || activeProject.websiteUrl) ? '_blank' : undefined}
-                      rel={(activeProject.url || activeProject.websiteUrl) ? 'noopener noreferrer' : undefined}
-                      className={`flex w-28 md:w-36 h-[40px] md:h-[50px] items-center justify-center gap-2 pt-2 pb-1.5 px-3 relative hover:opacity-80 transition-opacity ${isToggled ? 'bg-variable-collection-white' : 'bg-variable-collection-white'}`}
-                      style={{ borderRadius: `${borderRadius}px` }}
-                      onClick={() => {
-                        if (!activeProject.url && !activeProject.websiteUrl) {
-                          sessionStorage.setItem('projectScrollPosition', window.scrollY.toString());
-                        }
-                      }}
-                    >
-                      <Image
-                        src="/SVG/Visit.svg"
-                        alt="Visit"
-                        width={20}
-                        height={20}
-                        className="relative w-4 h-4 md:w-5 md:h-5"
-                        style={{ filter: isToggled ? 'brightness(0)' : 'none' }}
-                      />
-                      <span className={`relative w-fit font-nohemi font-medium text-sm md:text-base tracking-[0] leading-normal whitespace-nowrap ${isToggled ? 'text-variable-collection-black' : 'text-variable-collection-black'}`}>
-                        {(activeProject.url || activeProject.websiteUrl) ? 'Visit site' : 'View project'}
-                      </span>
-                    </a>
+                      </div>
+                    ))}
                   </div>
-                )}
-                </div>
-              </FadeInUp>
+
+                  {(activeProject.url || activeProject.websiteUrl) && (
+                    <div className="inline-flex flex-col items-start justify-end gap-2.5 relative mt-auto">
+                      <a 
+                        href={activeProject.url || activeProject.websiteUrl || `/project/${activeProject.id}`}
+                        target={(activeProject.url || activeProject.websiteUrl) ? '_blank' : undefined}
+                        rel={(activeProject.url || activeProject.websiteUrl) ? 'noopener noreferrer' : undefined}
+                        className={`flex w-28 md:w-36 h-[40px] md:h-[50px] items-center justify-center gap-2 pt-2 pb-1.5 px-3 relative hover:opacity-80 transition-opacity ${isToggled ? 'bg-variable-collection-white' : 'bg-variable-collection-white'}`}
+                        style={{ borderRadius: `${borderRadius}px` }}
+                        onClick={() => {
+                          if (!activeProject.url && !activeProject.websiteUrl) {
+                            sessionStorage.setItem('projectScrollPosition', window.scrollY.toString());
+                          }
+                        }}
+                      >
+                        <Image
+                          src="/SVG/Visit.svg"
+                          alt="Visit"
+                          width={20}
+                          height={20}
+                          className="relative w-4 h-4 md:w-5 md:h-5"
+                          style={{ filter: isToggled ? 'brightness(0)' : 'none' }}
+                        />
+                        <span className={`relative w-fit font-nohemi font-medium text-sm md:text-base tracking-[0] leading-normal whitespace-nowrap ${isToggled ? 'text-variable-collection-black' : 'text-variable-collection-black'}`}>
+                          {(activeProject.url || activeProject.websiteUrl) ? 'Visit site' : 'View project'}
+                        </span>
+                      </a>
+                    </div>
+                  )}
+                  </div>
+                </FadeInUp>
+              </div>
             </div>
-          </div>
+          )}
                   
           {/* Scrollable Thumbnails Column - Position changes based on tab */}
           <div 
@@ -473,12 +505,20 @@ const Projects = ({ borderRadius, isToggled }) => {
             ))}
 
             {/* Navigation Button to Other Tab */}
-            {projectsData.length > 0 && (
+            {projectsData && projectsData.length > 0 && (
               <FadeInUp delay={projectsData.length * 100} className="w-full flex justify-end mt-10 md:mt-20">
                 <button
                   onClick={() => {
-                    setActiveTab(activeTab === 'uxui' ? 'graphics' : 'uxui');
-                    window.scrollTo({ top: document.getElementById('projects').offsetTop, behavior: 'smooth' });
+                    const newTab = activeTab === 'uxui' ? 'graphics' : 'uxui';
+                    setActiveTab(newTab);
+                    setActiveProjectIndex(0);
+                    // 탭 전환 후 첫 번째 썸네일로 스크롤
+                    setTimeout(() => {
+                      const firstThumbnail = thumbnailRefs.current[0];
+                      if (firstThumbnail) {
+                        firstThumbnail.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                      }
+                    }, 100);
                   }}
                   className="flex items-center justify-center gap-4 px-8 py-4 bg-variable-collection-yellow hover:opacity-90 transition-all duration-300 group"
                   style={{ borderRadius: `${borderRadius}px` }}
