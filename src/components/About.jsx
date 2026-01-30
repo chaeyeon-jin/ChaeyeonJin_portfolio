@@ -53,23 +53,9 @@ const About = ({ borderRadius, isToggled }) => {
             className="h-auto md:h-[280px] flex items-center justify-center px-4 md:px-10 py-6 md:py-0 bg-variable-collection-yellow transition-all duration-300 group cursor-pointer"
             style={{ borderRadius: `${borderRadius}px` }}
           >
-          <p className="w-full font-nohemi font-normal text-variable-collection-grey300 text-base md:text-2xl lg:text-[32px] tracking-[0] leading-relaxed md:leading-[40.4px]">
-            <span className="text-[#bcbcbc] group-hover:text-variable-collection-black transition-colors duration-300">I&apos;m a </span>
-            <span className="text-[#222222] group-hover:text-variable-collection-black transition-colors duration-300">Product designer &amp; Graphic designer</span>
-            <span className="text-[#bcbcbc] group-hover:text-variable-collection-black transition-colors duration-300"> based in </span>
-            <span className="text-[#222222] group-hover:text-variable-collection-black transition-colors duration-300">California</span>
-            <span className="text-[#bcbcbc] group-hover:text-variable-collection-black transition-colors duration-300">, specializing in </span>
-            <span className="text-[#222222] group-hover:text-variable-collection-black transition-colors duration-300">user-centered UX/UI</span>
-            <span className="text-[#bcbcbc] group-hover:text-variable-collection-black transition-colors duration-300"> design and </span>
-            <span className="text-[#222222] group-hover:text-variable-collection-black transition-colors duration-300">visual communication</span>
-            <span className="text-[#bcbcbc] group-hover:text-variable-collection-black transition-colors duration-300"> through </span>
-            <span className="text-[#222222] group-hover:text-variable-collection-black transition-colors duration-300">editorial design</span>
-            <span className="text-[#bcbcbc] group-hover:text-variable-collection-black transition-colors duration-300">, </span>
-            <span className="text-[#222222] group-hover:text-variable-collection-black transition-colors duration-300">branding</span>
-            <span className="text-[#bcbcbc] group-hover:text-variable-collection-black transition-colors duration-300">, and </span>
-            <span className="text-[#222222] group-hover:text-variable-collection-black transition-colors duration-300">motion graphics</span>
-            <span className="text-[#bcbcbc] group-hover:text-variable-collection-black transition-colors duration-300">.</span>
-                </p>
+          <p className="w-full font-nohemi font-normal text-variable-collection-black group-hover:text-[#bcbcbc] transition-colors duration-300 text-base md:text-2xl lg:text-[32px] tracking-[0] leading-relaxed md:leading-[40.4px]">
+            I&apos;m a Product designer &amp; Graphic designer based in California, specializing in user-centered UX/UI design and visual communication through editorial design, branding, and motion graphics.
+          </p>
               </div>
           </FadeInUp>
 
@@ -139,20 +125,8 @@ const About = ({ borderRadius, isToggled }) => {
             className="h-auto md:h-[280px] flex items-center justify-center px-4 md:px-10 py-6 md:py-0 bg-variable-collection-yellow transition-all duration-300 group cursor-pointer"
             style={{ borderRadius: `${borderRadius}px` }}
           >
-          <p className="w-full font-nohemi font-normal text-variable-collection-grey300 text-base md:text-2xl lg:text-[32px] tracking-[0] leading-relaxed md:leading-[40.4px]">
-            <span className="text-[#bcbcbc] group-hover:text-variable-collection-black transition-colors duration-300">
-              I enjoy turning ideas into functional, interactive experiences through{" "}
-            </span>
-            <span className="text-[#222222] group-hover:text-variable-collection-black transition-colors duration-300">front-end developing</span>
-            <span className="text-[#bcbcbc] group-hover:text-variable-collection-black transition-colors duration-300"> with </span>
-            <span className="text-[#222222] group-hover:text-variable-collection-black transition-colors duration-300">HTML</span>
-            <span className="text-[#bcbcbc] group-hover:text-variable-collection-black transition-colors duration-300">, </span>
-            <span className="text-[#222222] group-hover:text-variable-collection-black transition-colors duration-300">CSS</span>
-            <span className="text-[#bcbcbc] group-hover:text-variable-collection-black transition-colors duration-300">, </span>
-            <span className="text-[#222222] group-hover:text-variable-collection-black transition-colors duration-300">JavaScript</span>
-            <span className="text-[#bcbcbc] group-hover:text-variable-collection-black transition-colors duration-300">, and </span>
-            <span className="text-[#222222] group-hover:text-variable-collection-black transition-colors duration-300">React</span>
-            <span className="text-[#bcbcbc] group-hover:text-variable-collection-black transition-colors duration-300">, with a focus on usability and iteration.</span>
+          <p className="w-full font-nohemi font-normal text-variable-collection-black group-hover:text-[#bcbcbc] transition-colors duration-300 text-base md:text-2xl lg:text-[32px] tracking-[0] leading-relaxed md:leading-[40.4px]">
+            I enjoy turning ideas into functional, interactive experiences through front-end developing with HTML, CSS, JavaScript, and React, with a focus on usability and iteration.
           </p>
           </div>
         </FadeInUp>
@@ -189,21 +163,8 @@ const About = ({ borderRadius, isToggled }) => {
             className="h-auto md:h-[280px] flex items-center justify-center px-4 md:px-10 py-6 md:py-0 bg-variable-collection-yellow transition-all duration-300 group cursor-pointer"
             style={{ borderRadius: `${borderRadius}px` }}
           >
-          <p className="w-full font-nohemi font-normal text-variable-collection-background text-base md:text-2xl lg:text-[32px] tracking-[0] leading-relaxed md:leading-[40.4px]">
-            <span className="text-[#bcbcbc] group-hover:text-variable-collection-black transition-colors duration-300">Currently a</span>
-            <span className="text-[#e1e1e1] group-hover:text-variable-collection-black transition-colors duration-300">&nbsp;</span>
-            <span className="text-[#222222] group-hover:text-variable-collection-black transition-colors duration-300">senior</span>
-            <span className="text-[#e1e1e1] group-hover:text-variable-collection-black transition-colors duration-300">&nbsp;</span>
-            <span className="text-[#bcbcbc] group-hover:text-variable-collection-black transition-colors duration-300">majoring in</span>
-            <span className="text-[#e1e1e1] group-hover:text-variable-collection-black transition-colors duration-300">&nbsp;</span>
-            <span className="text-[#222222] group-hover:text-variable-collection-black transition-colors duration-300">Visual Communication Design</span>
-            <span className="text-[#bcbcbc] group-hover:text-variable-collection-black transition-colors duration-300">, and previously worked as a </span>
-            <span className="text-[#222222] group-hover:text-variable-collection-black transition-colors duration-300">freelance visual designer</span>
-            <span className="text-[#e1e1e1] group-hover:text-variable-collection-black transition-colors duration-300">&nbsp;</span>
-            <span className="text-[#bcbcbc] group-hover:text-variable-collection-black transition-colors duration-300">in</span>
-            <span className="text-[#e1e1e1] group-hover:text-variable-collection-black transition-colors duration-300">&nbsp;</span>
-            <span className="text-[#222222] group-hover:text-variable-collection-black transition-colors duration-300">Ireland</span>
-            <span className="text-[#bcbcbc] group-hover:text-variable-collection-black transition-colors duration-300">, collaborating with local clients on branding and visual projects.</span>
+          <p className="w-full font-nohemi font-normal text-variable-collection-black group-hover:text-[#bcbcbc] transition-colors duration-300 text-base md:text-2xl lg:text-[32px] tracking-[0] leading-relaxed md:leading-[40.4px]">
+            Currently a senior majoring in Visual Communication Design, and previously worked as a freelance visual designer in Ireland, collaborating with local clients on branding and visual projects.
           </p>
           </div>
         </FadeInUp>

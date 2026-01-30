@@ -7,7 +7,7 @@ import { useLenis } from 'lenis/react'
 import FadeInUp from './FadeInUp'
 
 const Projects = ({ borderRadius, isToggled }) => {
-  const [activeTab, setActiveTab] = useState('uxui')
+  const [activeTab, setActiveTab] = useState('graphics')
   const [activeProjectIndex, setActiveProjectIndex] = useState(0)
   const thumbnailRefs = useRef([])
   const projectsSectionRef = useRef(null)
@@ -341,26 +341,10 @@ const Projects = ({ borderRadius, isToggled }) => {
                 <div 
                   className="absolute h-[38px] md:h-[56px] w-[calc(50%-10px)] bg-variable-collection-white transition-all duration-300 rounded-[20px]"
                   style={{
-                    left: activeTab === 'uxui' ? '8px' : 'calc(50% + 2px)',
+                    left: activeTab === 'graphics' ? '8px' : 'calc(50% + 2px)',
                     transform: 'none'
                   }}
                 />
-                <button
-                  onClick={() => {
-                    if (activeTab !== 'uxui') {
-                      setActiveTab('uxui');
-                      setActiveProjectIndex(0);
-                      setTimeout(() => {
-                        scrollToProjectsTop();
-                      }, 50);
-                    }
-                  }}
-                  className={`relative z-10 flex-1 h-full flex items-center justify-center font-mango-grotesque font-medium text-xl md:text-3xl transition-colors duration-300 ${
-                    activeTab === 'uxui' ? 'text-variable-collection-black' : 'text-variable-collection-black/40'
-                  }`}
-                >
-                  UX/UI
-                </button>
                 <button
                   onClick={() => {
                     if (activeTab !== 'graphics') {
@@ -376,6 +360,22 @@ const Projects = ({ borderRadius, isToggled }) => {
                   }`}
                 >
                   Graphics
+                </button>
+                <button
+                  onClick={() => {
+                    if (activeTab !== 'uxui') {
+                      setActiveTab('uxui');
+                      setActiveProjectIndex(0);
+                      setTimeout(() => {
+                        scrollToProjectsTop();
+                      }, 50);
+                    }
+                  }}
+                  className={`relative z-10 flex-1 h-full flex items-center justify-center font-mango-grotesque font-medium text-xl md:text-3xl transition-colors duration-300 ${
+                    activeTab === 'uxui' ? 'text-variable-collection-black' : 'text-variable-collection-black/40'
+                  }`}
+                >
+                  UX/UI
                 </button>
               </div>
             </FadeInUp>

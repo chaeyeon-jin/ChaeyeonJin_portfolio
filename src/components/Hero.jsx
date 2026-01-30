@@ -215,7 +215,7 @@ const Hero = ({ borderRadius, setBorderRadius, isToggled, setIsToggled }) => {
                 style={{ borderRadius: `${borderRadius}px` }}
               >
                 <p className={`relative w-full font-mango-grotesque font-medium text-xl md:text-xl lg:text-2xl xl:text-[2.3vw] max-xl:text-[24px] tracking-[0] leading-normal text-center transition-colors duration-300 ${isToggled ? 'text-variable-collection-black' : 'text-variable-collection-background'}`}>
-                  I&apos;m looking for an internship - contact me!!
+                  Open to new opportunities.
                 </p>
               </div>
             </FadeInUp>
@@ -227,8 +227,8 @@ const Hero = ({ borderRadius, setBorderRadius, isToggled, setIsToggled }) => {
                 style={{ borderRadius: `${borderRadius}px` }}
               >
                 <p className="relative w-full font-nohemi font-normal text-variable-collection-black text-[6.5vw] md:text-[2.2vw] lg:text-[2.5vw] xl:text-[2.5vw] 2xl:text-5xl tracking-[0] leading-[1.01] text-center md:text-left break-words">
-                  She is a Designer &amp; Developer in California, who bridges tech and
-                  design.
+                  She is a Designer &amp; Developer in California, who shapes bold visual
+                  stories.
                 </p>
               </div>
             </FadeInUp>
