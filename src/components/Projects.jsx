@@ -49,6 +49,15 @@ const Projects = ({ borderRadius, isToggled }) => {
   // UX/UI Project data array
   const uxuiProjectsData = [
     {
+      id: 'dipin',
+      title: 'DIPIN',
+      description: 'An AI-era evaluation engine for real-world problem-solving',
+      date: '11/2025 ~ 02/2026',
+      tags: ['UX research', 'UI design', 'Development'],
+      url: 'https://app.dipin.site/',
+      thumbnail: '/dipin/dipinthumbnail.png'
+    },
+    {
       id: 'simo',
       title: 'SiMO',
       description: 'SiMple mockup generator for designers',

@@ -132,6 +132,120 @@ const ProjectDetail = ({ id }) => {
     );
   }
 
+  // dipin 프로젝트 처리
+  if (id === 'dipin') {
+    const dipinData = {
+      title: 'DIPIN',
+      description: 'An AI-era evaluation engine for real-world problem-solving',
+      date: '11/2025 ~ 02/2026',
+      tags: ['UX research', 'UI design', 'Development'],
+      url: 'https://app.dipin.site/'
+    };
+
+    const dipinImages = [
+      '/dipin/dipin1.png',
+      '/dipin/dipin2.png',
+      '/dipin/dipin3.png',
+      '/dipin/dipin4.png',
+      '/dipin/dipin5.png',
+      '/dipin/dipin6.png',
+      '/dipin/dipin7.png',
+      '/dipin/dipin8.png'
+    ];
+
+    return (
+      <div className="w-full">
+        {/* 고정된 이전 버튼 */}
+        <button
+          onClick={handleBack}
+          className="fixed top-[20px] md:top-[40px] left-[20px] md:left-[40px] z-50 flex items-center justify-center hover:opacity-80 transition-all duration-300"
+        >
+          <Image
+            src="/SVG/arrow.svg"
+            alt="Back"
+            width={99}
+            height={61}
+            className="rotate-180 w-16 h-10 md:w-[99px] md:h-[61px]"
+          />
+        </button>
+        {/* 프로젝트 설명 - 그리드 시스템 */}
+        <div className="w-full px-[20px] pt-[80px] md:pt-6 md:pl-[180px] md:pr-[80px] py-6 md:py-[46px] bg-variable-collection-background">
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-x-3 md:gap-x-5">
+            {/* 왼쪽 3칸 - 제목, 설명, 웹사이트 (세로 배치) */}
+            <div className="col-span-1 md:col-span-3 flex flex-col gap-4 md:gap-[22px]">
+              {/* 제목 */}
+              <h3 className="font-nohemi font-normal text-2xl md:text-3xl tracking-[0] leading-tight md:leading-[36px] text-variable-collection-black">
+                {dipinData.title}
+              </h3>
+
+              {/* 설명 */}
+              <p className="font-nohemi font-normal text-base md:text-xl tracking-[0] leading-snug md:leading-[24px] text-variable-collection-black">
+                {dipinData.description}
+              </p>
+
+              {/* Visit site 버튼 */}
+              <div className="inline-flex items-start justify-start">
+                <a
+                  href={dipinData.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex w-28 md:w-36 h-[40px] md:h-[50px] items-center justify-center gap-2 pt-2 pb-1.5 px-3 bg-variable-collection-white hover:opacity-80 transition-opacity rounded-[60px]"
+                >
+                  <Image
+                    src="/SVG/Visit.svg"
+                    alt="Visit"
+                    width={20}
+                    height={20}
+                    className="relative"
+                  />
+                  <span className="relative w-fit font-nohemi font-medium text-sm md:text-base tracking-[0] leading-normal whitespace-nowrap text-variable-collection-black">
+                    Visit site
+                  </span>
+                </a>
+              </div>
+            </div>
+
+            {/* 오른쪽 3칸 - 기간, 태그 (세로 배치) */}
+            <div className="col-span-1 md:col-span-3 flex flex-col gap-4 md:gap-[22px]">
+              {/* 날짜 */}
+              <time className="font-nohemi font-normal text-lg md:text-2xl tracking-[0] leading-normal md:leading-[24.3px] text-variable-collection-black">
+                {dipinData.date}
+              </time>
+
+              {/* 태그들 */}
+              <div className="inline-flex items-start gap-2 flex-wrap">
+                {dipinData.tags.map((tag, index) => (
+                  <div key={index} className="inline-flex items-center gap-1.5">
+                    <span className="flex w-fit items-center justify-center gap-1.5 pt-1.5 md:pt-2 pb-1 md:pb-1.5 px-2 md:px-3 bg-variable-collection-yellow rounded-[20px]">
+                      <span className="relative w-fit font-nohemi font-medium text-variable-collection-black text-xs md:text-sm tracking-[0] leading-normal whitespace-nowrap">
+                        {tag}
+                      </span>
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 포트폴리오 이미지 */}
+        <div className="w-full">
+          {dipinImages.map((src, index) => (
+            <Image
+              key={src}
+              src={src}
+              alt={`DIPIN ${index + 1}`}
+              width={1920}
+              height={1080}
+              className="w-full h-auto"
+              priority={index === 0}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   // myoo 프로젝트 처리
   if (id === 'myoo') {
     const myooData = {
