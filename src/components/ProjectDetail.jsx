@@ -150,7 +150,8 @@ const ProjectDetail = ({ id }) => {
       '/dipin/dipin5.png',
       '/dipin/dipin6.png',
       '/dipin/dipin7.png',
-      '/dipin/dipin8.png'
+      '/dipin/dipin8.png',
+      '/dipin/dipin9.png'
     ];
 
     return (
@@ -230,6 +231,14 @@ const ProjectDetail = ({ id }) => {
 
         {/* 포트폴리오 이미지 */}
         <div className="w-full">
+          <Image
+            src="/dipin/dipinthumbnail.png"
+            alt="DIPIN thumbnail"
+            width={1920}
+            height={1080}
+            className="w-full h-auto"
+            priority
+          />
           {dipinImages.map((src, index) => (
             <Image
               key={src}
@@ -238,7 +247,6 @@ const ProjectDetail = ({ id }) => {
               width={1920}
               height={1080}
               className="w-full h-auto"
-              priority={index === 0}
             />
           ))}
         </div>
